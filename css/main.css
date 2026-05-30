@@ -2331,7 +2331,7 @@ blockquote {
 }
 
 .comment--level-2 {
-  margin-right: var(--space-14);
+  margin-right: var(--space-12);
 }
 
 .comment__avatar {

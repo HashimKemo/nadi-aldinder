@@ -51,7 +51,6 @@
     .article-share__btn:hover { background: var(--color-primary); color: var(--text-on-primary); border-color: var(--color-primary); }
     .article-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-8); }
     .article-tags__tag { padding: var(--space-1) var(--space-3); background: var(--color-secondary-bg); color: var(--color-secondary-dark); border-radius: var(--radius-full); font-size: var(--text-xs); }
-    .article-comment-placeholder { padding: var(--space-8); text-align: center; border: 2px dashed var(--border-color); border-radius: var(--radius-lg); color: var(--text-muted); margin: var(--space-10) 0; }
     .article-navigation { display: flex; justify-content: space-between; gap: var(--space-4); margin-top: var(--space-10); padding-top: var(--space-8); border-top: 1px solid var(--border-color); }
     .article-nav-link { display: flex; flex-direction: column; padding: var(--space-4); background: var(--color-primary-bg); border-radius: var(--radius-lg); text-decoration: none; color: var(--text-primary); transition: background var(--transition-fast); flex: 1; }
     .article-nav-link:hover { background: var(--color-secondary-bg); }
@@ -404,89 +403,13 @@
       }
 
       /* ---- نظام التعليقات ---- */
+      try {
       var currentArticleId = parseInt(articleId);
-
-      async function loadComments() {
-        var list = document.getElementById('comments-list');
-        var loading = document.getElementById('comments-loading');
-        if (!list) return;
-
-        var { data: comments, error } = await supabaseClient
-          .from('article_comments')
-          .select('*')
-          .eq('article_id', currentArticleId)
-          .order('created_at', { ascending: true });
-
-        if (loading) loading.style.display = 'none';
-
-        if (error || !comments || comments.length === 0) {
-          list.innerHTML = '<div class="comments-empty"><i class="fas fa-comment" aria-hidden="true" style="font-size:1.5rem;margin-bottom:var(--space-2);display:block;"></i>لا توجد تعليقات بعد — كن أول من يعلق!</div>';
-          document.getElementById('comments-count').textContent = '0';
-          return;
-        }
-
-        document.getElementById('comments-count').textContent = comments.length;
-
-        var tree = buildCommentTree(comments);
-        list.innerHTML = '';
-        tree.forEach(function (c) { list.appendChild(renderComment(c, comments)); });
-      }
-
-      function buildCommentTree(flat) {
-        var map = {}, roots = [];
-        flat.forEach(function (c) { map[c.id] = c; c._children = []; });
-        flat.forEach(function (c) {
-          if (c.parent_id && map[c.parent_id]) {
-            map[c.parent_id]._children.push(c);
-          } else {
-            roots.push(c);
-          }
-        });
-        return roots;
-      }
-
-      function renderComment(comment, allComments, level) {
-        if (level === undefined) level = 0;
-        var div = document.createElement('div');
-        div.className = 'comment' + (level > 0 ? ' comment--level-' + Math.min(level, 2) : '');
-        div.id = 'comment-' + comment.id;
-
-        var avatarUrl = comment.avatar_url;
-        var avatarHtml = avatarUrl
-          ? '<img class="comment__avatar" src="' + avatarUrl + '" alt="" loading="lazy" decoding="async">'
-          : '<div class="comment__avatar comment__avatar--empty">' + (comment.name ? comment.name.charAt(0) : 'م') + '</div>';
-
-        var dateStr = fmtDateShort(comment.created_at);
-
-        var deleteBtn = '';
-        if (isEditorOrAbove) {
-          deleteBtn = '<button class="comment__delete-btn" onclick="deleteComment(' + comment.id + ')" title="حذف التعليق"><i class="fas fa-trash-alt" aria-hidden="true"></i> حذف</button>';
-        }
-
-        div.innerHTML =
-          '<div class="comment__avatar-wrap">' + avatarHtml + '</div>' +
-          '<div class="comment__body">' +
-            '<div class="comment__meta">' +
-              '<span class="comment__name">' + escapeHtml(comment.name) + '</span>' +
-              '<span class="comment__date">' + dateStr + '</span>' +
-            '</div>' +
-            '<div class="comment__text">' + escapeHtml(comment.content) + '</div>' +
-            '<div class="comment__actions">' +
-              '<button class="comment__reply-btn" onclick="openReply(' + comment.id + ')"><i class="fas fa-reply" aria-hidden="true"></i> رد</button>' +
-              deleteBtn +
-            '</div>' +
-          '</div>';
-
-        if (comment._children && comment._children.length > 0) {
-          var childrenWrapper = document.createElement('div');
-          comment._children.forEach(function (child) {
-            childrenWrapper.appendChild(renderComment(child, allComments, level + 1));
-          });
-          div.appendChild(childrenWrapper);
-        }
-
-        return div;
-      }
+      var isEditorOrAbove = false;
+      var currentUserId = null;
+      var currentUserName = '';
+      var currentUserAvatar = '';
+      var replyTargetId = null;
 
       function escapeHtml(str) {
         if (!str) return '';
@@ -497,128 +420,170 @@
 
       function fmtDateShort(d) {
         if (!d) return '—';
-        try {
-          return new Date(d).toLocaleDateString('ar-SA', {
-            year: 'numeric', month: 'short', day: 'numeric',
-            hour: '2-digit', minute: '2-digit'
-          });
-        } catch (e) { return '—'; }
+        try { return new Date(d).toLocaleDateString('ar-SA', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }); }
+        catch (e) { return '—'; }
       }
 
-      var isEditorOrAbove = false;
-      var currentUserId = null;
-      var currentUserName = '';
-      var currentUserAvatar = '';
+      function buildCommentTree(flat) {
+        var map = {}, roots = [];
+        flat.forEach(function (c) { map[c.id] = c; c._children = []; });
+        flat.forEach(function (c) {
+          if (c.parent_id && map[c.parent_id]) { map[c.parent_id]._children.push(c); }
+          else { roots.push(c); }
+        });
+        return roots;
+      }
 
-      (async function checkCommentAuth() {
-        var sessionRes = await supabaseClient.auth.getSession();
-        var session = sessionRes.data && sessionRes.data.session;
-        if (session) {
-          currentUserId = session.user.id;
-          var profileRes = await supabaseClient.from('profiles')
-            .select('name, role, avatar_url, is_approved')
-            .eq('id', session.user.id)
-            .maybeSingle();
-          var profile = profileRes.data;
-          if (profile) {
-            currentUserName = profile.name || 'مستخدم';
-            currentUserAvatar = profile.avatar_url || '';
-            if (profile.is_approved && (profile.role === 'admin' || profile.role === 'editor' || profile.role === 'publisher')) {
-              isEditorOrAbove = true;
-            }
-            showLoggedInForm();
-          } else {
-            showLoggedOutForm();
+      function renderComment(comment, allComments, level) {
+        if (level === undefined) level = 0;
+        var div = document.createElement('div');
+        div.className = 'comment' + (level > 0 ? ' comment--level-' + Math.min(level, 2) : '');
+        div.id = 'comment-' + comment.id;
+        var avatarHtml = comment.avatar_url
+          ? '<img class="comment__avatar" src="' + comment.avatar_url + '" alt="" loading="lazy" decoding="async">'
+          : '<div class="comment__avatar comment__avatar--empty">' + (comment.name ? comment.name.charAt(0) : 'م') + '</div>';
+        var del = isEditorOrAbove
+          ? '<button class="comment__delete-btn" onclick="deleteComment(' + comment.id + ')" title="حذف التعليق"><i class="fas fa-trash-alt" aria-hidden="true"></i> حذف</button>'
+          : '';
+        div.innerHTML =
+          '<div class="comment__avatar-wrap">' + avatarHtml + '</div>' +
+          '<div class="comment__body">' +
+            '<div class="comment__meta">' +
+              '<span class="comment__name">' + escapeHtml(comment.name) + '</span>' +
+              '<span class="comment__date">' + fmtDateShort(comment.created_at) + '</span>' +
+            '</div>' +
+            '<div class="comment__text">' + escapeHtml(comment.content) + '</div>' +
+            '<div class="comment__actions">' +
+              '<button class="comment__reply-btn" onclick="openReply(' + comment.id + ')"><i class="fas fa-reply" aria-hidden="true"></i> رد</button>' +
+              del +
+            '</div>' +
+          '</div>';
+        if (comment._children && comment._children.length > 0) {
+          var w = document.createElement('div');
+          comment._children.forEach(function (ch) { w.appendChild(renderComment(ch, allComments, level + 1)); });
+          div.appendChild(w);
+        }
+        return div;
+      }
+
+      async function loadComments() {
+        var list = document.getElementById('comments-list');
+        var loading = document.getElementById('comments-loading');
+        if (!list) return;
+        try {
+          var { data: comments, error } = await supabaseClient
+            .from('article_comments')
+            .select('*')
+            .eq('article_id', currentArticleId)
+            .order('created_at', { ascending: true });
+          if (loading) loading.style.display = 'none';
+          if (error || !comments || comments.length === 0) {
+            list.innerHTML = '<div class="comments-empty"><i class="fas fa-comment" aria-hidden="true" style="font-size:1.5rem;margin-bottom:var(--space-2);display:block;"></i>لا توجد تعليقات بعد — كن أول من يعلق!</div>';
+            document.getElementById('comments-count').textContent = '0';
+            return;
           }
-        } else {
-          showLoggedOutForm();
+          document.getElementById('comments-count').textContent = comments.length;
+          var tree = buildCommentTree(comments);
+          list.innerHTML = '';
+          tree.forEach(function (c) { list.appendChild(renderComment(c, comments)); });
+        } catch (e) {
+          console.warn('loadComments error:', e);
+          if (loading) loading.style.display = 'none';
+          list.innerHTML = '<div class="comments-empty">تعذر تحميل التعليقات</div>';
+        }
+      }
+
+      /* Auth + form visibility */
+      (async function () {
+        try {
+          var sRes = await supabaseClient.auth.getSession();
+          var sess = sRes.data && sRes.data.session;
+          if (sess) {
+            currentUserId = sess.user.id;
+            var pRes = await supabaseClient.from('profiles').select('name, role, avatar_url, is_approved').eq('id', sess.user.id).maybeSingle();
+            var prof = pRes.data;
+            if (prof) {
+              currentUserName = prof.name || 'مستخدم';
+              currentUserAvatar = prof.avatar_url || '';
+              if (prof.is_approved && (prof.role === 'admin' || prof.role === 'editor' || prof.role === 'publisher')) isEditorOrAbove = true;
+              document.getElementById('comment-form-logged-in').style.display = 'block';
+              document.getElementById('comment-form-logged-out').style.display = 'none';
+            } else {
+              document.getElementById('comment-form-logged-in').style.display = 'none';
+              document.getElementById('comment-form-logged-out').style.display = 'block';
+            }
+          } else {
+            document.getElementById('comment-form-logged-in').style.display = 'none';
+            document.getElementById('comment-form-logged-out').style.display = 'block';
+          }
+        } catch (e) {
+          console.warn('comment auth error:', e);
+          document.getElementById('comment-form-logged-in').style.display = 'none';
+          document.getElementById('comment-form-logged-out').style.display = 'block';
         }
         loadComments();
       })();
 
-      function showLoggedInForm() {
-        var loggedIn = document.getElementById('comment-form-logged-in');
-        var loggedOut = document.getElementById('comment-form-logged-out');
-        if (loggedIn) loggedIn.style.display = 'block';
-        if (loggedOut) loggedOut.style.display = 'none';
-        setupCommentSubmit();
-      }
+      /* Event listeners — set up once regardless of auth */
+      var ta = document.getElementById('comment-textarea');
+      var taGuest = document.getElementById('comment-textarea-guest');
+      var countEl = document.getElementById('comment-char-count');
+      var countGuest = document.getElementById('comment-char-count-guest');
+      if (ta && countEl) ta.addEventListener('input', function () { countEl.textContent = ta.value.length; });
+      if (taGuest && countGuest) taGuest.addEventListener('input', function () { countGuest.textContent = taGuest.value.length; });
 
-      function showLoggedOutForm() {
-        var loggedIn = document.getElementById('comment-form-logged-in');
-        var loggedOut = document.getElementById('comment-form-logged-out');
-        if (loggedIn) loggedIn.style.display = 'none';
-        if (loggedOut) loggedOut.style.display = 'block';
-        setupGuestCommentSubmit();
-      }
-
-      var commentSubmitSetup = false;
-      function setupCommentSubmit() {
-        if (commentSubmitSetup) return;
-        commentSubmitSetup = true;
+      document.getElementById('comment-submit-btn')?.addEventListener('click', async function () {
         var btn = document.getElementById('comment-submit-btn');
         var ta = document.getElementById('comment-textarea');
-        if (!btn || !ta) return;
-
-        var count = document.getElementById('comment-char-count');
-        ta.addEventListener('input', function () { if (count) count.textContent = ta.value.length; });
-
-        btn.addEventListener('click', async function () {
-          var content = ta.value.trim();
-          if (content.length < 2) { showCommentMsg('التعليق قصير جداً (حرفين على الأقل)', 'error'); return; }
-          btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        var content = ta.value.trim();
+        if (content.length < 2) { showCommentMsg('التعليق قصير جداً (حرفين على الأقل)', 'error'); return; }
+        btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        try {
           var { error } = await supabaseClient.from('article_comments').insert({
             article_id: currentArticleId, user_id: currentUserId,
-            name: currentUserName, avatar_url: currentUserAvatar,
-            email: (await supabaseClient.auth.getSession()).data.session?.user?.email || null,
+            name: currentUserName, avatar_url: currentUserAvatar, email: (await supabaseClient.auth.getSession()).data.session?.user?.email || null,
             content: content
           });
-          btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال التعليق';
-          if (error) { showCommentMsg('خطأ: ' + error.message, 'error'); return; }
-          ta.value = ''; if (count) count.textContent = '0';
+          if (error) { showCommentMsg('خطأ: ' + error.message, 'error'); btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال التعليق'; return; }
+          ta.value = ''; if (countEl) countEl.textContent = '0';
           showCommentMsg('تم إضافة تعليقك بنجاح!', 'success');
           loadComments();
-        });
-      }
+        } catch (e) { showCommentMsg('خطأ في الإرسال', 'error'); }
+        btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال التعليق';
+      });
 
-      var guestSubmitSetup = false;
-      function setupGuestCommentSubmit() {
-        if (guestSubmitSetup) return;
-        guestSubmitSetup = true;
+      document.getElementById('comment-submit-btn-guest')?.addEventListener('click', async function () {
         var btn = document.getElementById('comment-submit-btn-guest');
         var ta = document.getElementById('comment-textarea-guest');
         var nameInput = document.getElementById('comment-guest-name');
-        if (!btn || !ta || !nameInput) return;
-
-        var count = document.getElementById('comment-char-count-guest');
-        ta.addEventListener('input', function () { if (count) count.textContent = ta.value.length; });
-
-        btn.addEventListener('click', async function () {
-          var content = ta.value.trim();
-          var name = nameInput.value.trim() || 'زائر';
-          if (content.length < 2) { showCommentMsg('التعليق قصير جداً (حرفين على الأقل)', 'error'); return; }
-          btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        var content = ta.value.trim();
+        var name = nameInput.value.trim() || 'زائر';
+        if (content.length < 2) { showCommentMsg('التعليق قصير جداً (حرفين على الأقل)', 'error'); return; }
+        btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        try {
           var { error } = await supabaseClient.from('article_comments').insert({
             article_id: currentArticleId, name: name, content: content
           });
-          btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال التعليق';
-          if (error) { showCommentMsg('خطأ: ' + error.message, 'error'); return; }
-          ta.value = ''; if (count) count.textContent = '0';
+          if (error) { showCommentMsg('خطأ: ' + error.message, 'error'); btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال التعليق'; return; }
+          ta.value = ''; if (countGuest) countGuest.textContent = '0';
           showCommentMsg('تم إضافة تعليقك بنجاح!', 'success');
           loadComments();
-        });
-      }
+        } catch (e) { showCommentMsg('خطأ في الإرسال', 'error'); }
+        btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال التعليق';
+      });
 
-      var replyTargetId = null;
+      /* Reply */
       window.openReply = function (commentId) {
         replyTargetId = commentId;
         var container = document.getElementById('reply-form-container');
         if (container) container.style.display = 'block';
-        var ta = document.getElementById('reply-textarea');
-        if (ta) { ta.focus(); ta.value = ''; updateReplyCount(); }
-        var submitBtn = document.getElementById('reply-submit-btn');
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الرد'; }
-        container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        var rta = document.getElementById('reply-textarea');
+        if (rta) { rta.focus(); rta.value = ''; }
+        var rCount = document.getElementById('reply-char-count');
+        if (rCount) rCount.textContent = '0';
+        var rBtn = document.getElementById('reply-submit-btn');
+        if (rBtn) { rBtn.disabled = false; rBtn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الرد'; }
+        if (container) container.scrollIntoView({ behavior: 'smooth', block: 'center' });
       };
 
       document.getElementById('reply-cancel-btn')?.addEventListener('click', function () {
@@ -629,10 +594,7 @@
 
       var replyTa = document.getElementById('reply-textarea');
       var replyCount = document.getElementById('reply-char-count');
-      function updateReplyCount() {
-        if (replyTa && replyCount) replyCount.textContent = replyTa.value.length;
-      }
-      if (replyTa) replyTa.addEventListener('input', updateReplyCount);
+      if (replyTa && replyCount) replyTa.addEventListener('input', function () { replyCount.textContent = replyTa.value.length; });
 
       document.getElementById('reply-submit-btn')?.addEventListener('click', async function () {
         if (!replyTargetId) return;
@@ -640,41 +602,34 @@
         if (content.length < 2) { showCommentMsg('الرد قصير جداً', 'error'); return; }
         var btn = document.getElementById('reply-submit-btn');
         btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-
-        var insertData = {
-          article_id: currentArticleId, parent_id: replyTargetId,
-          content: content
-        };
-
-        if (currentUserId) {
-          var sRes = await supabaseClient.auth.getSession();
-          var session = sRes.data && sRes.data.session;
-          insertData.user_id = currentUserId;
-          insertData.name = currentUserName;
-          insertData.avatar_url = currentUserAvatar;
-          insertData.email = session ? session.user.email : null;
-        } else {
-          insertData.name = 'زائر';
-        }
-
-        var { error } = await supabaseClient.from('article_comments').insert(insertData);
+        try {
+          var insertData = { article_id: currentArticleId, parent_id: replyTargetId, content: content };
+          if (currentUserId) {
+            insertData.user_id = currentUserId; insertData.name = currentUserName;
+            insertData.avatar_url = currentUserAvatar;
+            insertData.email = ((await supabaseClient.auth.getSession()).data.session?.user?.email) || null;
+          } else { insertData.name = 'زائر'; }
+          var { error } = await supabaseClient.from('article_comments').insert(insertData);
+          if (error) { showCommentMsg('خطأ: ' + error.message, 'error'); btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الرد'; return; }
+          replyTargetId = null;
+          if (replyTa) replyTa.value = '';
+          if (replyCount) replyCount.textContent = '0';
+          var container = document.getElementById('reply-form-container');
+          if (container) container.style.display = 'none';
+          showCommentMsg('تم إضافة ردك بنجاح!', 'success');
+          loadComments();
+        } catch (e) { showCommentMsg('خطأ في الإرسال', 'error'); }
         btn.disabled = false; btn.innerHTML = '<i class="fas fa-paper-plane"></i> إرسال الرد';
-        if (error) { showCommentMsg('خطأ: ' + error.message, 'error'); return; }
-        replyTargetId = null;
-        if (replyTa) replyTa.value = '';
-        if (replyCount) replyCount.textContent = '0';
-        var container = document.getElementById('reply-form-container');
-        if (container) container.style.display = 'none';
-        showCommentMsg('تم إضافة ردك بنجاح!', 'success');
-        loadComments();
       });
 
       window.deleteComment = async function (commentId) {
         if (!confirm('هل أنت متأكد من حذف هذا التعليق؟')) return;
-        var { error } = await supabaseClient.from('article_comments').delete().eq('id', commentId);
-        if (error) { showCommentMsg('خطأ: ' + error.message, 'error'); return; }
-        showCommentMsg('تم حذف التعليق', 'success');
-        loadComments();
+        try {
+          var { error } = await supabaseClient.from('article_comments').delete().eq('id', commentId);
+          if (error) { showCommentMsg('خطأ: ' + error.message, 'error'); return; }
+          showCommentMsg('تم حذف التعليق', 'success');
+          loadComments();
+        } catch (e) { showCommentMsg('خطأ في الحذف', 'error'); }
       };
 
       function showCommentMsg(msg, type) {
@@ -682,15 +637,13 @@
         if (existing) existing.remove();
         var div = document.createElement('div');
         div.className = 'comment-form__notif';
-        div.style.cssText = 'padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);font-size:var(--text-sm);margin-bottom:var(--space-3);';
-        div.style.background = type === 'error' ? 'rgba(192,57,43,.08)' : 'rgba(45,143,92,.08)';
-        div.style.color = type === 'error' ? 'var(--color-error)' : 'var(--color-success)';
-        div.style.border = '1px solid ' + (type === 'error' ? 'rgba(192,57,43,.2)' : 'rgba(45,143,92,.2)');
+        div.style.cssText = 'padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);font-size:var(--text-sm);margin-bottom:var(--space-3);background:' + (type === 'error' ? 'rgba(192,57,43,.08)' : 'rgba(45,143,92,.08)') + ';color:' + (type === 'error' ? 'var(--color-error)' : 'var(--color-success)') + ';border:1px solid ' + (type === 'error' ? 'rgba(192,57,43,.2)' : 'rgba(45,143,92,.2)') + ';';
         div.textContent = msg;
-        var formContainer = document.getElementById('comment-form-container');
-        if (formContainer) formContainer.insertBefore(div, formContainer.firstChild);
+        var fc = document.getElementById('comment-form-container');
+        if (fc) fc.insertBefore(div, fc.firstChild);
         setTimeout(function () { if (div.parentNode) div.parentNode.removeChild(div); }, 4000);
       }
+      } catch (e) { console.error('Comment system error:', e); }
     });
   </script>
 </body>
