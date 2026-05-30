@@ -2,8 +2,11 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="shortcut icon" href="favicon.ico">
   <meta name="theme-color" content="#1b4d3e">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>لوحة التحكم — نادي الدندر الثقافي الاجتماعي</title>
@@ -116,6 +119,7 @@
         <div class="dashboard-header__user">
           <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=100&q=80" alt="المشرف" loading="lazy" decoding="async">
           <span>مرحباً، admin</span>
+          <button class="theme-toggle" aria-label="الوضع الليلي" style="color: rgba(245,240,232,.85); font-size: var(--text-base);"><i class="fas fa-moon"></i></button>
           <a href="#" class="dashboard-header__logout" id="logout-btn">تسجيل الخروج</a>
         </div>
       </div>
@@ -131,7 +135,8 @@
           <a href="admin.html?tab=comments" class="dashboard-sidebar__link" data-tab="comments" data-role="editor"><i class="fas fa-comments" aria-hidden="true"></i> التعليقات</a>
           <a href="admin.html?tab=members" class="dashboard-sidebar__link" data-tab="members" data-role="admin"><i class="fas fa-users" aria-hidden="true"></i> الأعضاء</a>
           <a href="admin.html?tab=subscribers" class="dashboard-sidebar__link" data-tab="subscribers" data-role="admin"><i class="fas fa-envelope" aria-hidden="true"></i> المشتركون</a>
-          <a href="admin.html?tab=settings" class="dashboard-sidebar__link" data-tab="settings" data-role="admin"><i class="fas fa-cog" aria-hidden="true"></i> إدارة المستخدمين</a>
+          <a href="admin.html?tab=profile" class="dashboard-sidebar__link" data-tab="profile" data-role="all"><i class="fas fa-user-cog" aria-hidden="true"></i> الإعدادات</a>
+          <a href="admin.html?tab=settings" class="dashboard-sidebar__link" data-tab="settings" data-role="admin"><i class="fas fa-shield-alt" aria-hidden="true"></i> إدارة المستخدمين</a>
         </aside>
 
         <main class="dashboard-main">
@@ -214,6 +219,52 @@
                   <thead><tr><th>المقالة</th><th>الكاتب</th><th>التعليق</th><th>التاريخ</th><th></th></tr></thead>
                   <tbody id="comments-tbody"></tbody>
                 </table>
+              </div>
+            </div>
+          </div>
+
+          <div id="tab-profile" style="display: none;">
+            <div class="admin-section">
+              <div class="admin-section__header">
+                <h2 class="admin-section__title">الإعدادات الشخصية</h2>
+              </div>
+              <div style="max-width: 500px;">
+                <form id="profile-form" style="display: flex; flex-direction: column; gap: var(--space-4);">
+                  <div>
+                    <label class="form-label" style="display: block; margin-bottom: var(--space-1); font-size: var(--text-sm);">الاسم الكامل</label>
+                    <input type="text" id="profile-name" class="form-input" required style="width: 100%;">
+                  </div>
+                  <div>
+                    <label class="form-label" style="display: block; margin-bottom: var(--space-1); font-size: var(--text-sm);">البريد الإلكتروني</label>
+                    <input type="email" id="profile-email" class="form-input" readonly style="width: 100%; background: var(--bg-section-alt); cursor: not-allowed;">
+                  </div>
+                  <div>
+                    <label class="form-label" style="display: block; margin-bottom: var(--space-1); font-size: var(--text-sm);">رابط الصورة الشخصية</label>
+                    <input type="url" id="profile-avatar" class="form-input" placeholder="https://..." style="width: 100%;">
+                    <div style="margin-top: var(--space-2); display: flex; align-items: center; gap: var(--space-2);">
+                      <img id="profile-avatar-preview" src="" alt="معاينة" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border-color); display: none;">
+                      <span style="font-size: var(--text-xs); color: var(--text-muted);">معاينة الصورة</span>
+                    </div>
+                  </div>
+                  <div>
+                    <label class="form-label" style="display: block; margin-bottom: var(--space-1); font-size: var(--text-sm);">الدور الحالي</label>
+                    <div id="profile-role" style="display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); background: var(--color-primary-bg); border-radius: var(--radius-md); font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-primary);"></div>
+                  </div>
+                  <hr style="border: none; border-top: 1px solid var(--border-color); margin: var(--space-2) 0;">
+                  <h3 style="font-size: var(--text-base); font-weight: var(--weight-bold); color: var(--text-primary);">تغيير كلمة المرور</h3>
+                  <div>
+                    <label class="form-label" style="display: block; margin-bottom: var(--space-1); font-size: var(--text-sm);">كلمة المرور الجديدة</label>
+                    <input type="password" id="profile-password" class="form-input" placeholder="اتركه فارغاً إن لم ترد التغيير" style="width: 100%;" autocomplete="new-password">
+                  </div>
+                  <div>
+                    <label class="form-label" style="display: block; margin-bottom: var(--space-1); font-size: var(--text-sm);">تأكيد كلمة المرور</label>
+                    <input type="password" id="profile-password-confirm" class="form-input" placeholder="أعد إدخال كلمة المرور الجديدة" style="width: 100%;" autocomplete="new-password">
+                  </div>
+                  <div>
+                    <button type="submit" class="btn btn--primary" id="profile-save-btn"><i class="fas fa-save" aria-hidden="true"></i> حفظ التغييرات</button>
+                  </div>
+                </form>
+                <div id="profile-success" style="display: none; padding: var(--space-4); background: var(--color-success); color: #fff; border-radius: var(--radius-md); margin-top: var(--space-4); text-align: center; font-weight: var(--weight-semibold);"><i class="fas fa-check-circle" aria-hidden="true"></i> تم حفظ التغييرات بنجاح!</div>
               </div>
             </div>
           </div>
@@ -495,6 +546,7 @@
       document.querySelectorAll('.dashboard-sidebar__link').forEach(function (l) { l.classList.remove('dashboard-sidebar__link--active'); });
       var activeLink = document.querySelector('.dashboard-sidebar__link[data-tab="' + tab + '"]');
       if (activeLink) activeLink.classList.add('dashboard-sidebar__link--active');
+      if (tab === 'profile') setupProfileTab();
     }
 
     function showNotification(msg, type) {
@@ -895,6 +947,95 @@
       commentIdToDelete = id;
       var modal = document.getElementById('comment-delete-modal');
       if (modal) modal.classList.add('confirm-modal-overlay--open');
+    }
+
+    /* ---- الإعدادات الشخصية ---- */
+    function loadProfile() {
+      var nameEl = document.getElementById('profile-name');
+      var emailEl = document.getElementById('profile-email');
+      var avatarEl = document.getElementById('profile-avatar');
+      var previewEl = document.getElementById('profile-avatar-preview');
+      var roleEl = document.getElementById('profile-role');
+      if (!nameEl) return;
+
+      supabaseClient.auth.getSession().then(function (res) {
+        var user = res.data.session.user;
+        emailEl.value = user.email || '';
+
+        supabaseClient.from('profiles').select('name, role, avatar_url').eq('id', user.id).maybeSingle().then(function (p) {
+          if (p.data) {
+            nameEl.value = p.data.name || '';
+            avatarEl.value = p.data.avatar_url || '';
+            if (p.data.avatar_url) { previewEl.src = p.data.avatar_url; previewEl.style.display = 'block'; }
+            var roleNames = { admin: 'أدمن', editor: 'محرر', publisher: 'ناشر', viewer: 'مشاهد' };
+            roleEl.innerHTML = '<i class="fas fa-' + (p.data.role === 'admin' ? 'crown' : p.data.role === 'editor' ? 'pen' : 'user') + '" aria-hidden="true"></i> ' + (roleNames[p.data.role] || p.data.role);
+          }
+        });
+      });
+    }
+
+    function setupProfileForm() {
+      var form = document.getElementById('profile-form');
+      var avatarInput = document.getElementById('profile-avatar');
+      var previewEl = document.getElementById('profile-avatar-preview');
+      var successEl = document.getElementById('profile-success');
+      if (!form) return;
+
+      if (avatarInput) {
+        avatarInput.addEventListener('input', function () {
+          if (avatarInput.value.trim()) { previewEl.src = avatarInput.value.trim(); previewEl.style.display = 'block'; }
+          else { previewEl.style.display = 'none'; }
+        });
+      }
+
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        if (successEl) successEl.style.display = 'none';
+        var btn = document.getElementById('profile-save-btn');
+        btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جارٍ الحفظ...';
+
+        var name = document.getElementById('profile-name').value.trim();
+        var avatar = document.getElementById('profile-avatar').value.trim();
+        var pass = document.getElementById('profile-password').value;
+        var passConfirm = document.getElementById('profile-password-confirm').value;
+
+        if (!name) { showNotification('يرجى إدخال الاسم', 'error'); btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> حفظ التغييرات'; return; }
+
+        if (pass && pass !== passConfirm) { showNotification('كلمة المرور غير متطابقة', 'error'); btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> حفظ التغييرات'; return; }
+
+        if (pass && pass.length < 6) { showNotification('كلمة المرور يجب أن تكون 6 أحرف على الأقل', 'error'); btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> حفظ التغييرات'; return; }
+
+        var sessionRes = await supabaseClient.auth.getSession();
+        var userId = sessionRes.data.session.user.id;
+
+        var errs = [];
+
+        var profileRes = await supabaseClient.from('profiles').update({ name: name, avatar_url: avatar || null }).eq('id', userId);
+        if (profileRes.error) errs.push(profileRes.error.message);
+
+        if (pass) {
+          var authRes = await supabaseClient.auth.updateUser({ password: pass });
+          if (authRes.error) errs.push(authRes.error.message);
+        }
+
+        btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> حفظ التغييرات';
+
+        if (errs.length > 0) {
+          showNotification('خطأ: ' + errs.join(', '), 'error');
+        } else {
+          document.getElementById('profile-password').value = '';
+          document.getElementById('profile-password-confirm').value = '';
+          if (successEl) successEl.style.display = 'block';
+          setTimeout(function () { if (successEl) successEl.style.display = 'none'; }, 4000);
+          showNotification('تم حفظ التغييرات بنجاح', 'success');
+          document.querySelector('.dashboard-header__user span').textContent = name;
+        }
+      });
+    }
+
+    function setupProfileTab() {
+      loadProfile();
+      setupProfileForm();
     }
   </script>
 </body>

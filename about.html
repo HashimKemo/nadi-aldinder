@@ -2,8 +2,11 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="shortcut icon" href="favicon.ico">
   <meta name="theme-color" content="#1b4d3e">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>عن النادي — نادي الدندر الثقافي الاجتماعي</title>
@@ -22,7 +25,21 @@
   <meta name="twitter:description" content="تعرّف على تاريخ نادي الدندر الثقافي الاجتماعي ورسالته ورؤيته وقيمه وفريق إدارته المتطوع منذ عام ٢٠١٨.">
   <meta name="twitter:image" content="https://dinderclub.sd/images/og-cover.jpg">
   
-  <!-- تحميل من Google Fonts -->
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "نادي الدندر الثقافي الاجتماعي",
+    "alternateName": "Dinder Cultural & Social Club",
+    "url": "https://dinderclub.sd",
+    "logo": "https://dinderclub.sd/images/favicon.svg",
+    "foundingDate": "2018",
+    "description": "نادي الدندر الثقافي الاجتماعي فضاء مفتوح للفكر والإبداع والحوار، يجمع أبناء الدندر ومحبي الثقافة السودانية.",
+    "address": { "@type": "PostalAddress", "addressLocality": "الدندر", "addressCountry": "SD" }
+  }
+  </script>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Noto+Naskh+Arabic:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
@@ -161,6 +178,7 @@
           <li><a href="events.html" class="nav__link">الفعاليات</a></li>
           <li><a href="contact.html" class="nav__link">تواصل معنا</a></li>
           <li><a href="login.html" class="nav__link btn btn--primary btn--sm" style="color: var(--text-on-primary); margin-right: var(--space-4);">دخول الأعضاء</a></li>
+          <li><button class="theme-toggle" aria-label="الوضع الليلي"><i class="fas fa-moon"></i></button></li>
         </ul>
       </nav>
     </div>

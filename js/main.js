@@ -30,7 +30,38 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.reveal').forEach(function (el) { window.revealObserver.observe(el); });
 
   checkUserSession();
+  applyTheme();
+  document.querySelectorAll('.theme-toggle').forEach(function (btn) {
+    btn.addEventListener('click', toggleTheme);
+  });
 });
+
+/* ——— الوضع الليلي ——— */
+function getPreferredTheme() {
+  var stored = localStorage.getItem('theme');
+  if (stored) return stored;
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
+  return 'light';
+}
+
+function applyTheme() {
+  var theme = getPreferredTheme();
+  document.documentElement.setAttribute('data-theme', theme);
+  document.querySelectorAll('.theme-toggle').forEach(function (btn) {
+    var icon = btn.querySelector('i');
+    if (icon) {
+      icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    }
+    btn.setAttribute('aria-label', theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي');
+  });
+}
+
+function toggleTheme() {
+  var current = document.documentElement.getAttribute('data-theme');
+  var next = current === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', next);
+  applyTheme();
+}
 
 async function checkUserSession() {
   var headerInner = document.querySelector('.header__inner');

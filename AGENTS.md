@@ -1,14 +1,17 @@
 # AGENTS.md — نادي الدندر الثقافي الاجتماعي
 
 ## Project Type
-Static multi-page Arabic HTML site (9 pages). **No build tools, no frameworks, no package.json.** Pure HTML+CSS+JS, hosted on GitHub Pages.
+Static multi-page Arabic HTML site (10 pages: 9 original + 404.html). **No build tools, no frameworks, no package.json.** Pure HTML+CSS+JS, hosted on GitHub Pages.
 
 ## Architecture
 
 | Layer | File(s) | Role |
 |-------|---------|------|
-| Styles | `css/main.css` (~2300 lines) | CSS custom properties, RTL, responsive, theme vars |
-| Shared JS | `js/main.js` | Menu toggle, scroll reveal, `checkUserSession()` (session badge in header) |
+| Styles | `css/main.css` (~2700 lines) | CSS custom properties, RTL, responsive, dark mode vars |
+| Shared JS | `js/main.js` | Menu toggle, scroll reveal, `checkUserSession()` (session badge), dark mode toggle |
+| Favicon | `images/favicon.svg`, `favicon.ico`, `images/favicon-{16,32}.png`, `images/apple-touch-icon.png` | Multi-format favicon set |
+| OG Image | `images/og-cover.jpg` | 1200×630 Open Graph image |
+| 404 | `404.html` | Custom error page |
 | Supabase | `js/supabase.js` | Client init (`supabaseClient` global), newsletter handler, health check |
 | Page-specific JS | inline in each `.html` | Articles (Supabase), admin (auth+CRUD), events (Supabase), login (auth) |
 | DB | Supabase (remote) | Tables: `articles`, `profiles`, `subscribers`, `membership_requests`, `events`, `contact_messages`, `event_registrations`, `article_comments` |
@@ -45,10 +48,14 @@ Static multi-page Arabic HTML site (9 pages). **No build tools, no frameworks, n
 - **Arabic RTL**: `dir="rtl"` on `<html>`. CSS vars for spacing, no hardcoded margins.
 - **Animations**: `class="reveal"` + IntersectionObserver in `main.js`.
 - **Mobile menu**: Dropdown below header (not full-screen). `nav--open` / `menu-toggle--active` classes.
+- **Dark Mode**: `data-theme="dark"` on `<html>`. Toggle button (`.theme-toggle`) in nav. Preference saved to `localStorage`. Falls back to `prefers-color-scheme`. CSS variables overridden in `[data-theme="dark"]` block.
+- **Favicon**: Multi-format set in `images/` + root `favicon.ico`. All 10 HTML files reference all formats.
+- **JSON-LD**: Organization + WebSite on `index.html` and `about.html`. Article schema injected dynamically in `article.html`.
+- **Admin Profile**: `الإعدادات` tab in admin panel. Edits name, avatar, password via Supabase Auth.
 
 ## Important Files
 
-- `STATE.md` — Project progress, all phases completed up to Phase 9.
+- `STATE.md` — Project progress, all phases completed up to Phase 11.
 - `SUPABASE_GUIDE.md` — Full SQL for tables, RLS policies (SECURITY DEFINER versions), and setup steps.
 - `CONTENT.md` — All Arabic text content for the site.
 - `sql/seed_articles.sql` — 8 initial articles INSERT.
