@@ -362,7 +362,7 @@
       const nextLink = document.querySelector('.article-nav-link[href*="id="]');
       if (nextLink) {
         const nextId = parseInt(articleId) + 1;
-        const { data: nextArticle } = await supabaseClient.from('articles').select('title').eq('id', nextId).eq('is_published', true).single();
+        const { data: nextArticle } = await supabaseClient.from('articles').select('title').eq('id', nextId).eq('is_published', true).maybeSingle();
         if (nextArticle) {
           nextLink.href = 'article.html?id=' + nextId;
           nextLink.querySelector('.article-nav-link__title').textContent = nextArticle.title;
@@ -371,7 +371,7 @@
         }
       }
 
-      await supabaseClient.rpc('increment_views', { article_id: articleId }).catch(() => {});
+      try { await supabaseClient.rpc('increment_views', { article_id: articleId }); } catch (e) {}
 
       const { data: related } = await supabaseClient
         .from('articles')

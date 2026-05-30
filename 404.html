@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="theme-color" content="#1b4d3e">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الصفحة غير موجودة — نادي الدندر الثقافي الاجتماعي</title>
+  <meta name="description" content="عذراً، الصفحة التي تبحث عنها غير موجودة. عد إلى الرئيسية أو تصفح المقالات.">
+  <meta name="robots" content="noindex, follow">
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dinderclub.sd/404.html">
+  <meta property="og:title" content="الصفحة غير موجودة — نادي الدندر الثقافي الاجتماعي">
+  <meta property="og:description" content="عذراً، الصفحة التي تبحث عنها غير موجودة. عد إلى الرئيسية أو تصفح المقالات.">
+  <meta property="og:image" content="https://dinderclub.sd/images/og-cover.jpg">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="الصفحة غير موجودة — نادي الدندر الثقافي الاجتماعي">
+  <meta name="twitter:description" content="عذراً، الصفحة التي تبحث عنها غير موجودة. عد إلى الرئيسية أو تصفح المقالات.">
+  <meta name="twitter:image" content="https://dinderclub.sd/images/og-cover.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Noto+Naskh+Arabic:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .hero--404 {
+      background: linear-gradient(135deg, var(--color-primary-dark) 0%, #1a4a3a 50%, var(--text-secondary) 100%);
+      min-height: 55vh;
+    }
+    .hero__breadcrumbs {
+      display: inline-flex; align-items: center; gap: var(--space-2);
+      background: rgba(0,0,0,.25); padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full); margin-bottom: var(--space-4);
+      font-size: var(--text-xs); color: rgba(245,240,232,.85);
+      border: 1px solid rgba(255,255,255,.1);
+    }
+    .hero__breadcrumbs a { color: var(--color-secondary); transition: color var(--transition-fast); }
+    .hero__breadcrumbs a:hover { color: var(--color-secondary-light); }
+    .error-code {
+      font-family: var(--font-latin);
+      font-size: clamp(6rem, 20vw, 12rem);
+      font-weight: var(--weight-bold);
+      color: rgba(200, 146, 42, 0.15);
+      line-height: 1;
+      margin-bottom: var(--space-2);
+      user-select: none;
+    }
+    .error-message {
+      font-size: var(--text-2xl);
+      color: var(--text-light);
+      font-family: var(--font-heading);
+      margin-bottom: var(--space-3);
+    }
+    .error-description {
+      color: rgba(245,240,232,.75);
+      font-size: var(--text-sm);
+      max-width: 450px;
+      margin: 0 auto var(--space-6);
+      line-height: var(--leading-relaxed);
+    }
+    .error-actions {
+      display: flex;
+      gap: var(--space-3);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .error-actions .btn {
+      min-width: 140px;
+      justify-content: center;
+    }
+    .error-decoration {
+      font-size: 3rem;
+      opacity: 0.1;
+      position: absolute;
+      user-select: none;
+      pointer-events: none;
+    }
+  </style>
+
+  <link rel="stylesheet" href="lib/fontawesome/all.min.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header__inner">
+      <a href="index.html" class="header__logo">
+        <span class="header__logo-decoration">✦</span>
+        نادي الدندر
+        <span class="header__logo-sub">الثقافي الاجتماعي</span>
+      </a>
+      <button class="menu-toggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="main-nav">
+        <span class="menu-toggle__bar"></span>
+        <span class="menu-toggle__bar"></span>
+        <span class="menu-toggle__bar"></span>
+      </button>
+      <nav class="nav" id="main-nav">
+        <ul class="nav__list">
+          <li><a href="index.html" class="nav__link">الرئيسية</a></li>
+          <li><a href="articles.html" class="nav__link">المقالات</a></li>
+          <li><a href="about.html" class="nav__link">عن النادي</a></li>
+          <li><a href="events.html" class="nav__link">الفعاليات</a></li>
+          <li><a href="join.html" class="nav__link">انضم إلينا</a></li>
+          <li><a href="contact.html" class="nav__link">تواصل معنا</a></li>
+          <li><a href="login.html" class="nav__link btn btn--primary btn--sm" style="color: var(--text-on-primary); margin-right: var(--space-4);">دخول الأعضاء</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero hero--404" style="position: relative; overflow: hidden;">
+    <span class="error-decoration" style="top: 10%; right: 5%;">✦</span>
+    <span class="error-decoration" style="bottom: 10%; left: 8%;">✦</span>
+    <div class="hero__content animate-fade-in-up">
+      <nav class="hero__breadcrumbs" aria-label="مسار الصفحة">
+        <a href="index.html">الرئيسية</a>
+        <span>خطأ 404</span>
+      </nav>
+      <div class="error-code">404</div>
+      <h1 class="error-message">عذراً، الصفحة غير موجودة</h1>
+      <p class="error-description">يبدو أن الرابط الذي تبحث عنه قد انتقل أو أُزيل أو أنّه لم يكن موجوداً من الأساس. يمكنك العودة إلى الرئيسية أو تصفّح أحدث المقالات.</p>
+      <div class="error-actions">
+        <a href="index.html" class="btn btn--primary"><i class="fas fa-home" aria-hidden="true"></i> العودة للرئيسية</a>
+        <a href="articles.html" class="btn btn--secondary"><i class="fas fa-file-alt" aria-hidden="true"></i> تصفّح المقالات</a>
+        <a href="contact.html" class="btn btn--outline" style="border-color: rgba(245,240,232,.3); color: var(--text-light);"><i class="fas fa-envelope" aria-hidden="true"></i> تواصل معنا</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" style="text-align: center;">
+      <div class="reveal" style="max-width: 600px; margin: 0 auto;">
+        <p style="color: var(--text-muted); font-size: var(--text-sm); margin-bottom: var(--space-4);">ربما تبحث عن أحد هذه الأقسام:</p>
+        <div style="display: flex; flex-wrap: wrap; gap: var(--space-2); justify-content: center;">
+          <a href="about.html" class="btn btn--outline btn--sm">عن النادي</a>
+          <a href="events.html" class="btn btn--outline btn--sm">الفعاليات</a>
+          <a href="join.html" class="btn btn--outline btn--sm">طلب عضوية</a>
+          <a href="login.html" class="btn btn--outline btn--sm">دخول الأعضاء</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <div class="footer__logo">نادي الدندر الثقافي الاجتماعي</div>
+          <p class="footer__description">فضاء ثقافي اجتماعي يجمع أبناء الدندر أينما كانوا.</p>
+          <div class="footer__social">
+            <a href="#" class="footer__social-link" aria-label="فيسبوك"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="تويتر"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="يوتيوب"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="واتساب"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer__heading">روابط سريعة</h4>
+          <ul class="footer__links">
+            <li><a href="index.html" class="footer__link">الرئيسية</a></li>
+            <li><a href="articles.html" class="footer__link">المقالات</a></li>
+            <li><a href="about.html" class="footer__link">عن النادي</a></li>
+            <li><a href="events.html" class="footer__link">الفعاليات</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__heading">روابط مهمة</h4>
+          <ul class="footer__links">
+            <li><a href="join.html" class="footer__link">طلب عضوية</a></li>
+            <li><a href="contact.html" class="footer__link">تواصل معنا</a></li>
+            <li><a href="login.html" class="footer__link">دخول الأعضاء</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__heading">النشرة البريدية</h4>
+          <p style="font-size: var(--text-sm); color: rgba(245,240,232,.7); margin-bottom: var(--space-3);">آخر المقالات والفعاليات إلى بريدك مباشرة</p>
+          <form class="newsletter-form" style="display: flex; gap: var(--space-2);">
+            <input type="email" name="email" placeholder="بريدك الإلكتروني" style="flex:1; padding: var(--space-2) var(--space-3); background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: var(--radius-md); color: var(--text-light); font-size: var(--text-xs); direction: rtl;">
+            <button type="submit" class="btn btn--primary btn--sm" style="font-size: var(--text-xs); padding: var(--space-2) var(--space-3);">اشترك</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">© ٢٠٢٦ نادي الدندر الثقافي الاجتماعي — جميع الحقوق محفوظة. صُنع بواسطة م/هاشم كمال.</p>
+        <div class="footer__legal">
+          <a href="about.html" class="footer__legal-link">سياسة الخصوصية</a>
+          <a href="about.html" class="footer__legal-link">شروط الاستخدام</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
