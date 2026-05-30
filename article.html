@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="theme-color" content="#1b4d3e">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>دور النادي الثقافي في بناء الهوية — نادي الدندر الثقافي الاجتماعي</title>
+  <meta name="description" content="نناقش في هذا المقال دور المؤسسات الثقافية في ترسيخ الهوية وسط العولمة المتسارعة وكيف يمكن للنادي أن يكون حاضنة لهذا الدور الحيوي.">
+  
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://dinderclub.sd/article.html?id=1">
+  <meta property="og:title" content="دور النادي الثقافي في بناء الهوية — نادي الدندر الثقافي الاجتماعي">
+  <meta property="og:description" content="نناقش في هذا المقال دور المؤسسات الثقافية في ترسيخ الهوية وسط العولمة المتسارعة وكيف يمكن للنادي أن يكون حاضنة لهذا الدور الحيوي.">
+  <meta property="og:image" content="https://dinderclub.sd/images/og-cover.jpg">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="دور النادي الثقافي في بناء الهوية — نادي الدندر الثقافي الاجتماعي">
+  <meta name="twitter:description" content="نناقش في هذا المقال دور المؤسسات الثقافية في ترسيخ الهوية وسط العولمة المتسارعة وكيف يمكن للنادي أن يكون حاضنة لهذا الدور الحيوي.">
+  <meta name="twitter:image" content="https://dinderclub.sd/images/og-cover.jpg">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Noto+Naskh+Arabic:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .hero--article { background: linear-gradient(135deg, var(--color-primary-dark) 0%, #1a4a3a 40%, var(--text-secondary) 100%); min-height: 45vh; }
+    .hero__breadcrumbs { display: inline-flex; align-items: center; gap: var(--space-2); background: rgba(0,0,0,.25); padding: var(--space-2) var(--space-4); border-radius: var(--radius-full); margin-bottom: var(--space-4); font-size: var(--text-xs); color: rgba(245,240,232,.85); border: 1px solid rgba(255,255,255,.1); }
+    .hero__breadcrumbs a { color: var(--color-secondary); transition: color var(--transition-fast); }
+    .hero__breadcrumbs a:hover { color: var(--color-secondary-light); }
+    .hero__breadcrumbs span::before { content: '/'; margin: 0 var(--space-2); color: rgba(245,240,232,.4); }
+    .article-header { margin-bottom: var(--space-6); }
+    .article-header__meta { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; font-size: var(--text-sm); color: var(--text-muted); margin-bottom: var(--space-4); }
+    .article-header__meta-author { display: flex; align-items: center; gap: var(--space-2); }
+    .article-header__meta-author img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+    .article-header__meta-author strong { color: var(--text-primary); }
+    .article-header__featured-image { width: 100%; border-radius: var(--radius-lg); margin-bottom: var(--space-8); object-fit: cover; max-height: 500px; }
+    .article-body { font-size: var(--text-base); line-height: var(--leading-loose); color: var(--text-primary); }
+    .article-body p { margin-bottom: var(--space-5); }
+    .article-body h2 { font-size: var(--h3-size); margin-top: var(--space-10); margin-bottom: var(--space-4); color: var(--color-primary); }
+    .article-body h3 { font-size: var(--h4-size); margin-top: var(--space-8); margin-bottom: var(--space-3); color: var(--text-primary); }
+    .article-body blockquote { border-right: 4px solid var(--color-secondary); padding: var(--space-4) var(--space-6); margin: var(--space-6) 0; background: var(--color-secondary-bg); border-radius: 0 var(--radius-md) var(--radius-md) 0; font-style: italic; color: var(--text-secondary); }
+    .article-body ul, .article-body ol { padding-right: var(--space-6); margin-bottom: var(--space-5); }
+    .article-body li { margin-bottom: var(--space-2); }
+    .article-share { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-6); background: var(--color-primary-bg); border-radius: var(--radius-lg); margin: var(--space-10) 0; }
+    .article-share__title { font-weight: var(--weight-bold); color: var(--color-primary); margin-left: var(--space-2); }
+    .article-share__btn { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-full); text-decoration: none; color: var(--text-primary); transition: all var(--transition-fast); font-size: var(--text-sm); }
+    .article-share__btn:hover { background: var(--color-primary); color: var(--text-on-primary); border-color: var(--color-primary); }
+    .article-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-8); }
+    .article-tags__tag { padding: var(--space-1) var(--space-3); background: var(--color-secondary-bg); color: var(--color-secondary-dark); border-radius: var(--radius-full); font-size: var(--text-xs); }
+    .article-comment-placeholder { padding: var(--space-8); text-align: center; border: 2px dashed var(--border-color); border-radius: var(--radius-lg); color: var(--text-muted); margin: var(--space-10) 0; }
+    .article-navigation { display: flex; justify-content: space-between; gap: var(--space-4); margin-top: var(--space-10); padding-top: var(--space-8); border-top: 1px solid var(--border-color); }
+    .article-nav-link { display: flex; flex-direction: column; padding: var(--space-4); background: var(--color-primary-bg); border-radius: var(--radius-lg); text-decoration: none; color: var(--text-primary); transition: background var(--transition-fast); flex: 1; }
+    .article-nav-link:hover { background: var(--color-secondary-bg); }
+    .article-nav-link__dir { font-size: var(--text-xs); color: var(--text-muted); margin-bottom: var(--space-1); }
+    .article-nav-link__title { font-size: var(--text-sm); font-weight: var(--weight-bold); color: var(--color-primary); }
+  </style>
+
+  <link rel="stylesheet" href="lib/fontawesome/all.min.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header__inner">
+      <a href="index.html" class="header__logo"><span class="header__logo-decoration">✦</span> نادي الدندر <span class="header__logo-sub">الثقافي الاجتماعي</span></a>
+      <button class="menu-toggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="main-nav">
+        <span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span>
+      </button>
+      <nav class="nav" id="main-nav">
+        <ul class="nav__list">
+          <li><a href="index.html" class="nav__link">الرئيسية</a></li>
+          <li><a href="articles.html" class="nav__link nav__link--active">المقالات</a></li>
+          <li><a href="about.html" class="nav__link">عن النادي</a></li>
+          <li><a href="events.html" class="nav__link">الفعاليات</a></li>
+          <li><a href="join.html" class="nav__link">انضم إلينا</a></li>
+          <li><a href="contact.html" class="nav__link">تواصل معنا</a></li>
+          <li><a href="login.html" class="nav__link btn btn--primary btn--sm" style="color: var(--text-on-primary); margin-right: var(--space-4);">دخول الأعضاء</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero hero--article">
+    <div class="hero__content animate-fade-in-up">
+      <nav class="hero__breadcrumbs"><a href="index.html">الرئيسية</a><span><a href="articles.html">المقالات</a></span><span>المقالة</span></nav>
+      <h1 class="hero__title">دور النادي الثقافي في بناء الهوية المجتمعية</h1>
+      <p class="hero__description">نناقش في هذا المقال دور المؤسسات الثقافية في ترسيخ الهوية وسط العولمة المتسارعة وكيف يمكن للنادي أن يكون حاضنة لهذا الدور الحيوي.</p>
+    </div>
+    <span class="hero__decoration-star" style="top: 20%; right: 12%;">✦</span>
+    <span class="hero__decoration-star" style="bottom: 15%; left: 10%;">✦</span>
+  </section>
+
+  <section class="section">
+    <div class="container article-layout">
+      <div class="article-content">
+        <div class="article-header reveal">
+          <div class="article-header__meta">
+            <span class="article-header__meta-author">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="د. أحمد عبد الله" loading="lazy" decoding="async">
+              <span>بقلم <strong>د. أحمد عبد الله</strong></span>
+            </span>
+            <span>نُشر في ٢٨ مايو ٢٠٢٦</span>
+            <span>٨ دقائق قراءة</span>
+          </div>
+          <img class="article-header__featured-image" src="https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?auto=format&fit=crop&w=1200&q=80" alt="صورة تراث" loading="lazy" decoding="async">
+        </div>
+
+        <div class="article-body reveal">
+          <p>لكل مجتمع ثقافته التي تشكل هويته وتميزه عن غيره، وفي عالم يموج بالتحولات المتسارعة تبرز الحاجة الملحة إلى مؤسسات ثقافية تحمي هذا الموروث وتنقله للأجيال القادمة. نادي الدندر الثقافي الاجتماعي واحد من تلك المؤسسات التي تسعى جاهدة لتحقيق هذا الهدف النبيل.</p>
+
+          <p>منذ تأسيسه في عام ٢٠١٨، عمل النادي على بناء منصة ثقافية جامعة تجمع أبناء المنطقة حول قيم المعرفة والحوار والانتماء. وما يميز هذه التجربة أنها لم تنطلق من فراغ، بل من حاجة حقيقية شعر بها شباب الدندر المهاجرون في مدن مختلفة، والذين وجدوا في النادي مساحة للتعبير عن هويتهم والتفاعل مع تراثهم.</p>
+
+          <h2>أبعاد الهوية الثقافية السودانية</h2>
+
+          <p>إن الحديث عن الهوية في السودان حديث ذو شجون، فالتنوع العرقي والثقافي واللغوي يجعل من الصعب اختزال الهوية في قالب واحد. ولكن، في الوقت نفسه، يوفر هذا التنوع ثراءً كبيراً يمكن استثماره في بناء مجتمع متسامح ومنفتح. النادي يعمل على تعزيز الهوية المحلية لمنطقة الدندر في إطار الهوية الوطنية الشاملة.</p>
+
+          <blockquote>«الثقافة ليست ترفاً فكرياً بل ضرورة وجودية. لا يمكن لأمة أن تنهض دون أن تعرف من تكون وإلى أين تريد أن تذهب.» — أ. أحمد عبد الله في محاضرة سابقة</blockquote>
+
+          <p>من خلال تنظيم الندوات والأمسيات الثقافية، يساهم النادي في خلق وعي جمعي بأهمية التراث الثقافي ودوره في تشكيل الرؤية المستقبلية. كما أن نشر المقالات والبحوث على موقع النادي يتيح للأعضاء فرصة التعبير عن آرائهم وأفكارهم في مختلف المجالات الثقافية والأدبية والاجتماعية.</p>
+
+          <h2>دور النادي في العصر الرقمي</h2>
+
+          <p>مع الثورة الرقمية التي يشهدها العالم، أصبح للتواصل الثقافي بعد جديد تماماً. النادي يستخدم منصات التواصل الاجتماعي وموقعه الإلكتروني للوصول إلى أبناء الدندر في كل مكان، مما يخلق فضاءً افتراضياً للتفاعل والحوار يتجاوز حدود الجغرافيا.</p>
+
+          <p>يقول أحد الأعضاء في تعليق له على صفحة النادي: «النادي ده بالنسبة لنا زي البيت الكبير / اجتمعنا فيه على حب الدندر والعلم». هذا الشعور بالانتماء هو جوهر رسالة النادي التي يسعى إلى ترسيخها من خلال أنشطته المتنوعة وبرامجه المختلفة.</p>
+
+          <h2>كيف يمكننا دعم الثقافة المحلية؟</h2>
+
+          <p>المسؤولية لا تقع على عاتق النادي وحده، بل هي مسؤولية مجتمعية مشتركة. كل فرد من أبناء الدندر يمكنه المساهمة في إثراء الحركة الثقافية من خلال الكتابة والمشاركة في الفعاليات ودعم الأنشطة المختلفة. كما أن المؤسسات الرسمية مدعوة إلى تقديم الدعم اللازم للمبادرات الثقافية الطوعية التي تساهم في بناء مجتمع متماسك وواعٍ.</p>
+
+          <p>ختاماً، يظل نادي الدندر الثقافي الاجتماعي نموذجاً يحتذى به في العمل الثقافي الطوعي، ويؤكد أن الإرادة الصادقة يمكنها أن تصنع الفارق حتى في أصعب الظروف. فالثقافة ليست رفاهية، بل هي البوصلة التي ترسم طريق الأمم نحو مستقبل أكثر إشراقاً.</p>
+        </div>
+
+        <div class="article-share reveal">
+          <span class="article-share__title">شارك المقالة</span>
+          <a href="#" class="article-share__btn" aria-label="شارك على فيسبوك"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+          <a href="#" class="article-share__btn" aria-label="شارك على تويتر"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
+          <a href="#" class="article-share__btn" aria-label="شارك على واتساب"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+          <a href="#" class="article-share__btn" aria-label="نسخ الرابط"><i class="fas fa-link" aria-hidden="true"></i></a>
+        </div>
+
+        <div class="article-tags reveal">
+          <span class="article-tags__tag">تاريخ وتراث</span>
+          <span class="article-tags__tag">دور النادي</span>
+          <span class="article-tags__tag">هوية ثقافية</span>
+          <span class="article-tags__tag">مجتمع</span>
+        </div>
+
+        <div class="article-navigation reveal">
+          <a href="article.html?id=2" class="article-nav-link" style="text-align: right;">
+            <span class="article-nav-link__dir">→ المقالة التالية</span>
+            <span class="article-nav-link__title">وصف النهر على ضفاف الذاكرة الأدبية</span>
+          </a>
+          <a href="articles.html" class="article-nav-link" style="text-align: left;">
+            <span class="article-nav-link__dir">→ العودة إلى المقالات</span>
+            <span class="article-nav-link__title">جميع المقالات</span>
+          </a>
+        </div>
+
+        <div class="article-comment-placeholder reveal">
+          <p style="font-size: var(--text-lg); margin-bottom: var(--space-2);"><i class="fas fa-comment" aria-hidden="true"></i></p>
+          <p style="font-weight: var(--weight-bold); color: var(--text-primary); margin-bottom: var(--space-2);">التعليقات</p>
+          <p style="font-size: var(--text-sm);">أضف تعليقك... (قريباً)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section__header reveal">
+        <h2 class="section__title">مقالات ذات صلة</h2>
+      </div>
+      <div class="auto-grid">
+        <article class="news-card reveal" data-category="literature">
+          <img class="news-card__image" src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=600&q=80" alt="مشهد أدبي" loading="lazy" decoding="async">
+          <div class="news-card__body">
+            <div class="news-card__meta"><span class="news-card__category">أدب</span><span class="news-card__date">٢٥ مايو ٢٠٢٦</span></div>
+            <h3 class="news-card__title"><a href="article.html?id=2">وصف النهر على ضفاف الذاكرة الأدبية</a></h3>
+            <p class="news-card__excerpt">قراءة في نصوص أدبية تتخذ من النهر فضاءً سردياً يعبر عن التحولات النفسية.</p>
+            <div class="news-card__author">
+              <img class="news-card__author-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80" alt="أ. نورة حسنين" loading="lazy" decoding="async">
+              <div><div class="news-card__author-name">أ. نورة حسنين</div><div class="news-card__author-title">كاتبة وناقدة</div></div>
+            </div>
+          </div>
+        </article>
+        <article class="news-card reveal" data-category="history">
+          <img class="news-card__image" src="https://images.unsplash.com/photo-1461360228754-6e81c478b882?auto=format&fit=crop&w=600&q=80" alt="الحرف التقليدية" loading="lazy" decoding="async">
+          <div class="news-card__body">
+            <div class="news-card__meta"><span class="news-card__category">تاريخ وتراث</span><span class="news-card__date">٥ مايو ٢٠٢٦</span></div>
+            <h3 class="news-card__title"><a href="article.html?id=7">الحرف التقليدية في السودان: ذاكرة تنقرض</a></h3>
+            <p class="news-card__excerpt">جولة في عالم الحرف اليدوية المهددة بالاندثار وأهمية توثيقها.</p>
+            <div class="news-card__author">
+              <img class="news-card__author-avatar" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=100&q=80" alt="أ. سارة محمد" loading="lazy" decoding="async">
+              <div><div class="news-card__author-name">أ. سارة محمد</div><div class="news-card__author-title">باحثة تراث</div></div>
+            </div>
+          </div>
+        </article>
+        <article class="news-card reveal" data-category="culture">
+          <img class="news-card__image" src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=600&q=80" alt="الموروث الشعبي" loading="lazy" decoding="async">
+          <div class="news-card__body">
+            <div class="news-card__meta"><span class="news-card__category">ثقافة</span><span class="news-card__date">١٢ مايو ٢٠٢٦</span></div>
+            <h3 class="news-card__title"><a href="article.html?id=6">الموروث الشعبي في السودان الحديث: رؤية معاصرة</a></h3>
+            <p class="news-card__excerpt">كيف يمكن توظيف التراث الشعبي السوداني في صناعة محتوى ثقافي معاصر.</p>
+            <div class="news-card__author">
+              <img class="news-card__author-avatar" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&q=80" alt="أست. سارة محمود" loading="lazy" decoding="async">
+              <div><div class="news-card__author-name">أست. سارة محمود</div><div class="news-card__author-title">باحثة تراث</div></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <div class="footer__logo">نادي الدندر الثقافي الاجتماعي</div>
+          <p class="footer__description">فضاء ثقافي اجتماعي يجمع أبناء الدندر أينما كانوا.</p>
+          <div class="footer__social">
+            <a href="#" class="footer__social-link" aria-label="فيسبوك"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="تويتر"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="يوتيوب"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="واتساب"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer__heading">روابط سريعة</h4>
+          <ul class="footer__links">
+            <li><a href="index.html" class="footer__link">الرئيسية</a></li>
+            <li><a href="articles.html" class="footer__link">المقالات</a></li>
+            <li><a href="about.html" class="footer__link">عن النادي</a></li>
+            <li><a href="events.html" class="footer__link">الفعاليات</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__heading">روابط مهمة</h4>
+          <ul class="footer__links">
+            <li><a href="join.html" class="footer__link">طلب عضوية</a></li>
+            <li><a href="contact.html" class="footer__link">تواصل معنا</a></li>
+            <li><a href="login.html" class="footer__link">دخول الأعضاء</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__heading">النشرة البريدية</h4>
+          <p style="font-size: var(--text-sm); color: rgba(245,240,232,.7); margin-bottom: var(--space-3);">آخر المقالات والفعاليات إلى بريدك مباشرة</p>
+          <form class="newsletter-form" style="display: flex; gap: var(--space-2);">
+            <input type="email" name="email" placeholder="بريدك الإلكتروني" style="flex:1; padding: var(--space-2) var(--space-3); background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: var(--radius-md); color: var(--text-light); font-size: var(--text-xs); direction: rtl;">
+            <button type="submit" class="btn btn--primary btn--sm" style="font-size: var(--text-xs); padding: var(--space-2) var(--space-3);">اشترك</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">© ٢٠٢٦ نادي الدندر الثقافي الاجتماعي — جميع الحقوق محفوظة. صُنع بواسطة م/هاشم كمال.</p>
+        <div class="footer__legal">
+          <a href="about.html" class="footer__legal-link">سياسة الخصوصية</a>
+          <a href="about.html" class="footer__legal-link">شروط الاستخدام</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const params = new URLSearchParams(window.location.search);
+      const articleId = params.get('id');
+
+      if (!articleId) { document.querySelector('.article-body').innerHTML = '<p style="text-align:center;padding:4rem;color:var(--text-muted)">لم يتم تحديد المقالة.</p>'; return; }
+
+      const { data: article } = await supabaseClient
+        .from('articles')
+        .select('*')
+        .eq('id', articleId)
+        .single();
+
+      if (!article) { document.querySelector('.article-body').innerHTML = '<p style="text-align:center;padding:4rem;color:var(--text-muted)">المقالة غير موجودة.</p>'; return; }
+
+      document.title = article.title + ' — نادي الدندر الثقافي الاجتماعي';
+      document.querySelector('meta[name="description"]').content = article.excerpt || '';
+
+      document.querySelector('.hero__title').textContent = article.title;
+      document.querySelector('.hero__description').textContent = article.excerpt || '';
+
+      const authorEl = document.querySelector('.article-header__meta-author');
+      authorEl.innerHTML = `<img src="${article.author_avatar}" alt="${article.author}" loading="lazy" decoding="async"><span>بقلم <strong>${article.author}</strong></span>`;
+
+      const metaSpans = document.querySelectorAll('.article-header__meta span');
+      if (metaSpans.length >= 2) {
+        metaSpans[1].textContent = 'نُشر في ' + new Date(article.published_at).toLocaleDateString('ar-SD');
+        metaSpans[2].textContent = article.read_time + ' دقائق قراءة';
+      }
+
+      document.querySelector('.article-header__featured-image').src = article.cover_image;
+      document.querySelector('.article-header__featured-image').alt = article.title;
+      document.querySelector('.article-body').innerHTML = article.content;
+
+      const tagsContainer = document.querySelector('.article-tags');
+      tagsContainer.innerHTML = `<span class="article-tags__tag">${categoryNames[article.category] || article.category}</span>`;
+
+      if (article.tags) {
+        const tags = article.tags.split(',');
+        tags.forEach(t => { if (t.trim()) tagsContainer.innerHTML += `<span class="article-tags__tag">${t.trim()}</span>`; });
+      }
+
+      const nextLink = document.querySelector('.article-nav-link[href*="id="]');
+      if (nextLink) {
+        const nextId = parseInt(articleId) + 1;
+        const { data: nextArticle } = await supabaseClient.from('articles').select('title').eq('id', nextId).eq('is_published', true).single();
+        if (nextArticle) {
+          nextLink.href = 'article.html?id=' + nextId;
+          nextLink.querySelector('.article-nav-link__title').textContent = nextArticle.title;
+        } else {
+          nextLink.style.display = 'none';
+        }
+      }
+
+      await supabaseClient.rpc('increment_views', { article_id: articleId }).catch(() => {});
+
+      const { data: related } = await supabaseClient
+        .from('articles')
+        .select('*')
+        .eq('category', article.category)
+        .eq('is_published', true)
+        .neq('id', articleId)
+        .order('published_at', { ascending: false })
+        .limit(3);
+
+      const relatedGrid = document.querySelector('.auto-grid');
+      if (relatedGrid && related && related.length > 0) {
+        relatedGrid.innerHTML = '';
+        related.forEach(a => {
+          const card = document.createElement('article');
+          card.className = 'news-card reveal';
+          card.innerHTML = `
+            <img class="news-card__image" src="${a.cover_image}" alt="${a.title}" loading="lazy" decoding="async">
+            <div class="news-card__body">
+              <div class="news-card__meta"><span class="news-card__category">${categoryNames[a.category] || a.category}</span><span class="news-card__date">${new Date(a.published_at).toLocaleDateString('ar-SD')}</span></div>
+              <h3 class="news-card__title"><a href="article.html?id=${a.id}">${a.title}</a></h3>
+              <p class="news-card__excerpt">${(a.excerpt || '').substring(0, 100)}</p>
+              <div class="news-card__author">
+                <img class="news-card__author-avatar" src="${a.author_avatar}" alt="${a.author}" loading="lazy" decoding="async">
+                <div><div class="news-card__author-name">${a.author}</div></div>
+              </div>
+            </div>`;
+          relatedGrid.appendChild(card);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
+

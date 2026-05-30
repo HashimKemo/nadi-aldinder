@@ -1,0 +1,8 @@
+# نادي الدندر الثقافي الاجتماعي — Robots.txt
+# Allow all crawlers, disallow admin page
+
+User-agent: *
+Allow: /
+Disallow: /admin.html
+
+Sitemap: https://dinderclub.github.io/sitemap.xml

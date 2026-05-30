@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="theme-color" content="#1b4d3e">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>انضم إلى النادي — نادي الدندر الثقافي الاجتماعي</title>
+  <meta name="description" content="قدّم طلب انضمامك إلى نادي الدندر الثقافي الاجتماعي وكن جزءاً من مجتمع ثقافي متماسك. العضوية مجانية ومفتوحة للجميع.">
+  
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dinderclub.sd/join.html">
+  <meta property="og:title" content="انضم إلى النادي — نادي الدندر الثقافي الاجتماعي">
+  <meta property="og:description" content="قدّم طلب انضمامك إلى نادي الدندر الثقافي الاجتماعي وكن جزءاً من مجتمع ثقافي متماسك. العضوية مجانية ومفتوحة للجميع.">
+  <meta property="og:image" content="https://dinderclub.sd/images/og-cover.jpg">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="انضم إلى النادي — نادي الدندر الثقافي الاجتماعي">
+  <meta name="twitter:description" content="قدّم طلب انضمامك إلى نادي الدندر الثقافي الاجتماعي وكن جزءاً من مجتمع ثقافي متماسك. العضوية مجانية ومفتوحة للجميع.">
+  <meta name="twitter:image" content="https://dinderclub.sd/images/og-cover.jpg">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Noto+Naskh+Arabic:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/main.css">
+  
+  <style>
+    .hero--join {
+      background: linear-gradient(135deg, #0f2e24 0%, var(--color-primary) 50%, var(--color-primary-light) 100%);
+      min-height: 60vh;
+    }
+
+    .hero__breadcrumbs {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: rgba(0,0,0,.25);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-4);
+      font-size: var(--text-xs);
+      color: rgba(245,240,232,.85);
+      border: 1px solid rgba(255,255,255,.1);
+    }
+
+    .hero__breadcrumbs a {
+      color: var(--color-secondary);
+      transition: color var(--transition-fast);
+    }
+
+    .hero__breadcrumbs a:hover {
+      color: var(--color-secondary-light);
+    }
+
+    .hero__breadcrumbs span::before {
+      content: '/';
+      margin: 0 var(--space-2);
+      color: rgba(245,240,232,.4);
+    }
+
+    .benefit-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-card);
+      padding: var(--space-8) var(--space-6);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-card);
+      transition: all var(--transition-base);
+      text-align: center;
+    }
+
+    .benefit-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-secondary);
+    }
+
+    .benefit-card__icon {
+      font-size: 2.8rem;
+      margin-bottom: var(--space-4);
+      display: block;
+    }
+
+    .benefit-card__title {
+      font-family: var(--font-heading);
+      font-size: var(--text-xl);
+      font-weight: var(--weight-bold);
+      color: var(--color-primary-dark);
+      margin-bottom: var(--space-2);
+    }
+
+    .benefit-card__text {
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      line-height: var(--leading-relaxed);
+      margin-bottom: 0;
+    }
+
+    .join-form {
+      background: var(--bg-card);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-10);
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-md);
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 576px) {
+      .join-form {
+        padding: var(--space-6);
+      }
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+
+    @media (min-width: 600px) {
+      .form-row--2 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .form-check-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .form-check-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      cursor: pointer;
+      font-size: var(--text-sm);
+      color: var(--text-primary);
+      transition: color var(--transition-fast);
+    }
+
+    .form-check-item:hover {
+      color: var(--color-primary);
+    }
+
+    .form-check-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--color-primary);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .policy-card {
+      background: var(--color-primary-bg);
+      border: 1px solid rgba(27,77,62,.15);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+    }
+
+    .policy-card__title {
+      font-family: var(--font-heading);
+      font-size: var(--text-lg);
+      color: var(--color-primary-dark);
+      margin-bottom: var(--space-2);
+    }
+
+    .policy-card__text {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      line-height: var(--leading-relaxed);
+      margin-bottom: 0;
+    }
+  </style>
+
+  <link rel="stylesheet" href="lib/fontawesome/all.min.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="header__inner">
+      <a href="index.html" class="header__logo">
+        <span class="header__logo-decoration">✦</span>
+        نادي الدندر
+        <span class="header__logo-sub">الثقافي الاجتماعي</span>
+      </a>
+      <button class="menu-toggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="main-nav">
+        <span class="menu-toggle__bar"></span>
+        <span class="menu-toggle__bar"></span>
+        <span class="menu-toggle__bar"></span>
+      </button>
+      <nav class="nav" id="main-nav">
+        <ul class="nav__list">
+          <li><a href="index.html" class="nav__link">الرئيسية</a></li>
+          <li><a href="articles.html" class="nav__link">المقالات</a></li>
+          <li><a href="about.html" class="nav__link">عن النادي</a></li>
+          <li><a href="events.html" class="nav__link">الفعاليات</a></li>
+          <li><a href="join.html" class="nav__link nav__link--active">انضم إلينا</a></li>
+          <li><a href="contact.html" class="nav__link">تواصل معنا</a></li>
+          <li><a href="login.html" class="nav__link btn btn--primary btn--sm" style="color: var(--text-on-primary); margin-right: var(--space-4);">دخول الأعضاء</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero hero--join">
+    <div class="hero__content animate-fade-in-up">
+      <nav class="hero__breadcrumbs" aria-label="مسار الصفحة">
+        <a href="index.html">الرئيسية</a>
+        <span>انضم إلينا</span>
+      </nav>
+      <h1 class="hero__title">انضم إلى النادي</h1>
+      <p class="hero__description">
+        خطوة واحدة تفصلك عن مجتمع يستحق — انضم إلى نادي الدندر الثقافي الاجتماعي اليوم.
+      </p>
+    </div>
+    <span class="hero__decoration-star" style="top: 25%; right: 12%;">✦</span>
+    <span class="hero__decoration-star" style="bottom: 20%; left: 15%;">✦</span>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-header__label">لماذا تنضم</span>
+        <h2 class="section-header__title">لماذا تنضم إلينا؟</h2>
+        <p class="section-header__description" style="max-width: 620px;">
+          عضوية نادي الدندر الثقافي الاجتماعي ليست مجرد اسم في قائمة — هي انتماء حقيقي لمجتمع يؤمن بقوة الكلمة ويحتفي بكل صاحب قلم أو فكرة. بمجرد قبول طلبك، ستتمكن من نشر مقالاتك، وحضور الفعاليات، والمشاركة في الأنشطة، والتواصل مع أعضاء النادي في كل مكان.
+        </p>
+      </div>
+
+      <div class="auto-grid reveal">
+        
+        <div class="benefit-card">
+          <span class="benefit-card__icon"><i class="fas fa-newspaper" aria-hidden="true"></i></span>
+          <h3 class="benefit-card__title">حق النشر</h3>
+          <p class="benefit-card__text">انشر مقالاتك وأبحاثك وقصصك على موقع النادي وأمام جمهوره المتنوع.</p>
+        </div>
+
+        <div class="benefit-card">
+          <span class="benefit-card__icon"><i class="fas fa-ticket-alt" aria-hidden="true"></i></span>
+          <h3 class="benefit-card__title">أولوية في الفعاليات</h3>
+          <p class="benefit-card__text">احجز مقعدك في الورش والندوات قبل فتح التسجيل للعموم.</p>
+        </div>
+
+        <div class="benefit-card">
+          <span class="benefit-card__icon"><i class="fas fa-globe" aria-hidden="true"></i></span>
+          <h3 class="benefit-card__title">شبكة التواصل</h3>
+          <p class="benefit-card__text">تواصل مع أكثر من مئة عضو من الكتّاب والمثقفين وأصحاب الاهتمامات المشتركة.</p>
+        </div>
+
+        <div class="benefit-card">
+          <span class="benefit-card__icon"><i class="fas fa-bullhorn" aria-hidden="true"></i></span>
+          <h3 class="benefit-card__title">صوتك يُسمع</h3>
+          <p class="benefit-card__text">شارك في اتخاذ قرارات النادي وصياغة توجهاته في الاجتماعات الدورية.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-header__label">استمارة التقديم</span>
+        <h2 class="section-header__title">استمارة طلب الانضمام</h2>
+        <p class="section-header__description">
+          أكمل البيانات التالية وسيتواصل معك فريق النادي خلال أسبوع.
+        </p>
+      </div>
+
+      <div class="reveal">
+        <form class="join-form" id="join-form" action="https://formspree.io/f/xnqkyorw" method="POST">
+          <h3 style="font-family: var(--font-heading); font-size: var(--text-lg); color: var(--color-primary-dark); margin-bottom: var(--space-6);">
+            البيانات الشخصية
+          </h3>
+
+          <div class="form-row form-row--2" style="margin-bottom: var(--space-5);">
+            <div class="form-group">
+              <label for="full-name" class="form-label">الاسم الكامل *</label>
+              <input type="text" id="full-name" name="full_name" class="form-input" placeholder="الاسم الرباعي كاملاً" required>
+            </div>
+            <div class="form-group">
+              <label for="email" class="form-label">البريد الإلكتروني *</label>
+              <input type="email" id="email" name="email" class="form-input" placeholder="example@email.com" required>
+            </div>
+          </div>
+
+          <div class="form-row form-row--2" style="margin-bottom: var(--space-5);">
+            <div class="form-group">
+              <label for="phone" class="form-label">رقم الهاتف</label>
+              <input type="tel" id="phone" name="phone" class="form-input" placeholder="مع مفتاح الدولة (اختياري)">
+            </div>
+            <div class="form-group">
+              <label for="city" class="form-label">المدينة / البلد الحالي *</label>
+              <input type="text" id="city" name="city" class="form-input" placeholder="مكان إقامتك الحالي" required>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: var(--space-6);">
+            <label for="origin" class="form-label">الانتماء لمنطقة الدندر</label>
+            <input type="text" id="origin" name="origin" class="form-input" placeholder="(مثال: من الدندر أصلاً / من المهتمين بثقافتها)">
+            <span style="display: block; font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-1);">لا يشترط الانتماء الجغرافي للانضمام — الاهتمام كافٍ</span>
+          </div>
+
+          <hr style="border: none; border-top: 1px solid var(--border-light); margin: var(--space-6) 0;">
+
+          <h3 style="font-family: var(--font-heading); font-size: var(--text-lg); color: var(--color-primary-dark); margin-bottom: var(--space-4);">
+            اهتماماتك الثقافية
+          </h3>
+
+          <div class="form-group" style="margin-bottom: var(--space-6);">
+            <span class="form-label">اهتماماتك الثقافية *</span>
+            <span style="display: block; font-size: var(--text-xs); color: var(--text-muted); margin-bottom: var(--space-3);">اختر كل ما ينطبق عليك</span>
+            <div class="form-check-list">
+              <label class="form-check-item">
+                <input type="checkbox" name="interests[]" value="writing">
+                الكتابة والتأليف
+              </label>
+              <label class="form-check-item">
+                <input type="checkbox" name="interests[]" value="poetry">
+                الشعر والأدب
+              </label>
+              <label class="form-check-item">
+                <input type="checkbox" name="interests[]" value="research">
+                البحث والتوثيق
+              </label>
+              <label class="form-check-item">
+                <input type="checkbox" name="interests[]" value="events">
+                تنظيم الفعاليات
+              </label>
+              <label class="form-check-item">
+                <input type="checkbox" name="interests[]" value="media">
+                الإعلام والتصوير
+              </label>
+              <label class="form-check-item">
+                <input type="checkbox" name="interests[]" value="other">
+                أخرى
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: var(--space-6);">
+            <label for="bio" class="form-label">نبذة مختصرة عنك *</label>
+            <textarea id="bio" name="bio" class="form-input form-textarea" placeholder="أخبرنا بجملتين أو ثلاث عن نفسك وعلاقتك بالثقافة والكتابة..." required></textarea>
+            <span style="display: block; font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-1);">لا يُشترط أن تكون كاتباً محترفاً — الحماس أهم من السيرة</span>
+          </div>
+
+          <div class="form-group" style="margin-bottom: var(--space-6);">
+            <label for="how-knew" class="form-label">كيف عرفت عن النادي؟</label>
+            <select id="how-knew" name="how_knew" class="form-input form-select">
+              <option value="">— اختر من القائمة —</option>
+              <option value="friend">من صديق أو معارف</option>
+              <option value="social">عبر وسائل التواصل الاجتماعي</option>
+              <option value="search">بحث على الإنترنت</option>
+              <option value="member">من عضو في النادي</option>
+              <option value="other">أخرى</option>
+            </select>
+          </div>
+
+          <hr style="border: none; border-top: 1px solid var(--border-light); margin: var(--space-6) 0;">
+
+          <div class="form-group" style="margin-bottom: var(--space-6);">
+            <label class="form-check-item" style="font-size: var(--text-sm);">
+              <input type="checkbox" name="agree" value="yes" required>
+              <span>أوافق على الالتزام بلائحة النادي وقواعد الأدب في النشر والتواصل *</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn--gold btn--lg btn--full">
+            أرسل طلب الانضمام
+          </button>
+        </form>
+
+        <div id="join-success" style="display: none; max-width: 720px; margin: 0 auto;">
+          <div class="auth-card" style="max-width: 100%;">
+            <div class="auth-card__header">
+              <div class="auth-card__icon" style="font-size: 3.5rem;"><i class="fas fa-gift" aria-hidden="true"></i></div>
+              <h2 class="auth-card__title">تم استلام طلبك! <i class="fas fa-check-circle" aria-hidden="true" style="color: var(--color-success);"></i></h2>
+              <p class="auth-card__description" style="font-size: var(--text-base); line-height: var(--leading-relaxed); margin-top: var(--space-4);">
+                شكراً لاهتمامك بالانضمام إلى نادي الدندر. سيراجع فريقنا طلبك ويتواصل معك عبر البريد الإلكتروني خلال أسبوع واحد. في الانتظار، يمكنك تصفح مقالاتنا والتعرف على أنشطة النادي.
+              </p>
+            </div>
+            <div style="text-align: center; margin-top: var(--space-6);">
+              <a href="articles.html" class="btn btn--primary">تصفّح المقالات</a>
+            </div>
+          </div>
+        </div>
+
+        <div id="join-error" style="display: none; max-width: 720px; margin: var(--space-4) auto 0;">
+          <div class="alert alert--error" style="padding: var(--space-5); font-size: var(--text-base);">
+            حدث خطأ أثناء الإرسال. يرجى المحاولة مجدداً أو التواصل معنا مباشرةً عبر البريد الإلكتروني.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container-narrow">
+      <div class="policy-card reveal">
+        <h3 class="policy-card__title">ملاحظة مهمة</h3>
+        <p class="policy-card__text">
+          تخضع طلبات الانضمام لمراجعة من قِبل مجلس الإدارة. يُراعى في القبول الالتزام بمبادئ النادي وقيمه، لا الكفاءة الأكاديمية أو المستوى الأدبي. يُرحَّب بالمبتدئين والمتحمسين من كل المستويات.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <div class="footer__logo">نادي الدندر الثقافي الاجتماعي</div>
+          <p class="footer__description">
+            فضاء ثقافي اجتماعي يجمع أبناء الدندر أينما كانوا.
+          </p>
+          <div class="footer__social">
+            <a href="#" class="footer__social-link" aria-label="فيسبوك"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="تويتر"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="يوتيوب"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="واتساب"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer__heading">روابط سريعة</h4>
+          <ul class="footer__links">
+            <li><a href="index.html" class="footer__link">الرئيسية</a></li>
+            <li><a href="articles.html" class="footer__link">المقالات</a></li>
+            <li><a href="about.html" class="footer__link">عن النادي</a></li>
+            <li><a href="events.html" class="footer__link">الفعاليات</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__heading">روابط مهمة</h4>
+          <ul class="footer__links">
+            <li><a href="join.html" class="footer__link">طلب عضوية</a></li>
+            <li><a href="contact.html" class="footer__link">تواصل معنا</a></li>
+            <li><a href="login.html" class="footer__link">دخول الأعضاء</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__heading">النشرة البريدية</h4>
+          <p style="font-size: var(--text-sm); color: rgba(245,240,232,.7); margin-bottom: var(--space-3);">آخر المقالات والفعاليات إلى بريدك مباشرة</p>
+          <form class="newsletter-form" style="display: flex; gap: var(--space-2);">
+            <input type="email" name="email" placeholder="بريدك الإلكتروني" style="flex:1; padding: var(--space-2) var(--space-3); background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: var(--radius-md); color: var(--text-light); font-size: var(--text-xs); direction: rtl;">
+            <button type="submit" class="btn btn--primary btn--sm" style="font-size: var(--text-xs); padding: var(--space-2) var(--space-3);">اشترك</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">
+          © ٢٠٢٦ نادي الدندر الثقافي الاجتماعي — جميع الحقوق محفوظة. صُنع بواسطة م/هاشم كمال.
+        </p>
+        <div class="footer__legal">
+          <a href="about.html" class="footer__legal-link">سياسة الخصوصية</a>
+          <a href="about.html" class="footer__legal-link">شروط الاستخدام</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('join-form');
+      const successDiv = document.getElementById('join-success');
+      const errorDiv = document.getElementById('join-error');
+
+      if (form) {
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const formData = new FormData(form);
+          const submitBtn = form.querySelector('button[type="submit"]');
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جارٍ الإرسال...';
+
+          const { error } = await supabaseClient.from('membership_requests').insert({
+            full_name: formData.get('full_name'),
+            email: formData.get('email'),
+            phone: formData.get('phone'),
+            birth_year: parseInt(formData.get('birth_year')) || null,
+            qualification: formData.get('qualification') || null,
+            interests: formData.get('interests') || null,
+            message: formData.get('message') || null
+          });
+
+          if (!error) {
+            form.style.display = 'none';
+            successDiv.style.display = 'block';
+            errorDiv.style.display = 'none';
+          } else {
+            errorDiv.style.display = 'flex';
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'إرسال الطلب';
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
+

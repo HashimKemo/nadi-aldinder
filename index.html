@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="theme-color" content="#1b4d3e">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نادي الدندر الثقافي الاجتماعي — حيث تلتقي الثقافة بالانتماء</title>
+  <meta name="description" content="نادي الدندر الثقافي الاجتماعي فضاء مفتوح للفكر والإبداع والحوار، يجمع أبناء الدندر ومحبي الثقافة السودانية بمقالات وفعاليات وأنشطة متنوعة.">
+  
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dinderclub.sd/index.html">
+  <meta property="og:title" content="نادي الدندر الثقافي الاجتماعي — حيث تلتقي الثقافة بالانتماء">
+  <meta property="og:description" content="نادي الدندر الثقافي الاجتماعي فضاء مفتوح للفكر والإبداع والحوار، يجمع أبناء الدندر ومحبي الثقافة السودانية بمقالات وفعاليات وأنشطة متنوعة.">
+  <meta property="og:image" content="https://dinderclub.sd/images/og-cover.jpg">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="نادي الدندر الثقافي الاجتماعي — حيث تلتقي الثقافة بالانتماء">
+  <meta name="twitter:description" content="نادي الدندر الثقافي الاجتماعي فضاء مفتوح للفكر والإبداع والحوار، يجمع أبناء الدندر ومحبي الثقافة السودانية بمقالات وفعاليات وأنشطة متنوعة.">
+  <meta name="twitter:image" content="https://dinderclub.sd/images/og-cover.jpg">
+  
+  <!-- تحميل خطوط Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Noto+Naskh+Arabic:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  
+  <!-- ربط ملف التنسيقات -->
+  <link rel="stylesheet" href="css/main.css">
+  
+  <style>
+    /* أنماط خاصة بصفحة index.html فقط دون باقي الأقسام */
+    .stats-section {
+      background: var(--bg-card);
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      padding: var(--space-8) 0;
+    }
+    
+    .stat-box {
+      text-align: center;
+      padding: var(--space-4);
+      transition: transform var(--transition-base);
+    }
+    
+    .stat-box:hover {
+      transform: translateY(-5px);
+    }
+    
+    .stat-box__icon {
+      font-size: var(--text-3xl);
+      color: var(--color-secondary);
+      margin-bottom: var(--space-2);
+    }
+    
+    .stat-box__number {
+      font-family: var(--font-heading);
+      font-size: var(--text-4xl);
+      font-weight: var(--weight-bold);
+      color: var(--color-primary-dark);
+      margin-bottom: var(--space-1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .stat-box__label {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      font-weight: var(--weight-medium);
+    }
+
+    /* تنسيق معاينة قسم عن النادي */
+    .about-preview {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-10);
+      align-items: center;
+    }
+    
+    @media (min-width: 992px) {
+      .about-preview {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    
+    .about-preview__visual {
+      position: relative;
+      width: 100%;
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    
+    /* تنسيق الأشكال الهندسية للمعاينة البصرية */
+    .about-shape {
+      position: absolute;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      transition: all var(--transition-slow);
+    }
+    
+    .about-shape--main {
+      width: 65%;
+      height: 70%;
+      top: 5%;
+      right: 5%;
+      background: url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
+      border: 4px solid var(--bg-card);
+      z-index: 2;
+    }
+    
+    .about-shape--secondary {
+      width: 50%;
+      height: 55%;
+      bottom: 5%;
+      left: 5%;
+      background: url('https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
+      border: 4px solid var(--bg-card);
+      z-index: 1;
+    }
+    
+    .about-shape--accent {
+      width: 120px;
+      height: 120px;
+      background: var(--color-primary-bg);
+      border: 2px dashed var(--color-secondary);
+      border-radius: var(--radius-full);
+      top: 15%;
+      left: 15%;
+      z-index: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-secondary);
+      font-size: 2.5rem;
+      animation: floatStar 10s infinite ease-in-out;
+    }
+    
+    .about-preview:hover .about-shape--main {
+      transform: translateY(-10px) rotate(1deg);
+    }
+    
+    .about-preview:hover .about-shape--secondary {
+      transform: translateY(10px) rotate(-1deg);
+    }
+
+  </style>
+
+  <link rel="stylesheet" href="lib/fontawesome/all.min.css">
+</head>
+<body>
+
+  <!-- ============================================
+       بداية رأس الموقع
+       ============================================ -->
+  <header class="header">
+    <div class="header__inner">
+      <a href="index.html" class="header__logo">
+        <span class="header__logo-decoration">✦</span>
+        نادي الدندر
+        <span class="header__logo-sub">الثقافي الاجتماعي</span>
+      </a>
+      
+      <button class="menu-toggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="main-nav">
+        <span class="menu-toggle__bar"></span>
+        <span class="menu-toggle__bar"></span>
+        <span class="menu-toggle__bar"></span>
+      </button>
+      
+      <nav class="nav" id="main-nav">
+        <ul class="nav__list">
+          <li><a href="index.html" class="nav__link nav__link--active">الرئيسية</a></li>
+          <li><a href="articles.html" class="nav__link">المقالات</a></li>
+          <li><a href="about.html" class="nav__link">عن النادي</a></li>
+          <li><a href="join.html" class="nav__link">انضم إلينا</a></li>
+          <li><a href="events.html" class="nav__link">الفعاليات</a></li>
+          <li><a href="contact.html" class="nav__link">تواصل معنا</a></li>
+          <li><a href="login.html" class="nav__link btn btn--primary btn--sm" style="color: var(--text-on-primary); margin-right: var(--space-4);">دخول الأعضاء</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============================================
+       بداية الهيرو (Hero Section)
+       ============================================ -->
+  <section class="hero">
+    <div class="hero__content animate-fade-in-up">
+      <span class="hero__subtitle">نادي الدندر الثقافي الاجتماعي</span>
+      <h1 class="hero__title">
+        حيث تلتقي الثقافة<br>
+        <span class="hero__title-star">✦</span> بالانتماء <span class="hero__title-star">✦</span>
+      </h1>
+      <p class="hero__description">
+        نادي الدندر الثقافي الاجتماعي — فضاء مفتوح للفكر والإبداع والحوار، يجمع أبناء الدندر أينما كانوا.
+      </p>
+      <div class="hero__actions">
+        <a href="join.html" class="btn btn--gold btn--lg">انضم إلى النادي</a>
+        <a href="articles.html" class="btn btn--secondary-light btn--lg">تصفّح المقالات</a>
+      </div>
+    </div>
+    
+    <!-- نجمة تزيين الخلفية -->
+    <span class="hero__decoration-star" style="top: 25%; right: 12%;">✦</span>
+    <span class="hero__decoration-star" style="bottom: 20%; left: 15%;">✦</span>
+    <span class="hero__decoration-star" style="top: 15%; left: 20%;">✦</span>
+    <span class="hero__decoration-star" style="bottom: 30%; right: 25%;">✦</span>
+  </section>
+
+  <!-- ============================================
+       بداية شريط الإحصاءات (Stats Bar)
+       ============================================ -->
+  <section class="stats-section reveal">
+    <div class="container">
+      <div class="grid grid--4 grid--centered">
+        
+        <!-- إحصاء 1 -->
+        <div class="stat-box">
+          <div class="stat-box__icon"><i class="fas fa-users" aria-hidden="true"></i></div>
+          <div class="stat-box__number" data-target="120">0</div>
+          <span class="stat-box__number-suffix" style="font-family: var(--font-heading); font-size: var(--text-4xl); font-weight: var(--weight-bold); color: var(--color-primary-dark);">+</span>
+          <div class="stat-box__label">عضو نشط</div>
+        </div>
+        
+        <!-- إحصاء 2 -->
+        <div class="stat-box">
+          <div class="stat-box__icon"><i class="fas fa-pen" aria-hidden="true"></i></div>
+          <div class="stat-box__number" data-target="85">0</div>
+          <span class="stat-box__number-suffix" style="font-family: var(--font-heading); font-size: var(--text-4xl); font-weight: var(--weight-bold); color: var(--color-primary-dark);">+</span>
+          <div class="stat-box__label">مقالة منشورة</div>
+        </div>
+        
+        <!-- إحصاء 3 -->
+        <div class="stat-box">
+          <div class="stat-box__icon"><i class="fas fa-calendar-alt" aria-hidden="true"></i></div>
+          <div class="stat-box__number" data-target="30">0</div>
+          <span class="stat-box__number-suffix" style="font-family: var(--font-heading); font-size: var(--text-4xl); font-weight: var(--weight-bold); color: var(--color-primary-dark);">+</span>
+          <div class="stat-box__label">فعالية أُقيمت</div>
+        </div>
+        
+        <!-- إحصاء 4 -->
+        <div class="stat-box">
+          <div class="stat-box__icon"><i class="fas fa-calendar-check" aria-hidden="true"></i></div>
+          <div class="stat-box__number" data-target="2018">0</div>
+          <div class="stat-box__label">عام التأسيس</div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       معاينة قسم عن النادي (About Preview)
+       ============================================ -->
+  <section class="section">
+    <div class="container">
+      <div class="about-preview">
+        
+        <!-- العمود الأيمن: النص الوصفي -->
+        <div class="reveal reveal--right">
+          <div class="section-header" style="text-align: right; margin-right: 0; margin-bottom: var(--space-6);">
+            <span class="section-header__label">من نحن</span>
+            <h2 class="section-header__title" style="text-align: right;">قصة مكان وناس وحلم لم يكتمل بعد</h2>
+          </div>
+          <p class="article-content" style="font-size: var(--text-base); line-height: var(--leading-relaxed); margin-bottom: var(--space-6);">
+            نادي الدندر الثقافي الاجتماعي مساحةٌ حيّة نبتت من رحم الانتماء، يحملها أبناء منطقة الدندر الذين آمنوا بأن الثقافة جسرٌ لا سقف له.
+            نسعى إلى توثيق الموروث وإشعال الحوار وتمكين الأقلام الشابة، في فضاء يجمع بين عمق الأصالة ورحابة الأفق.
+          </p>
+          <p class="article-content" style="font-size: var(--text-base); line-height: var(--leading-relaxed); margin-bottom: var(--space-6);">
+            هنا تُنشر الأفكار، وتُقام الفعاليات، وتنمو صداقات تمتد عبر الجغرافيا وتبقى. نؤمن بأن كل فردٍ يحمل قصة تستحق أن تُروى، وصوتاً يستحق أن يُسمع.
+          </p>
+          <a href="about.html" class="btn btn--secondary" style="margin-top: var(--space-2);">اقرأ المزيد عن النادي</a>
+        </div>
+        
+        <!-- العمود الأيسر: الصور والمعاينة -->
+        <div class="about-preview__visual reveal reveal--left">
+          <div class="about-shape about-shape--main" title="صورة من منطقة الدندر"></div>
+          <div class="about-shape about-shape--secondary" title="فعاليات النادي الثقافية"></div>
+          <div class="about-shape about-shape--accent">✦</div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       بداية قسم الميزات (Features Section)
+       ============================================ -->
+  <section class="section section--alt">
+    <div class="container">
+      
+      <!-- عنوان القسم -->
+      <div class="section-header reveal">
+        <span class="section-header__label">ماذا يقدم</span>
+        <h2 class="section-header__title">ماذا يقدم النادي؟</h2>
+        <p class="section-header__description">
+          ثلاثة محاور رئيسية تجعل من نادي الدندر وجهة ثقافية فريدة في المنطقة.
+        </p>
+      </div>
+      
+      <!-- بطاقات الميزات -->
+      <div class="grid grid--3">
+        
+        <!-- الميزة 1 -->
+        <div class="member-card reveal" style="padding: var(--space-8) var(--space-6);">
+          <div style="font-size: 3rem; margin-bottom: var(--space-4);"><i class="fas fa-pen-fancy" aria-hidden="true"></i></div>
+          <h3 class="member-card__name" style="margin-bottom: var(--space-3); font-size: var(--text-xl);">منبر ثقافي حر</h3>
+          <p class="member-card__bio" style="font-size: var(--text-sm); line-height: var(--leading-relaxed);">
+            منصة للكتّاب والمفكرين لنشر مقالاتهم وأبحاثهم بلا قيود سوى قيود الأدب والموضوعية. كل صوت يستحق أن يُسمع، وكل فكرة تستحق أن تُناقش.
+          </p>
+        </div>
+        
+        <!-- الميزة 2 -->
+        <div class="member-card reveal" style="padding: var(--space-8) var(--space-6); transition-delay: 100ms;">
+          <div style="font-size: 3rem; margin-bottom: var(--space-4);"><i class="fas fa-handshake" aria-hidden="true"></i></div>
+          <h3 class="member-card__name" style="margin-bottom: var(--space-3); font-size: var(--text-xl);">مجتمع متماسك</h3>
+          <p class="member-card__bio" style="font-size: var(--text-sm); line-height: var(--leading-relaxed);">
+            شبكة من الأعضاء المتفاعلين تجمعهم روح الانتماء لمنطقة الدندر والحرص على رفع شأنها ثقافياً واجتماعياً. نبني علاقات حقيقية تتجاوز حدود الشاشات.
+          </p>
+        </div>
+        
+        <!-- الميزة 3 -->
+        <div class="member-card reveal" style="padding: var(--space-8) var(--space-6); transition-delay: 200ms;">
+          <div style="font-size: 3rem; margin-bottom: var(--space-4);"><i class="fas fa-masks-theater" aria-hidden="true"></i></div>
+          <h3 class="member-card__name" style="margin-bottom: var(--space-3); font-size: var(--text-xl);">فعاليات وأنشطة</h3>
+          <p class="member-card__bio" style="font-size: var(--text-sm); line-height: var(--leading-relaxed);">
+            ندوات وأمسيات شعرية وورش عمل ومسابقات تُقام بانتظام، تُثري العقل وتُغذّي الروح وتُوثّق الروابط بين الأعضاء. كل فعالية بوابة لتجربة جديدة.
+          </p>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       معاينة الفعاليات القادمة (Upcoming Events Preview)
+       ============================================ -->
+  <section class="section">
+    <div class="container">
+      
+      <!-- عنوان القسم -->
+      <div class="section-header reveal">
+        <span class="section-header__label">فعاليات قادمة</span>
+        <h2 class="section-header__title">أبرز الفعاليات القادمة</h2>
+        <p class="section-header__description">
+          لا تفوّت فرصة المشاركة في فعالياتنا المتنوعة — سجّل حضورك الآن في أقرب المواعيد.
+        </p>
+      </div>
+      
+      <!-- بطاقات الفعاليات -->
+      <div class="grid grid--3">
+        
+        <!-- فعالية 1 -->
+        <article class="event-card reveal">
+          <img class="event-card__image" src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=600&q=80" alt="أمسية ذاكرة النهر" loading="lazy" decoding="async">
+          <div class="event-card__body">
+            <div class="event-card__date">
+              <span class="event-card__date-icon"><i class="fas fa-calendar-alt" aria-hidden="true"></i></span>
+              <span>15 مايو 2026 — 6:00 مساء</span>
+            </div>
+            <h3 class="event-card__title">أمسية "ذاكرة النهر" — شعر وحكايات</h3>
+            <p class="event-card__description">
+              أمسية شعرية وأدبية تستحضر صور النهر والريف وحياة الناس في الدندر من خلال قصائد وقصص قصيرة يؤديها نخبة من شعراء النادي.
+            </p>
+            <div class="event-card__footer">
+              <span class="event-card__location"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> قاعة المركز الثقافي — الخرطوم</span>
+              <a href="join.html" class="event-card__link">سجّل حضورك</a>
+            </div>
+          </div>
+        </article>
+        
+        <!-- فعالية 2 -->
+        <article class="event-card reveal" style="transition-delay: 100ms;">
+          <img class="event-card__image" src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=600&q=80" alt="ورشة الكتابة" loading="lazy" decoding="async">
+          <div class="event-card__body">
+            <div class="event-card__date">
+              <span class="event-card__date-icon"><i class="fas fa-calendar-alt" aria-hidden="true"></i></span>
+              <span>30 مايو 2026 — 8:00 مساء</span>
+            </div>
+            <h3 class="event-card__title">ورشة "ابدأ من هنا" — مدخل إلى كتابة المقالة</h3>
+            <p class="event-card__description">
+              ورشة مكثفة تقدم أساسيات بناء المقالة الفكرية من الفكرة حتى التنقيح، يديرها الكاتب المتطوع الأستاذ أحمد عمر.
+            </p>
+            <div class="event-card__footer">
+              <span class="event-card__location"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> عبر الإنترنت (أونلاين)</span>
+              <a href="join.html" class="event-card__link">سجّل حضورك</a>
+            </div>
+          </div>
+        </article>
+        
+        <!-- فعالية 3 -->
+        <article class="event-card reveal" style="transition-delay: 200ms;">
+          <img class="event-card__image" src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=80" alt="ندوة فكرية" loading="lazy" decoding="async">
+          <div class="event-card__body">
+            <div class="event-card__date">
+              <span class="event-card__date-icon"><i class="fas fa-calendar-alt" aria-hidden="true"></i></span>
+              <span>12 يونيو 2026 — 5:00 مساء</span>
+            </div>
+            <h3 class="event-card__title">ندوة فكرية: الهوية المحلية في مواجهة العولمة</h3>
+            <p class="event-card__description">
+              حوار فكري مفتوح يتناول إشكاليات الهوية الثقافية في عصر التحولات المتسارعة، بمشاركة باحثين وأكاديميين.
+            </p>
+            <div class="event-card__footer">
+              <span class="event-card__location"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> عبر الإنترنت + حضوري</span>
+              <a href="join.html" class="event-card__link">سجّل حضورك</a>
+            </div>
+          </div>
+        </article>
+        
+      </div>
+      
+      <!-- رابط عرض كل الفعاليات -->
+      <div style="text-align: center; margin-top: var(--space-10);" class="reveal">
+        <a href="join.html" class="btn btn--secondary">تصفّح كل الفعاليات القادمة</a>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- ============================================
+       معاينة أحدث المقالات (Latest Articles Preview)
+       ============================================ -->
+  <section class="section section--alt">
+    <div class="container">
+      
+      <!-- عنوان القسم ورابط التصفح -->
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: var(--space-10); flex-wrap: wrap; gap: var(--space-4);" class="reveal">
+        <div class="section-header" style="text-align: right; margin: 0;">
+          <span class="section-header__label">أحدث المقالات</span>
+          <h2 class="section-header__title" style="margin-bottom: 0;">من هنا تبدأ الأفكار</h2>
+        </div>
+        <a href="articles.html" class="btn btn--secondary btn--sm" style="border-radius: var(--radius-full);">عرض جميع المقالات ←</a>
+      </div>
+      
+      <!-- بطاقات المقالات -->
+      <div class="grid grid--3">
+        
+        <!-- مقال 1 -->
+        <article class="news-card reveal">
+          <img class="news-card__image" src="https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?auto=format&fit=crop&w=600&q=80" alt="صورة مقالة" loading="lazy" decoding="async">
+          <div class="news-card__body">
+            <div class="news-card__meta">
+              <span class="news-card__category">رأي ثقافي</span>
+              <span class="news-card__date">10 أبريل 2026</span>
+            </div>
+            <h3 class="news-card__title">بين جذور الماضي وأغصان الحاضر — أين نحن من هويتنا الثقافية؟</h3>
+            <p class="news-card__excerpt">
+              نتأمل في هذه المقالة مسيرة الهوية الثقافية في عالم متغير، ونسأل: كيف نحافظ على جذورنا ونحن نمد أغصاننا نحو السماء؟ Between roots and branches.
+            </p>
+            <div class="news-card__author">
+              <img class="news-card__author-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="د. أحمد عبد الرحمن" loading="lazy" decoding="async">
+              <div>
+                <div class="news-card__author-name">د. أحمد عبد الرحمن</div>
+                <div class="news-card__author-title">كاتب وباحث أكاديمي</div>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        <!-- مقال 2 -->
+        <article class="news-card reveal" style="transition-delay: 100ms;">
+          <img class="news-card__image" src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=600&q=80" alt="الكتابة الإبداعية" loading="lazy" decoding="async">
+          <div class="news-card__body">
+            <div class="news-card__meta">
+              <span class="news-card__category">أدب وفن</span>
+              <span class="news-card__date">01 مارس 2026</span>
+            </div>
+            <h3 class="news-card__title">لماذا نكتب؟ رحلة في دهاليز الإبداع والكتابة</h3>
+            <p class="news-card__excerpt">
+              تأمل في علاقة الكاتب بالكتابة، ولماذا تظل الحاجة للتعبير ملحة رغم كل وسائل التواصل الحديثة التي تزاحم الكلمة المكتوبة.
+            </p>
+            <div class="news-card__author">
+              <img class="news-card__author-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80" alt="أ. نورة حامد" loading="lazy" decoding="async">
+              <div>
+                <div class="news-card__author-name">أ. نورة حامد</div>
+                <div class="news-card__author-title">كاتبة وصحفية</div>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        <!-- مقال 3 -->
+        <article class="news-card reveal" style="transition-delay: 200ms;">
+          <img class="news-card__image" src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=600&q=80" alt="صورة كتب" loading="lazy" decoding="async">
+          <div class="news-card__body">
+            <div class="news-card__meta">
+              <span class="news-card__category">أدب وفن</span>
+              <span class="news-card__date">18 فبراير 2026</span>
+            </div>
+            <h3 class="news-card__title">التراث الشفهي وسرديات النهر — حكايات من ضفاف الدندر</h3>
+            <p class="news-card__excerpt">
+              تجميع للحكايات الشعبية المروية على ضفاف النهر، توثيق لذاكرة جماعية توشك على الاندثار في زحام الحداثة المتسارعة.
+            </p>
+            <div class="news-card__author">
+              <img class="news-card__author-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80" alt="مهند عمر خالد" loading="lazy" decoding="async">
+              <div>
+                <div class="news-card__author-name">مهند عمر خالد</div>
+                <div class="news-card__author-title">باحث في التراث</div>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       بداية قسم الدعوة (CTA Section)
+       ============================================ -->
+  <section class="section" style="padding: 0;">
+    <div class="container">
+      <div class="subscribe-card reveal">
+        <div class="subscribe-card__content">
+          <span class="hero__subtitle" style="border-color: rgba(200, 146, 42, 0.4); color: var(--color-secondary);">انضم إلينا اليوم</span>
+          <h2 class="subscribe-card__title" style="margin-top: var(--space-3);">كن جزءاً من المشهد</h2>
+          <p class="subscribe-card__description">
+            انضم إلى نادي الدندر الثقافي الاجتماعي واكتب فصلك في قصة هذا المجتمع. العضوية مفتوحة لكل من يحمل الدندر في قلبه أو يؤمن برسالتنا الثقافية.
+          </p>
+          <div style="margin-top: var(--space-8);">
+            <a href="join.html" class="btn btn--gold btn--lg">قدّم طلب انضمامك الآن</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       بداية حقل النشرة البريدية (Newsletter Block)
+       ============================================ -->
+  <section class="section">
+    <div class="container" style="max-width: 700px;">
+      <div class="reveal" style="text-align: center;">
+        <div class="section-header" style="margin-bottom: var(--space-6);">
+          <span class="section-header__label">النشرة البريدية</span>
+          <h2 class="section-header__title">ابقَ على اطلاع</h2>
+          <p class="section-header__description" style="font-size: var(--text-sm);">
+            اشترك في نشرتنا البريدية وصلك كل جديد من مقالات وفعاليات وأخبار النادي مباشرةً إلى بريدك.
+          </p>
+        </div>
+        
+        <!-- ملاحظة: نموذج النشرة متصل بـ Formspree (عدّل Action عند الربط) -->
+        <form class="subscribe-card__form" id="newsletter-form" action="https://formspree.io/f/xnqkyorw" method="POST">
+          <input type="email" class="subscribe-card__input" placeholder="بريدك الإلكتروني" required aria-label="البريد الإلكتروني">
+          <button type="submit" class="btn btn--primary">اشترك الآن</button>
+        </form>
+        <div id="newsletter-success" class="alert alert--success" style="display: none; margin-top: var(--space-4); max-width: 450px; margin-left: auto; margin-right: auto;">
+          <span>✓ شكراً! سيصلك كل جديد قريباً.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       بداية التذييل (Footer)
+       ============================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        
+        <!-- القسم الأول: العلامة التجارية -->
+        <div class="footer__brand">
+          <div class="footer__logo">نادي الدندر الثقافي الاجتماعي</div>
+          <p class="footer__description">
+            فضاء ثقافي اجتماعي يجمع أبناء الدندر أينما كانوا.
+          </p>
+          <div class="footer__social">
+            <a href="#" class="footer__social-link" aria-label="فيسبوك"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="تويتر"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="يوتيوب"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="واتساب"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+          </div>
+        </div>
+        
+        <!-- القسم الثاني: روابط سريعة -->
+        <div>
+          <h4 class="footer__heading">روابط سريعة</h4>
+          <ul class="footer__links">
+            <li><a href="index.html" class="footer__link">الرئيسية</a></li>
+            <li><a href="articles.html" class="footer__link">المقالات</a></li>
+            <li><a href="about.html" class="footer__link">عن النادي</a></li>
+            <li><a href="events.html" class="footer__link">الفعاليات</a></li>
+          </ul>
+        </div>
+        
+        <!-- القسم الثالث: روابط مهمة -->
+        <div>
+          <h4 class="footer__heading">روابط مهمة</h4>
+          <ul class="footer__links">
+            <li><a href="join.html" class="footer__link">طلب عضوية</a></li>
+            <li><a href="contact.html" class="footer__link">تواصل معنا</a></li>
+            <li><a href="login.html" class="footer__link">دخول الأعضاء</a></li>
+          </ul>
+        </div>
+        
+        <!-- القسم الرابع: النشرة البريدية -->
+        <div>
+          <h4 class="footer__heading">النشرة البريدية</h4>
+          <p style="font-size: var(--text-sm); color: rgba(245,240,232,.7); margin-bottom: var(--space-3);">آخر المقالات والفعاليات إلى بريدك مباشرة</p>
+          <form class="newsletter-form" style="display: flex; gap: var(--space-2);">
+            <input type="email" name="email" placeholder="بريدك الإلكتروني" style="flex:1; padding: var(--space-2) var(--space-3); background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: var(--radius-md); color: var(--text-light); font-size: var(--text-xs); direction: rtl;">
+            <button type="submit" class="btn btn--primary btn--sm" style="font-size: var(--text-xs); padding: var(--space-2) var(--space-3);">اشترك</button>
+          </form>
+        </div>
+        
+      </div>
+      
+      <!-- بداية الحقوق والروابط القانونية -->
+      <div class="footer__bottom">
+        <p class="footer__copyright">
+          © ٢٠٢٦ نادي الدندر الثقافي الاجتماعي — جميع الحقوق محفوظة. صُنع بواسطة م/هاشم كمال.
+        </p>
+        <div class="footer__legal">
+          <a href="about.html" class="footer__legal-link">سياسة الخصوصية</a>
+          <a href="about.html" class="footer__legal-link">شروط الاستخدام</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================
+       بداية السكريبتات والتفاعلات
+       ============================================ -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // 3. ربط الإحصائيات بـ Supabase + تفعيل العد التصاعدي
+      var statNumbers = document.querySelectorAll('.stat-box__number');
+      
+      async function loadStats() {
+        var [artRes, memRes, evtRes] = await Promise.all([
+          supabaseClient.from('articles').select('*', { count: 'exact', head: true }).eq('is_published', true),
+          supabaseClient.from('membership_requests').select('*', { count: 'exact', head: true }).eq('status', 'approved'),
+          supabaseClient.from('events').select('*', { count: 'exact', head: true }).eq('is_active', true)
+        ]);
+        if (statNumbers[0]) statNumbers[0].setAttribute('data-target', memRes.count || 120);
+        if (statNumbers[1]) statNumbers[1].setAttribute('data-target', artRes.count || 85);
+        if (statNumbers[2]) statNumbers[2].setAttribute('data-target', evtRes.count || 30);
+      }
+      
+      var counterDuration = 1500;
+      
+      var animateCounters = function (element) {
+        var target = parseInt(element.getAttribute('data-target'), 10);
+        var start = 0;
+        var stepTime = Math.abs(Math.floor(counterDuration / target));
+        var current = start;
+        
+        if (target === 2018) { current = 1950; }
+        
+        var timer = setInterval(function () {
+          if (target > 1000) { current += 5; }
+          else { current += 1; }
+          
+          if (current >= target) {
+            element.textContent = target.toLocaleString('ar-EG');
+            clearInterval(timer);
+          } else {
+            element.textContent = current.toLocaleString('ar-EG');
+          }
+        }, Math.max(stepTime, 15));
+      };
+      
+      var statsObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            statNumbers.forEach(function (num) { animateCounters(num); });
+            statsObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      
+      var statsSection = document.querySelector('.stats-section');
+      if (statsSection) {
+        loadStats().then(function () { statsObserver.observe(statsSection); });
+      }
+
+      // 4. معالجة تقديم النشرة البريدية عبر النموذج
+      const newsletterForm = document.getElementById('newsletter-form');
+      const newsletterSuccess = document.getElementById('newsletter-success');
+      
+      if (newsletterForm && newsletterSuccess) {
+        newsletterForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          // إخفاء النموذج وإظهار رسالة النجاح
+          newsletterForm.style.display = 'none';
+          newsletterSuccess.style.display = 'flex';
+          
+          // في الإنتاج الفعلي استخدم Formspree الحقيقي
+          console.log('Newsletter subscription successful');
+        });
+      }
+      
+    });
+  </script>
+</body>
+</html>
+
