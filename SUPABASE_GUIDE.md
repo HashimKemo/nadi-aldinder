@@ -780,6 +780,58 @@ INSERT INTO events (title, description, category, event_date, event_time, locati
 
 ---
 
+## الجزء 13: نظام التعليقات على المقالات
+
+### 13.1: إنشاء جدول التعليقات
+
+نفّذ هذا الكود في SQL Editor في Supabase:
+
+```sql
+-- جدول التعليقات
+CREATE TABLE article_comments (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  article_id BIGINT NOT NULL REFERENCES articles(id) ON DELETE CASCADE,
+  user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL,
+  name TEXT NOT NULL,
+  email TEXT,
+  avatar_url TEXT,
+  content TEXT NOT NULL CHECK (char_length(content) >= 2 AND char_length(content) <= 2000),
+  parent_id BIGINT REFERENCES article_comments(id) ON DELETE CASCADE,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE article_comments ENABLE ROW LEVEL SECURITY;
+
+-- القراءة: الجميع يرى جميع التعليقات
+CREATE POLICY "comments_read_all" ON article_comments
+  FOR SELECT USING (true);
+
+-- الإضافة: أي زائر (سواء مسجل أو لا)
+CREATE POLICY "comments_insert_all" ON article_comments
+  FOR INSERT WITH CHECK (true);
+
+-- التحديث: المحررون فما فوق
+CREATE POLICY "comments_update_editor" ON article_comments
+  FOR UPDATE USING (public.is_editor_or_above());
+
+-- الحذف: المحررون فما فوق فقط
+CREATE POLICY "comments_delete_editor" ON article_comments
+  FOR DELETE USING (public.is_editor_or_above());
+```
+
+### 13.2: إضافة عداد التعليقات إلى لوحة التحكم
+
+في دالة `loadDashboard()` في admin.html، أضف هذا السطر لجلب عدد التعليقات:
+
+```javascript
+var commentsRes = await supabaseClient
+  .from('article_comments')
+  .select('*', { count: 'exact', head: true });
+```
+
+---
+
 ## تنبيهات مهمة
 
 1. **احتفظ بكلمة مرور قاعدة البيانات** — لا يمكن استعادتها

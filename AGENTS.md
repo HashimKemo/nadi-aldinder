@@ -11,7 +11,7 @@ Static multi-page Arabic HTML site (9 pages). **No build tools, no frameworks, n
 | Shared JS | `js/main.js` | Menu toggle, scroll reveal, `checkUserSession()` (session badge in header) |
 | Supabase | `js/supabase.js` | Client init (`supabaseClient` global), newsletter handler, health check |
 | Page-specific JS | inline in each `.html` | Articles (Supabase), admin (auth+CRUD), events (Supabase), login (auth) |
-| DB | Supabase (remote) | Tables: `articles`, `profiles`, `subscribers`, `membership_requests`, `events`, `contact_messages`, `event_registrations` |
+| DB | Supabase (remote) | Tables: `articles`, `profiles`, `subscribers`, `membership_requests`, `events`, `contact_messages`, `event_registrations`, `article_comments` |
 
 ## Critical Setup — Supabase
 
@@ -64,6 +64,8 @@ Static multi-page Arabic HTML site (9 pages). **No build tools, no frameworks, n
 | View registered users | admin.html → إدارة المستخدمين tab |
 | Approve members | admin.html → لوحة التحكم tab → طلبات العضوية |
 | Fix RLS issues | Re-run SECURITY DEFINER functions + policies from SUPABASE_GUIDE.md Part 3 |
+| Moderate comments | admin.html → التعليقات tab (editor+) — delete unwanted comments |
+| Add comments table | Run SQL from SUPABASE_GUIDE.md Part 13 in SQL Editor |
 | Wake up Supabase | Visit Supabase Dashboard → project → Resume (if paused) |
 
 ## Gotchas
@@ -73,3 +75,7 @@ Static multi-page Arabic HTML site (9 pages). **No build tools, no frameworks, n
 - The CRUD event listeners in admin are set up inside `setupArticleCRUD()` called from `DOMContentLoaded` — NOT at script load time.
 - `article.html` expects `?id=` query param. `increment_views` RPC must exist in DB.
 - Events countdown fetches nearest future event from Supabase — if no events exist, shows "لا توجد فعاليات قادمة".
+- Comments on articles are published instantly (no moderation queue). Admins/Editors/Publishers can delete via the article page or admin panel.
+- Article users with "confirmed" role (admin/editor/publisher) see a "حذف" button on every comment when viewing article.html.
+- The `article_comments` table uses `parent_id` (self-referencing FK) for nested replies (max 2 levels visually).
+- When deleting a comment via admin panel, all its child replies are CASCADE deleted.
