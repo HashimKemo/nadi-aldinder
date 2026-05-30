@@ -310,7 +310,9 @@
   <script src="js/supabase.js"></script>
   <script src="js/main.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', async () => {
+    var categoryNames = { opinion: 'رأي', literature: 'أدب', history: 'تاريخ وتراث', society: 'مجتمع', culture: 'ثقافة' };
+
+    document.addEventListener('DOMContentLoaded', async function () {
       const params = new URLSearchParams(window.location.search);
       const articleId = params.get('id');
 
