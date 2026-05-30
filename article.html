@@ -355,6 +355,7 @@
               </div>
             </div>`;
           relatedGrid.appendChild(card);
+          if (window.revealObserver) window.revealObserver.observe(card);
         });
       }
     });

@@ -19,15 +19,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  var observer = new IntersectionObserver(function (e) {
+  window.revealObserver = new IntersectionObserver(function (e) {
     e.forEach(function (entry) {
       if (entry.isIntersecting) {
         entry.target.classList.add('reveal--visible');
-        observer.unobserve(entry.target);
+        window.revealObserver.unobserve(entry.target);
       }
     });
   }, { threshold: .1, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.reveal').forEach(function (el) { observer.observe(el); });
+  document.querySelectorAll('.reveal').forEach(function (el) { window.revealObserver.observe(el); });
 
   checkUserSession();
 });

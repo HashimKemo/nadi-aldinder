@@ -357,6 +357,7 @@
             </div>
           </div>`;
         grid.appendChild(card);
+        if (window.revealObserver) window.revealObserver.observe(card);
       });
 
       empty.style.display = totalFiltered === 0 ? 'block' : 'none';
