@@ -273,11 +273,17 @@
 
       if (!articleId) { document.querySelector('.article-body').innerHTML = '<p style="text-align:center;padding:4rem;color:var(--text-muted)">لم يتم تحديد المقالة.</p>'; return; }
 
-      const { data: article } = await supabaseClient
+      var { data: article, error } = await supabaseClient
         .from('articles')
         .select('*')
         .eq('id', articleId)
         .single();
+
+      if (error) {
+        console.warn('⚠️ Supabase غير متاح:', error.message);
+        document.querySelector('.article-body').innerHTML = '<p style="text-align:center;padding:4rem;color:var(--text-muted)">تعذر تحميل المقالة — تحقق من الاتصال بقاعدة البيانات.</p>';
+        return;
+      }
 
       if (!article) { document.querySelector('.article-body').innerHTML = '<p style="text-align:center;padding:4rem;color:var(--text-muted)">المقالة غير موجودة.</p>'; return; }
 

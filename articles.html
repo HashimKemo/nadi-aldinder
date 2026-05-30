@@ -267,7 +267,8 @@
   <script src="js/main.js"></script>
   <script>
     const categoryNames = { opinion: 'رأي', literature: 'أدب', history: 'تاريخ وتراث', society: 'مجتمع', culture: 'ثقافة' };
-    let allArticles = [];
+    let allArticles = null;
+    let supabaseReady = false;
     let currentFilter = 'all';
     let currentPage = 0;
     const pageSize = 6;
@@ -302,16 +303,25 @@
     });
 
     async function loadArticles() {
-      const { data: articles } = await supabaseClient
+      var { data: articles, error } = await supabaseClient
         .from('articles')
         .select('*')
         .eq('is_published', true)
         .order('published_at', { ascending: false });
+      if (error) {
+        console.warn('⚠️ Supabase غير متاح - يتم عرض المقالات الثابتة:', error.message);
+        return;
+      }
+      supabaseReady = true;
       allArticles = articles || [];
-      renderArticles();
+      if (allArticles.length > 0) {
+        renderArticles();
+      }
     }
 
     function renderArticles(append = false) {
+      if (!supabaseReady) return;
+
       const grid = document.getElementById('articles-grid');
       const empty = document.getElementById('articles-empty');
       const loadMore = document.getElementById('load-more-btn');

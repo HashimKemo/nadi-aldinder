@@ -593,8 +593,12 @@
     });
 
     async function loadEvents() {
-      var res = await supabaseClient.from('events').select('*').order('event_date', { ascending: false });
-      allEvents = res.data || [];
+      var { data, error } = await supabaseClient.from('events').select('*').order('event_date', { ascending: false });
+      if (error) {
+        console.warn('⚠️ Supabase غير متاح - الفعاليات غير متوفرة:', error.message);
+        return;
+      }
+      allEvents = data || [];
       renderEvents();
     }
 
