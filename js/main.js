@@ -66,8 +66,6 @@ function toggleTheme() {
 }
 
 async function checkUserSession() {
-  var headerInner = document.querySelector('.header__inner');
-  if (!headerInner) return;
   if (window.location.pathname.indexOf('login.html') !== -1) return;
 
   var sessionRes = await supabaseClient.auth.getSession();
@@ -82,34 +80,26 @@ async function checkUserSession() {
 
   var p = profileRes.data;
   var roleNames = { admin: 'أدمن', editor: 'محرر', publisher: 'ناشر', viewer: 'مشاهد' };
-  var roleLabel = roleNames[p.role] || p.role;
-  var isAdminOrEditor = (p.role === 'admin' || p.role === 'editor' || p.role === 'publisher');
 
-  var badge = document.createElement('div');
-  badge.id = 'user-badge';
-  badge.className = 'user-badge';
-  badge.innerHTML =
-    '<div class="user-badge__info">' +
-      '<span class="user-badge__name">' + p.name + '</span>' +
-      '<span class="user-badge__role">' + roleLabel + '</span>' +
-    '</div>' +
-    (isAdminOrEditor ? '<a href="admin.html" class="user-badge__link"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a>' : '') +
-    '<a href="#" class="user-badge__logout" id="user-logout"><i class="fas fa-sign-out-alt"></i></a>';
+  var dashItem = document.getElementById('nav-dashboard');
+  var userInfo = document.getElementById('nav-user-info');
+  var userName = document.getElementById('nav-user-name');
+  var loginItem = document.getElementById('nav-login-btn');
 
-  var toggleBtn = document.querySelector('.menu-toggle');
-  if (toggleBtn) {
-    headerInner.insertBefore(badge, toggleBtn.nextSibling);
-  } else {
-    headerInner.appendChild(badge);
+  if (p.role === 'admin' || p.role === 'editor' || p.role === 'publisher') {
+    if (dashItem) dashItem.style.display = '';
   }
-  badge.style.display = 'flex';
+  if (userName) userName.textContent = p.name + ' (' + (roleNames[p.role] || p.role) + ')';
+  if (userInfo) userInfo.style.display = '';
+  if (loginItem) loginItem.style.display = 'none';
 
-  document.getElementById('user-logout').addEventListener('click', async function (e) {
-    e.preventDefault();
-    await supabaseClient.auth.signOut();
-    window.location.reload();
-  });
-
-  var loginBtn = document.querySelector('.nav__list a[href="login.html"]');
-  if (loginBtn) loginBtn.style.display = 'none';
+  var logoutBtn = document.getElementById('nav-logout');
+  if (logoutBtn) {
+    logoutBtn.style.display = '';
+    logoutBtn.addEventListener('click', async function (e) {
+      e.preventDefault();
+      await supabaseClient.auth.signOut();
+      window.location.reload();
+    });
+  }
 }

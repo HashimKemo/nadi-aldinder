@@ -74,6 +74,11 @@
       border-top: 1px solid var(--border-color);
       border-bottom: 1px solid var(--border-color);
       padding: var(--space-8) 0;
+      opacity: 0;
+      transition: opacity 0.7s ease;
+    }
+    .stats-section.reveal--visible {
+      opacity: 1;
     }
     
     .stat-box {
@@ -257,7 +262,7 @@
   <!-- ============================================
        بداية شريط الإحصاءات (Stats Bar)
        ============================================ -->
-  <section class="stats-section reveal">
+  <section class="stats-section" id="stats-section">
     <div class="container">
       <div class="grid grid--3 grid--centered">
         
@@ -641,6 +646,7 @@
       var statsObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
+            entry.target.classList.add('reveal--visible');
             statNumbers.forEach(function (num) { animateCounters(num); });
             statsObserver.unobserve(entry.target);
           }
@@ -648,7 +654,7 @@
       }, { threshold: 0.3 });
 
       loadStats(function () {
-        var statsSection = document.querySelector('.stats-section');
+        var statsSection = document.getElementById('stats-section');
         if (statsSection) statsObserver.observe(statsSection);
       });
 
