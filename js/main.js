@@ -1,23 +1,42 @@
 document.addEventListener('DOMContentLoaded', () => {
   var toggle = document.querySelector('.menu-toggle');
   var nav = document.getElementById('main-nav');
+  var overlay = null;
+
+  function openMenu() {
+    nav.classList.add('nav--open');
+    toggle.classList.add('menu-toggle--active');
+    document.body.classList.add('nav-open');
+    document.documentElement.classList.add('nav-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    overlay = document.createElement('div');
+    overlay.className = 'nav-overlay';
+    overlay.addEventListener('click', closeMenu);
+    document.body.appendChild(overlay);
+  }
+
+  function closeMenu() {
+    nav.classList.remove('nav--open');
+    toggle.classList.remove('menu-toggle--active');
+    document.body.classList.remove('nav-open');
+    document.documentElement.classList.remove('nav-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    if (overlay) {
+      overlay.remove();
+      overlay = null;
+    }
+  }
+
   if (toggle && nav) {
     toggle.addEventListener('click', () => {
-      var isOpen = nav.classList.contains('nav--open');
-      nav.classList.toggle('nav--open');
-      toggle.classList.toggle('menu-toggle--active');
-      document.body.classList.toggle('nav-open');
-      document.documentElement.classList.toggle('nav-open');
-      toggle.setAttribute('aria-expanded', !isOpen);
+      if (nav.classList.contains('nav--open')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
     });
-    document.querySelectorAll('.nav__link').forEach(function (l) {
-      l.addEventListener('click', function () {
-        nav.classList.remove('nav--open');
-        toggle.classList.remove('menu-toggle--active');
-        document.body.classList.remove('nav-open');
-        document.documentElement.classList.remove('nav-open');
-        toggle.setAttribute('aria-expanded', 'false');
-      });
+    document.querySelectorAll('.nav__link, .nav__drawer-login').forEach(function (l) {
+      l.addEventListener('click', closeMenu);
     });
   }
 
