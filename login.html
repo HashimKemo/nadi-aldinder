@@ -152,7 +152,7 @@
 
           <p class="login-no-account">
             ليس لديك حساب بعد؟<br>
-            <a href="join.html">قدّم طلب انضمامك</a> · <a href="signup.html">أنشئ حسابك</a>
+            <a href="join.html">قدّم طلب انضمامك</a>
           </p>
         </div>
       </div>
@@ -322,14 +322,21 @@
               sessionStorage.removeItem('loginLocked');
               successDiv.textContent = 'مرحباً بك! تم تسجيل الدخول كعضو.';
               successDiv.style.display = 'block';
-              setTimeout(function () { window.location.href = 'index.html'; }, 800);
-            } else if (profile && (profile.role === 'admin' || profile.role === 'editor' || profile.role === 'publisher') && profile.is_approved) {
+              setTimeout(function () { window.location.href = 'dashboard.html'; }, 800);
+            } else if (profile && profile.role === 'admin' && profile.is_approved) {
               attemptCount = 0;
               sessionStorage.removeItem('loginAttempts');
               sessionStorage.removeItem('loginLocked');
               successDiv.textContent = 'تم تسجيل الدخول بنجاح! جارٍ تحميل لوحة التحكم...';
               successDiv.style.display = 'block';
               setTimeout(function () { window.location.href = 'admin.html'; }, 800);
+            } else if (profile && (profile.role === 'editor' || profile.role === 'publisher') && profile.is_approved) {
+              attemptCount = 0;
+              sessionStorage.removeItem('loginAttempts');
+              sessionStorage.removeItem('loginLocked');
+              successDiv.textContent = 'تم تسجيل الدخول بنجاح! جارٍ تحميل لوحة العضو...';
+              successDiv.style.display = 'block';
+              setTimeout(function () { window.location.href = 'dashboard.html'; }, 800);
             } else {
               await supabaseClient.auth.signOut();
               errorDiv.textContent = profile

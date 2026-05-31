@@ -10,7 +10,7 @@
   <meta name="theme-color" content="#1b4d3e">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>إنشاء حساب — نادي الدندر الثقافي الاجتماعي</title>
-  <meta name="description" content="أنشئ حسابك على منصة نادي الدندر الثقافي الاجتماعي للوصول إلى لوحة التحكم ونشر مقالاتك.">
+  <meta name="description" content="بعد الموافقة على طلب عضويتك، يصلك رابط التفعيل على بريدك الإلكتروني.">
 
   <!-- Open Graph / Social Media -->
   <meta property="og:type" content="website">
@@ -101,8 +101,8 @@
   <section class="hero hero--signup">
     <div class="hero__content animate-fade-in-up">
       <nav class="hero__breadcrumbs"><a href="index.html">الرئيسية</a><span>إنشاء حساب</span></nav>
-      <h1 class="hero__title">إنشاء حساب عضو</h1>
-      <p class="hero__description">تمت الموافقة على طلب انضمامك؟ أنشئ حسابك الآن لتنطلق في منصة النادي.</p>
+      <h1 class="hero__title">تم إرسال الدعوة</h1>
+      <p class="hero__description">عند الموافقة على طلب عضويتك، سيصلك رابط لتفعيل الحساب على بريدك الإلكتروني.</p>
     </div>
     <span class="hero__decoration-star" style="top: 20%; right: 12%;">✦</span>
     <span class="hero__decoration-star" style="bottom: 15%; left: 10%;">✦</span>
@@ -111,50 +111,15 @@
   <section class="signup-section">
     <div class="container">
       <div class="signup-wrapper">
-        <div class="signup-card reveal">
-          <div class="signup-card__icon"><i class="fas fa-user-plus" aria-hidden="true"></i></div>
-          <h2 class="signup-card__title">إنشاء حساب جديد</h2>
-          <p class="signup-card__subtitle">يجب أن يكون طلب انضمامك معتمداً أولاً من الإدارة قبل إنشاء الحساب</p>
-
-          <div id="signup-error" class="alert alert--error"></div>
-          <div id="signup-success" class="alert alert--success"></div>
-
-          <form id="signup-form" onsubmit="return false;">
-            <div class="form-group">
-              <label for="signup-name">الاسم الكامل</label>
-              <input type="text" id="signup-name" name="name" placeholder="اسمك كما سيظهر في المنصة" required autocomplete="name">
-            </div>
-
-            <div class="form-group">
-              <label for="signup-email">البريد الإلكتروني</label>
-              <input type="email" id="signup-email" name="email" placeholder="البريد المسجل في طلب الانضمام" required autocomplete="email">
-            </div>
-
-            <div class="form-group">
-              <label for="signup-password">كلمة المرور</label>
-              <div class="pwd-wrapper">
-                <input type="password" id="signup-password" name="password" placeholder="على الأقل 6 أحرف" required minlength="6" autocomplete="new-password">
-                <button type="button" class="pwd-toggle" id="signup-pwd-toggle" aria-label="إظهار كلمة المرور" tabindex="-1"><i class="fas fa-eye" aria-hidden="true"></i></button>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="signup-password-confirm">تأكيد كلمة المرور</label>
-              <div class="pwd-wrapper">
-                <input type="password" id="signup-password-confirm" name="password_confirm" placeholder="أعد إدخال كلمة المرور" required minlength="6" autocomplete="new-password">
-                <button type="button" class="pwd-toggle" id="signup-pwd-confirm-toggle" aria-label="إظهار كلمة المرور" tabindex="-1"><i class="fas fa-eye" aria-hidden="true"></i></button>
-              </div>
-            </div>
-
-            <p class="signup-note">
-              بإنشائك للحساب، توافق على <a href="about.html" style="color:var(--color-primary);">شروط الاستخدام</a> وسياسة الخصوصية الخاصة بالنادي.
-            </p>
-
-            <button type="submit" class="btn btn--primary signup-btn">إنشاء الحساب</button>
-          </form>
-
+        <div class="signup-card reveal" style="text-align: center;">
+          <div class="signup-card__icon"><i class="fas fa-envelope-open-text" aria-hidden="true" style="color: var(--color-primary);"></i></div>
+          <h2 class="signup-card__title">نظام الدعوات الجديد</h2>
+          <p class="signup-card__subtitle" style="margin-bottom: var(--space-6);">
+            لم يعد إنشاء الحساب يدوياً متاحاً. عند موافقة الإدارة على طلب عضويتك،<br>
+            سيصلك رابط على بريدك الإلكتروني لتفعيل حسابك واختيار كلمة المرور.
+          </p>
+          <a href="join.html" class="btn btn--primary signup-btn" style="width: auto; display: inline-block; padding: var(--space-3) var(--space-8);">تقديم طلب عضوية</a>
           <div class="signup-divider"></div>
-
           <p class="signup-has-account">
             لديك حساب بالفعل؟<br>
             <a href="login.html">سجّل دخولك</a>
@@ -216,128 +181,10 @@
   <script src="js/supabase.js"></script>
   <script src="js/main.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById('signup-form');
-      const errorDiv = document.getElementById('signup-error');
-      const successDiv = document.getElementById('signup-success');
-      const submitBtn = form.querySelector('button[type="submit"]');
-
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        errorDiv.style.display = 'none';
-        successDiv.style.display = 'none';
-
-        const name = document.getElementById('signup-name').value.trim();
-        const email = document.getElementById('signup-email').value.trim();
-        const pass = document.getElementById('signup-password').value;
-        const passConfirm = document.getElementById('signup-password-confirm').value;
-
-        if (!name || !email || !pass || !passConfirm) {
-          errorDiv.textContent = 'يرجى ملء جميع الحقول المطلوبة.';
-          errorDiv.style.display = 'block';
-          return;
-        }
-
-        if (pass.length < 6) {
-          errorDiv.textContent = 'كلمة المرور يجب أن تكون 6 أحرف على الأقل.';
-          errorDiv.style.display = 'block';
-          return;
-        }
-
-        if (pass !== passConfirm) {
-          errorDiv.textContent = 'كلمة المرور غير متطابقة.';
-          errorDiv.style.display = 'block';
-          return;
-        }
-
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جارٍ إنشاء الحساب...';
-
-        try {
-          var { data: approved, error: checkErr } = await supabaseClient.rpc('is_email_approved', { user_email: email });
-
-          if (checkErr) {
-            errorDiv.textContent = 'خطأ في التحقق من حالة الطلب: ' + checkErr.message;
-            errorDiv.style.display = 'block';
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = 'إنشاء الحساب';
-            return;
-          }
-
-          if (!approved) {
-            errorDiv.textContent = 'لم يتم الموافقة على طلب انضمامك بعد. قدّم طلبك أولاً من صفحة الانضمام أو تواصل مع الإدارة.';
-            errorDiv.style.display = 'block';
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = 'إنشاء الحساب';
-            return;
-          }
-
-          var { data: authData, error: authErr } = await supabaseClient.auth.signUp({
-            email: email,
-            password: pass
-          });
-
-          if (authErr) {
-            if (authErr.message === 'User already registered') {
-              errorDiv.textContent = 'هذا البريد مسجل مسبقاً. سجّل دخولك مباشرة.';
-            } else {
-              errorDiv.textContent = 'خطأ في إنشاء الحساب: ' + authErr.message;
-            }
-            errorDiv.style.display = 'block';
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = 'إنشاء الحساب';
-            return;
-          }
-
-          var { error: profileErr } = await supabaseClient.rpc('create_profile_on_signup', {
-            user_id: authData.user.id,
-            user_name: name,
-            user_email: email
-          });
-
-          if (profileErr) {
-            await supabaseClient.auth.signOut();
-            errorDiv.textContent = 'خطأ في إعداد الحساب: ' + profileErr.message + '. تواصل مع الإدارة.';
-            errorDiv.style.display = 'block';
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = 'إنشاء الحساب';
-            return;
-          }
-
-          await supabaseClient.auth.signOut();
-
-          successDiv.textContent = 'تم إنشاء الحساب بنجاح! جارٍ تحويلك إلى صفحة تسجيل الدخول...';
-          successDiv.style.display = 'block';
-          submitBtn.innerHTML = 'إنشاء الحساب';
-
-          setTimeout(function () { window.location.href = 'login.html'; }, 1500);
-        } catch (err) {
-          errorDiv.textContent = 'حدث خطأ في الاتصال. تحقق من اتصالك بالإنترنت.';
-          errorDiv.style.display = 'block';
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = 'إنشاء الحساب';
-        }
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.newsletter-form').forEach(function (f) {
+        f.addEventListener('submit', function (e) { e.preventDefault(); });
       });
-
-      var pwdToggle1 = document.getElementById('signup-pwd-toggle');
-      var pwdInput1 = document.getElementById('signup-password');
-      if (pwdToggle1 && pwdInput1) {
-        pwdToggle1.addEventListener('click', function () {
-          var isPassword = pwdInput1.type === 'password';
-          pwdInput1.type = isPassword ? 'text' : 'password';
-          pwdToggle1.innerHTML = isPassword ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
-        });
-      }
-
-      var pwdToggle2 = document.getElementById('signup-pwd-confirm-toggle');
-      var pwdInput2 = document.getElementById('signup-password-confirm');
-      if (pwdToggle2 && pwdInput2) {
-        pwdToggle2.addEventListener('click', function () {
-          var isPassword = pwdInput2.type === 'password';
-          pwdInput2.type = isPassword ? 'text' : 'password';
-          pwdToggle2.innerHTML = isPassword ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
-        });
-      }
     });
   </script>
 </body>

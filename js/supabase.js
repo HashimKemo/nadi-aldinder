@@ -1,6 +1,8 @@
 const SUPABASE_URL = 'https://easlhsilbsnennpggpej.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVhc2xoc2lsYnNuZW5ucGdncGVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5NDQ2NTQsImV4cCI6MjA5NDUyMDY1NH0.xKGbWv1vrITvAwM6dg9EjkAI3sAi8uKbRNSK8JO2OoE';
 
+const SUPABASE_FUNCTIONS_URL = SUPABASE_URL.replace('.supabase.co', '.supabase.co/functions/v1');
+
 const { createClient } = supabase;
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 

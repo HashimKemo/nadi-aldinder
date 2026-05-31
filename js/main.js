@@ -107,8 +107,17 @@ async function checkUserSession() {
   var userName = document.getElementById('nav-user-name');
   var loginItem = document.getElementById('nav-login-btn');
 
-  if (p.role === 'admin' || p.role === 'editor' || p.role === 'publisher') {
-    if (dashItem) dashItem.style.display = '';
+  if (dashItem) {
+    if (p.role === 'admin') {
+      dashItem.querySelector('a').href = 'admin.html';
+      dashItem.querySelector('.nav__link-title').textContent = 'لوحة التحكم';
+      dashItem.querySelector('.nav__link-desc').textContent = 'إدارة الموقع';
+    } else {
+      dashItem.querySelector('a').href = 'dashboard.html';
+      dashItem.querySelector('.nav__link-title').textContent = 'لوحة العضو';
+      dashItem.querySelector('.nav__link-desc').textContent = 'ملفك الشخصي';
+    }
+    dashItem.style.display = '';
   }
   if (userName) userName.textContent = p.name + ' (' + (roleNames[p.role] || p.role) + ')';
   if (userInfo) userInfo.style.display = '';

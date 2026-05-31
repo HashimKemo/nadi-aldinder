@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="shortcut icon" href="favicon.ico">
+  <meta name="theme-color" content="#1b4d3e">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة العضو — نادي الدندر الثقافي الاجتماعي</title>
+  <meta name="description" content="لوحة العضو في نادي الدندر الثقافي الاجتماعي.">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dinderclub.sd/dashboard.html">
+  <meta property="og:title" content="لوحة العضو — نادي الدندر الثقافي الاجتماعي">
+  <meta property="og:description" content="لوحة العضو في نادي الدندر الثقافي الاجتماعي.">
+  <meta property="og:image" content="https://dinderclub.sd/images/og-cover.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Noto+Naskh+Arabic:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    body { background: var(--bg-section-alt); }
+    .dashboard-header { background: var(--color-primary-dark); padding: var(--space-4) 0; }
+    .dashboard-header__inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3); }
+    .dashboard-header__logo { font-family: var(--font-heading); font-size: var(--text-lg); color: var(--text-light); text-decoration: none; }
+    .dashboard-header__logo span { color: var(--color-secondary); }
+    .dashboard-header__user { display: flex; align-items: center; gap: var(--space-2); color: rgba(245,240,232,.85); font-size: var(--text-xs); }
+    .dashboard-header__user img { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,.2); }
+    .dashboard-header__logout { padding: var(--space-1) var(--space-3); background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: var(--radius-md); color: var(--text-light); font-size: var(--text-xs); cursor: pointer; transition: background var(--transition-fast); text-decoration: none; }
+    .dashboard-header__logout:hover { background: rgba(255,255,255,.2); }
+    .dashboard-layout { display: grid; grid-template-columns: 200px 1fr; gap: var(--space-4); padding: var(--space-4) 0; }
+    .dashboard-sidebar { background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-color); padding: var(--space-3); height: fit-content; position: sticky; top: var(--space-4); }
+    .dashboard-sidebar__link { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); border-radius: var(--radius-md); color: var(--text-primary); text-decoration: none; font-size: var(--text-sm); transition: all var(--transition-fast); }
+    .dashboard-sidebar__link:hover { background: var(--color-primary-bg); color: var(--color-primary); }
+    .dashboard-sidebar__link--active { background: var(--color-primary); color: var(--text-on-primary); }
+    .dashboard-sidebar__link--active:hover { background: var(--color-primary-light); }
+    .dashboard-main { min-height: 60vh; }
+    .admin-section { background: var(--bg-card); border-radius: var(--radius-lg); border: 1px solid var(--border-color); padding: var(--space-5); margin-bottom: var(--space-5); }
+    .admin-section__header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-4); }
+    .admin-section__title { font-family: var(--font-heading); font-size: var(--h6-size); color: var(--color-primary); }
+    .tab-empty { text-align: center; padding: var(--space-10) var(--space-4); color: var(--text-muted); font-size: var(--text-base); }
+    .confirm-modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-overlay); z-index: 1001; justify-content: center; align-items: center; }
+    .confirm-modal-overlay--open { display: flex; }
+    .confirm-modal { background: var(--bg-card); border-radius: var(--radius-xl); padding: var(--space-8); max-width: 400px; width: 90%; text-align: center; }
+    .admin-notification { position: fixed; bottom: var(--space-4); left: 50%; transform: translateX(-50%); padding: var(--space-3) var(--space-6); border-radius: var(--radius-lg); font-size: var(--text-sm); font-weight: var(--weight-semibold); z-index: 2000; box-shadow: 0 4px 20px rgba(0,0,0,.15); animation: notifIn 0.3s ease; }
+    .admin-notification--success { background: var(--color-success); color: #fff; }
+    .admin-notification--error { background: var(--color-error); color: #fff; }
+    @keyframes notifIn { from { opacity: 0; transform: translateX(-50%) translateY(10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+    @media (max-width: 768px) {
+      .dashboard-layout { grid-template-columns: 1fr; }
+      .dashboard-sidebar { display: flex; overflow-x: auto; gap: var(--space-1); padding: var(--space-2); position: static; }
+      .dashboard-sidebar__link { white-space: nowrap; font-size: var(--text-xs); padding: var(--space-1) var(--space-2); }
+    }
+  </style>
+  <link rel="stylesheet" href="lib/fontawesome/all.min.css">
+</head>
+<body>
+  <header class="dashboard-header">
+    <div class="container">
+      <div class="dashboard-header__inner">
+        <a href="index.html" class="dashboard-header__logo">✦ نادي الدندر <span>الثقافي الاجتماعي</span></a>
+        <div class="dashboard-header__user">
+          <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=100&q=80" alt="العضو" loading="lazy" decoding="async" id="dash-user-avatar">
+          <span id="dash-user-name">مرحباً</span>
+          <a href="#" class="dashboard-header__logout" id="logout-btn">تسجيل الخروج</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="dashboard-layout">
+        <aside class="dashboard-sidebar">
+          <a href="#" class="dashboard-sidebar__link dashboard-sidebar__link--active" data-tab="profile"><i class="fas fa-user" aria-hidden="true"></i> الملف الشخصي</a>
+          <a href="#" class="dashboard-sidebar__link" data-tab="articles" id="sidebar-articles" style="display:none;"><i class="fas fa-file-alt" aria-hidden="true"></i> المقالات</a>
+        </aside>
+
+        <main class="dashboard-main">
+          <div id="tab-profile">
+            <div class="admin-section">
+              <div class="admin-section__header">
+                <h2 class="admin-section__title">الملف الشخصي</h2>
+              </div>
+              <div style="max-width: 500px;">
+                <form id="profile-form" style="display: flex; flex-direction: column; gap: var(--space-4);">
+                  <div>
+                    <label class="form-label" style="display: block; margin-bottom: var(--space-1); font-size: var(--text-sm);">الاسم الكامل</label>
+                    <input type="text" id="profile-name" class="form-input" required style="width: 100%;">
+                  </div>
+                  <div>
+                    <label class="form-label" style="display: block; margin-bottom: var(--space-1); font-size: var(--text-sm);">البريد الإلكتروني</label>
+                    <input type="email" id="profile-email" class="form-input" readonly style="width: 100%; background: var(--bg-section-alt); cursor: not-allowed;">
+                  </div>
+                  <div>
+                    <label class="form-label" style="display: block; margin-bottom: var(--space-1); font-size: var(--text-sm);">رابط الصورة الشخصية</label>
+                    <input type="url" id="profile-avatar" class="form-input" placeholder="https://..." style="width: 100%;">
+                    <div style="margin-top: var(--space-2); display: flex; align-items: center; gap: var(--space-2);">
+                      <img id="profile-avatar-preview" src="" alt="معاينة" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border-color); display: none;">
+                      <span style="font-size: var(--text-xs); color: var(--text-muted);">معاينة الصورة</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div id="profile-role" style="display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-3); background: var(--color-primary-bg); border-radius: var(--radius-md); font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-primary);"></div>
+                  </div>
+                  <hr style="border: none; border-top: 1px solid var(--border-color); margin: var(--space-2) 0;">
+                  <h3 style="font-size: var(--text-base); font-weight: var(--weight-bold); color: var(--text-primary);">تغيير كلمة المرور</h3>
+                  <div>
+                    <label class="form-label" style="display: block; margin-bottom: var(--space-1); font-size: var(--text-sm);">كلمة المرور الجديدة</label>
+                    <input type="password" id="profile-password" class="form-input" placeholder="اتركه فارغاً إن لم ترد التغيير" style="width: 100%;" autocomplete="new-password">
+                  </div>
+                  <div>
+                    <label class="form-label" style="display: block; margin-bottom: var(--space-1); font-size: var(--text-sm);">تأكيد كلمة المرور</label>
+                    <input type="password" id="profile-password-confirm" class="form-input" placeholder="أعد إدخال كلمة المرور الجديدة" style="width: 100%;" autocomplete="new-password">
+                  </div>
+                  <div>
+                    <button type="submit" class="btn btn--primary" id="profile-save-btn"><i class="fas fa-save" aria-hidden="true"></i> حفظ التغييرات</button>
+                  </div>
+                </form>
+                <div id="profile-success" style="display: none; padding: var(--space-4); background: var(--color-success); color: #fff; border-radius: var(--radius-md); margin-top: var(--space-4); text-align: center; font-weight: var(--weight-semibold);"><i class="fas fa-check-circle" aria-hidden="true"></i> تم حفظ التغييرات بنجاح!</div>
+              </div>
+            </div>
+          </div>
+
+          <div id="tab-articles" style="display: none;">
+            <div class="admin-section">
+              <div class="admin-section__header">
+                <h2 class="admin-section__title">المقالات</h2>
+                <a href="admin.html?tab=articles" class="btn btn--primary btn--sm"><i class="fas fa-external-link-alt" aria-hidden="true"></i> فتح إدارة المقالات</a>
+              </div>
+              <p style="color: var(--text-muted); font-size: var(--text-sm);">يمكنك إدارة المقالات من خلال لوحة التحكم المخصصة. انقر على الزر أعلاه للانتقال إليها.</p>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </section>
+
+  <div class="confirm-modal-overlay" id="logout-modal">
+    <div class="confirm-modal">
+      <div class="confirm-modal__icon"><i class="fas fa-sign-out-alt" aria-hidden="true"></i></div>
+      <p class="confirm-modal__text">هل تريد تسجيل الخروج؟</p>
+      <div class="confirm-modal__actions">
+        <button class="btn btn--primary" id="confirm-logout">تسجيل الخروج</button>
+        <button class="btn btn--secondary" id="cancel-logout">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <div class="footer__logo">نادي الدندر الثقافي الاجتماعي</div>
+          <p class="footer__description">فضاء ثقافي اجتماعي يجمع أبناء الدندر أينما كانوا.</p>
+          <div class="footer__social">
+            <a href="https://www.facebook.com/DinderClub" target="_blank" rel="noopener" class="footer__social-link" aria-label="فيسبوك"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+            <a href="https://x.com/DinderClub" target="_blank" rel="noopener" class="footer__social-link" aria-label="تويتر"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
+            <a href="https://www.youtube.com/@DinderClub" target="_blank" rel="noopener" class="footer__social-link" aria-label="يوتيوب"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+            <a href="contact.html" target="_blank" rel="noopener" class="footer__social-link" aria-label="واتساب"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer__heading">روابط سريعة</h4>
+          <ul class="footer__links">
+            <li><a href="index.html" class="footer__link">الرئيسية</a></li>
+            <li><a href="articles.html" class="footer__link">المقالات</a></li>
+            <li><a href="about.html" class="footer__link">عن النادي</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__heading">روابط مهمة</h4>
+          <ul class="footer__links">
+            <li><a href="join.html" class="footer__link">طلب عضوية</a></li>
+            <li><a href="contact.html" class="footer__link">تواصل معنا</a></li>
+            <li><a href="login.html" class="footer__link">دخول الأعضاء</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__heading">النشرة البريدية</h4>
+          <p style="font-size: var(--text-sm); color: rgba(245,240,232,.7); margin-bottom: var(--space-3);">آخر المقالات إلى بريدك مباشرة</p>
+          <form class="newsletter-form" style="display: flex; gap: var(--space-2);">
+            <input type="email" name="email" placeholder="بريدك الإلكتروني" style="flex:1; padding: var(--space-2) var(--space-3); background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: var(--radius-md); color: var(--text-light); font-size: var(--text-xs); direction: rtl;">
+            <button type="submit" class="btn btn--primary btn--sm" style="font-size: var(--text-xs); padding: var(--space-2) var(--space-3);">اشترك</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">© ٢٠٢٦ نادي الدندر الثقافي الاجتماعي — جميع الحقوق محفوظة. صُنع بواسطة م/هاشم كمال.</p>
+        <div class="footer__legal">
+          <a href="about.html" class="footer__legal-link">سياسة الخصوصية</a>
+          <a href="about.html" class="footer__legal-link">شروط الاستخدام</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script>
+    var userRole = null;
+    var currentUserId = null;
+    var notificationTimer = null;
+    var roleNames = { admin: 'أدمن', editor: 'محرر', publisher: 'ناشر', member: 'عضو' };
+
+    function fmtDate(d) {
+      if (!d) return '—';
+      try { return new Date(d).toLocaleDateString('ar-SD'); } catch (e) { return '—'; }
+    }
+
+    function showNotification(msg, type) {
+      var existing = document.querySelector('.admin-notification');
+      if (existing) existing.remove();
+      var div = document.createElement('div');
+      div.className = 'admin-notification admin-notification--' + (type || 'success');
+      div.textContent = msg;
+      document.body.appendChild(div);
+      if (notificationTimer) clearTimeout(notificationTimer);
+      notificationTimer = setTimeout(function () { if (div.parentNode) div.parentNode.removeChild(div); }, 3000);
+    }
+
+    document.addEventListener('DOMContentLoaded', async function () {
+      try {
+        var sessionRes = await supabaseClient.auth.getSession();
+        var session = sessionRes.data.session;
+        if (!session) { window.location.href = 'login.html'; return; }
+
+        currentUserId = session.user.id;
+
+        var profileRes = await supabaseClient.from('profiles')
+          .select('name, email, role, avatar_url, is_approved')
+          .eq('id', session.user.id)
+          .maybeSingle();
+
+        var profile = profileRes.data;
+        if (!profile || !profile.is_approved) {
+          await supabaseClient.auth.signOut();
+          window.location.href = 'login.html';
+          return;
+        }
+
+        userRole = profile.role;
+        document.getElementById('dash-user-name').textContent = 'مرحباً، ' + profile.name;
+        if (profile.avatar_url) {
+          document.getElementById('dash-user-avatar').src = profile.avatar_url;
+        }
+
+        if (userRole === 'publisher' || userRole === 'editor') {
+          document.getElementById('sidebar-articles').style.display = '';
+        }
+
+        loadProfile();
+        setupProfileForm();
+        setupTabs();
+
+        var logoutBtn = document.getElementById('logout-btn');
+        var logoutModal = document.getElementById('logout-modal');
+        if (logoutBtn && logoutModal) {
+          logoutBtn.addEventListener('click', function (e) { e.preventDefault(); logoutModal.classList.add('confirm-modal-overlay--open'); });
+          document.getElementById('cancel-logout').addEventListener('click', function () { logoutModal.classList.remove('confirm-modal-overlay--open'); });
+          logoutModal.addEventListener('click', function (e) { if (e.target === logoutModal) logoutModal.classList.remove('confirm-modal-overlay--open'); });
+          document.getElementById('confirm-logout').addEventListener('click', async function () { await supabaseClient.auth.signOut(); window.location.href = 'login.html'; });
+        }
+      } catch (e) { console.error('dashboard.js error:', e); }
+    });
+
+    function setupTabs() {
+      document.querySelectorAll('.dashboard-sidebar__link').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          var tab = link.getAttribute('data-tab');
+          document.querySelectorAll('.dashboard-sidebar__link').forEach(function (l) { l.classList.remove('dashboard-sidebar__link--active'); });
+          link.classList.add('dashboard-sidebar__link--active');
+          document.querySelectorAll('.dashboard-main > div').forEach(function (t) { t.style.display = 'none'; });
+          var target = document.getElementById('tab-' + tab);
+          if (target) target.style.display = '';
+        });
+      });
+    }
+
+    function loadProfile() {
+      var nameEl = document.getElementById('profile-name');
+      var emailEl = document.getElementById('profile-email');
+      var avatarEl = document.getElementById('profile-avatar');
+      var previewEl = document.getElementById('profile-avatar-preview');
+      var roleEl = document.getElementById('profile-role');
+      if (!nameEl) return;
+
+      supabaseClient.auth.getSession().then(function (res) {
+        var user = res.data.session.user;
+        supabaseClient.from('profiles').select('name, email, avatar_url, role').eq('id', user.id).maybeSingle().then(function (pRes) {
+          var p = pRes.data;
+          if (!p) return;
+          nameEl.value = p.name || '';
+          emailEl.value = p.email || user.email || '';
+          if (p.avatar_url) {
+            avatarEl.value = p.avatar_url;
+            previewEl.src = p.avatar_url;
+            previewEl.style.display = '';
+          }
+          roleEl.innerHTML = '<i class="fas fa-shield-alt" aria-hidden="true"></i> ' + (roleNames[p.role] || p.role);
+        });
+      });
+
+      avatarEl.addEventListener('input', function () {
+        var url = avatarEl.value.trim();
+        if (url) { previewEl.src = url; previewEl.style.display = ''; }
+        else { previewEl.style.display = 'none'; }
+      });
+    }
+
+    function setupProfileForm() {
+      var form = document.getElementById('profile-form');
+      if (!form) return;
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        var name = document.getElementById('profile-name').value.trim();
+        var avatar = document.getElementById('profile-avatar').value.trim();
+        var pass = document.getElementById('profile-password').value;
+        var passConfirm = document.getElementById('profile-password-confirm').value;
+        var successEl = document.getElementById('profile-success');
+        var btn = document.getElementById('profile-save-btn');
+
+        if (!name) { showNotification('الاسم مطلوب', 'error'); return; }
+        if (pass && pass !== passConfirm) { showNotification('كلمتا المرور غير متطابقتين', 'error'); return; }
+        if (pass && pass.length < 6) { showNotification('كلمة المرور يجب أن تكون 6 أحرف على الأقل', 'error'); return; }
+
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جارٍ الحفظ...';
+
+        var userId = currentUserId;
+        var errs = [];
+
+        if (name) {
+          var profileRes = await supabaseClient.from('profiles').update({ name: name, avatar_url: avatar || null }).eq('id', userId);
+          if (profileRes.error) errs.push(profileRes.error.message);
+        }
+
+        if (pass) {
+          var authRes = await supabaseClient.auth.updateUser({ password: pass });
+          if (authRes.error) errs.push(authRes.error.message);
+        }
+
+        btn.disabled = false; btn.innerHTML = '<i class="fas fa-save"></i> حفظ التغييرات';
+
+        if (errs.length > 0) {
+          showNotification('خطأ: ' + errs.join(', '), 'error');
+        } else {
+          document.getElementById('profile-password').value = '';
+          document.getElementById('profile-password-confirm').value = '';
+          if (successEl) successEl.style.display = 'block';
+          setTimeout(function () { if (successEl) successEl.style.display = 'none'; }, 4000);
+          showNotification('تم حفظ التغييرات بنجاح', 'success');
+          document.getElementById('dash-user-name').textContent = 'مرحباً، ' + name;
+        }
+      });
+    }
+  </script>
+</body>
+</html>
