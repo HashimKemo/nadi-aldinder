@@ -1286,6 +1286,8 @@ blockquote {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .news-card:hover .news-card__title {
@@ -1302,6 +1304,8 @@ blockquote {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .news-card__author {

@@ -643,8 +643,10 @@
       
       var statsSection = document.querySelector('.stats-section');
       if (statsSection) {
-        loadStats().then(function () { statsObserver.observe(statsSection); });
+        statsObserver.observe(statsSection);
       }
+
+      loadStats();
 
       loadLatestArticles();
       
