@@ -51,7 +51,40 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.reveal').forEach(function (el) { window.revealObserver.observe(el); });
 
   checkUserSession();
+  applyTheme();
+  document.querySelectorAll('.theme-toggle').forEach(function (btn) {
+    btn.addEventListener('click', toggleTheme);
+  });
+  window.addEventListener('resize', applyTheme);
 });
+
+/* ——— الوضع الليلي ——— */
+function getPreferredTheme() {
+  if (window.innerWidth < 768) return 'light';
+  var stored = localStorage.getItem('theme');
+  if (stored) return stored;
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
+  return 'light';
+}
+
+function applyTheme() {
+  var theme = getPreferredTheme();
+  document.documentElement.setAttribute('data-theme', theme);
+  document.querySelectorAll('.theme-toggle').forEach(function (btn) {
+    var icon = btn.querySelector('i');
+    if (icon) {
+      icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    }
+    btn.setAttribute('aria-label', theme === 'dark' ? 'الوضع النهاري' : 'الوضع الليلي');
+  });
+}
+
+function toggleTheme() {
+  var current = document.documentElement.getAttribute('data-theme');
+  var next = current === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', next);
+  applyTheme();
+}
 
 async function checkUserSession() {
   if (window.location.pathname.indexOf('login.html') !== -1) return;
@@ -67,7 +100,7 @@ async function checkUserSession() {
   if (!profileRes.data || !profileRes.data.is_approved) return;
 
   var p = profileRes.data;
-  var roleNames = { admin: 'أدمن', editor: 'محرر', publisher: 'ناشر', viewer: 'مشاهد' };
+  var roleNames = { admin: 'أدمن', editor: 'محرر', publisher: 'ناشر', member: 'عضو' };
 
   var dashItem = document.getElementById('nav-dashboard');
   var userInfo = document.getElementById('nav-user-info');

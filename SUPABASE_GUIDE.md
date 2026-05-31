@@ -62,7 +62,7 @@ CREATE TABLE profiles (
   id UUID REFERENCES auth.users ON DELETE CASCADE PRIMARY KEY,
   name TEXT NOT NULL,
   email TEXT,
-  role TEXT DEFAULT 'publisher' CHECK (role IN ('admin', 'editor', 'publisher', 'viewer')),
+  role TEXT DEFAULT 'publisher' CHECK (role IN ('admin', 'editor', 'publisher', 'member')),
   is_approved BOOLEAN DEFAULT false,
   avatar_url TEXT DEFAULT 'https://i.pravatar.cc/100?img=1',
   created_at TIMESTAMPTZ DEFAULT NOW()
@@ -110,7 +110,7 @@ CREATE TABLE events (
 > ALTER TABLE profiles DROP CONSTRAINT IF EXISTS profiles_role_check;
 > ALTER TABLE profiles DROP CONSTRAINT IF EXISTS profiles_role_check;
 > ALTER TABLE profiles ADD CONSTRAINT profiles_role_check 
->   CHECK (role IN ('admin', 'editor', 'publisher', 'viewer'));
+>   CHECK (role IN ('admin', 'editor', 'publisher', 'member'));
 > ```
 
 اضغط **Run** — سيتم إنشاء جميع الجداول.
@@ -864,10 +864,46 @@ var commentsRes = await supabaseClient
 3. يظهر إشعار للمشرف مع رابط signup.html ليشاركه مع العضو
 4. يذهب العضو إلى signup.html ← يدخل البريد والاسم وكلمة المرور
 5. signup.html يتأكد via is_email_approved(email) أن الطلب معتمد
-6. ينشئ حساب Auth عبر signUp() ← يُدرج profile مع role='viewer', is_approved=true
+6. ينشئ حساب Auth عبر signUp() ← يُدرج profile مع role='member', is_approved=true
 7. يوقّع الخروج تلقائياً ← يُوجّه إلى login.html
 8. يسجل العضو الدخول ← يُوجّه حسب صلاحياته
 ```
+
+### الترحيل: إضافة دور member ودالة إنشاء الحساب
+
+> **ملاحظة:** إذا كان مشروع Supabase لديه "Confirm email" مفعّلاً، يُفضّل تعطيله من **Authentication → Settings → Disable email confirmation** لأن الأعضاء معتمدون مسبقاً.
+
+شغّل هذا الكود في SQL Editor لإضافة دور `member` ودالة إنشاء الحساب التي تحل مشكلة 403:
+
+```sql
+-- تحديث الأدوار الحالية من viewer إلى member
+UPDATE profiles SET role = 'member' WHERE role = 'viewer';
+
+-- تحديث CHECK constraint
+ALTER TABLE profiles DROP CONSTRAINT IF EXISTS profiles_role_check;
+ALTER TABLE profiles ADD CONSTRAINT profiles_role_check 
+  CHECK (role IN ('admin', 'editor', 'publisher', 'member'));
+
+-- دالة SECURITY DEFINER لإنشاء الملف الشخصي (تتجاوز RLS وتحل مشكلة 403)
+CREATE OR REPLACE FUNCTION public.create_profile_on_signup(
+  user_id UUID, user_name TEXT, user_email TEXT
+) RETURNS void LANGUAGE plpgsql SECURITY DEFINER AS $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM public.membership_requests WHERE email = user_email AND status = 'approved') THEN
+    INSERT INTO public.profiles (id, name, email, role, is_approved)
+    VALUES (user_id, user_name, user_email, 'member', true)
+    ON CONFLICT (id) DO NOTHING;
+  ELSE
+    RAISE EXCEPTION 'لم يتم اعتماد البريد الإلكتروني. قدّم طلب انضمام أولاً.';
+  END IF;
+END;
+$$;
+
+-- منح صلاحية للمستخدمين غير المسجلين (ضروري ليعمل بعد signUp)
+GRANT EXECUTE ON FUNCTION public.create_profile_on_signup TO anon, authenticated;
+```
+
+يوجد نسخة من هذا الكود في `sql/member_role_migration.sql` يمكن رفعها مباشرة إلى SQL Editor.
 
 ### SQL المطلوب للقاعدة (شغّل في SQL Editor)
 

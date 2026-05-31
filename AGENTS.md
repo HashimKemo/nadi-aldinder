@@ -34,7 +34,7 @@ Static multi-page Arabic HTML site (10 pages: 9 original + 404.html). **No build
 | `admin` | All 5 tabs | Full (create, edit, delete, publish) |
 | `editor` | Dashboard + Articles only | Create + edit (no delete) |
 | `publisher` | Dashboard + Articles only | Create + edit + publish |
-| `viewer` | Redirected to `index.html` | None |
+| `member` | Redirected to `index.html` | None (account only, no dashboard) |
 
 - `admin.html` — `setupRoleBasedUI()` hides tabs by `data-role="admin"` attribute.
 - `loadMembers()` and `loadSubscribers()` have `if (!container) return;` null guard.
