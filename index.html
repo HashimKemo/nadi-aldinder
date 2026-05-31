@@ -576,38 +576,57 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
 
-      // 3. ربط الإحصائيات بـ Supabase + تفعيل العد التصاعدي
       var statNumbers = document.querySelectorAll('.stat-box__number');
-      
+      var categoryNames = {
+        history: 'تاريخ وتراث', literature: 'أدب وفن', opinion: 'رأي ثقافي',
+        culture: 'ثقافة', society: 'مجتمع', events: 'فعاليات', news: 'أخبار'
+      };
+
       async function loadStats() {
-        var [artRes, memRes] = await Promise.all([
+        var [artRes, memRes, subRes, evtRes] = await Promise.all([
           supabaseClient.from('articles').select('*', { count: 'exact', head: true }).eq('is_published', true),
-          supabaseClient.from('membership_requests').select('*', { count: 'exact', head: true }).eq('status', 'approved')
+          supabaseClient.from('membership_requests').select('*', { count: 'exact', head: true }).eq('status', 'approved'),
+          supabaseClient.from('subscribers').select('*', { count: 'exact', head: true }),
+          supabaseClient.from('events').select('*', { count: 'exact', head: true }).gte('date', new Date().toISOString())
         ]);
-        if (statNumbers[0]) statNumbers[0].setAttribute('data-target', memRes.count || 120);
-        if (statNumbers[1]) statNumbers[1].setAttribute('data-target', artRes.count || 85);
+        if (statNumbers[0]) statNumbers[0].setAttribute('data-target', memRes.count || 0);
+        if (statNumbers[1]) statNumbers[1].setAttribute('data-target', artRes.count || 0);
+      }
+
+      async function loadLatestArticles() {
+        var grid = document.querySelector('.grid--3 .news-card') ? document.querySelector('.grid--3') : null;
+        if (!grid) return;
+        var res = await supabaseClient.from('articles').select('*').eq('is_published', true).order('published_at', { ascending: false }).limit(3);
+        if (!res.data || res.data.length === 0) return;
+        grid.innerHTML = '';
+        res.data.forEach(function (a) {
+          var card = document.createElement('article');
+          card.className = 'news-card reveal';
+          card.innerHTML =
+            '<img class="news-card__image" src="' + (a.cover_image || 'images/og-cover.jpg') + '" alt="' + a.title + '" loading="lazy" decoding="async">' +
+            '<div class="news-card__body">' +
+            '<div class="news-card__meta"><span class="news-card__category">' + (categoryNames[a.category] || a.category) + '</span><span class="news-card__date">' + new Date(a.published_at).toLocaleDateString('ar-SD') + '</span></div>' +
+            '<h3 class="news-card__title"><a href="article.html?id=' + a.id + '">' + a.title + '</a></h3>' +
+            '<p class="news-card__excerpt">' + (a.excerpt || '') + '</p>' +
+            '<div class="news-card__author">' +
+            '<img class="news-card__author-avatar" src="' + (a.author_avatar || 'images/default-avatar.png') + '" alt="' + a.author + '" loading="lazy">' +
+            '<div><div class="news-card__author-name">' + a.author + '</div><div class="news-card__author-title">كاتب</div></div></div></div>';
+          grid.appendChild(card);
+          window.revealObserver && window.revealObserver.observe(card);
+        });
       }
       
       var counterDuration = 1500;
-      
       var animateCounters = function (element) {
         var target = parseInt(element.getAttribute('data-target'), 10);
-        var start = 0;
+        if (isNaN(target) || target <= 0) { element.textContent = '0'; return; }
+        if (target === 2018) { element.textContent = '٢٠١٨'; return; }
         var stepTime = Math.abs(Math.floor(counterDuration / target));
-        var current = start;
-        
-        if (target === 2018) { current = 1950; }
-        
+        var current = 0;
         var timer = setInterval(function () {
-          if (target > 1000) { current += 5; }
-          else { current += 1; }
-          
-          if (current >= target) {
-            element.textContent = target.toLocaleString('ar-EG');
-            clearInterval(timer);
-          } else {
-            element.textContent = current.toLocaleString('ar-EG');
-          }
+          current += 1;
+          if (current >= target) { element.textContent = target.toLocaleString('ar-EG'); clearInterval(timer); }
+          else { element.textContent = current.toLocaleString('ar-EG'); }
         }, Math.max(stepTime, 15));
       };
       
@@ -625,7 +644,7 @@
         loadStats().then(function () { statsObserver.observe(statsSection); });
       }
 
-      }
+      loadLatestArticles();
       
     });
   </script>
