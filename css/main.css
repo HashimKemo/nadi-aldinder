@@ -952,7 +952,7 @@ blockquote {
     visibility: hidden;
     pointer-events: none;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
-    z-index: 999;
+    z-index: 1002;
     overflow: hidden;
     padding: 0;
     box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
@@ -1141,6 +1141,13 @@ blockquote {
   body.nav-open {
     overflow: hidden !important;
     height: 100vh !important;
+  }
+
+  html.nav-open .header,
+  body.nav-open .header {
+    background: transparent;
+    box-shadow: none;
+    border-bottom: none;
   }
 
   .theme-toggle:not(.nav__drawer-theme) {
