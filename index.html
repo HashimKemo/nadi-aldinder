@@ -583,14 +583,14 @@
       };
 
       async function loadStats() {
-        var [artRes, memRes, subRes, evtRes] = await Promise.all([
-          supabaseClient.from('articles').select('*', { count: 'exact', head: true }).eq('is_published', true),
-          supabaseClient.from('membership_requests').select('*', { count: 'exact', head: true }).eq('status', 'approved'),
-          supabaseClient.from('subscribers').select('*', { count: 'exact', head: true }),
-          supabaseClient.from('events').select('*', { count: 'exact', head: true }).gte('date', new Date().toISOString())
-        ]);
-        if (statNumbers[0]) statNumbers[0].setAttribute('data-target', memRes.count || 0);
-        if (statNumbers[1]) statNumbers[1].setAttribute('data-target', artRes.count || 0);
+        try {
+          var [artRes, memRes] = await Promise.all([
+            supabaseClient.from('articles').select('*', { count: 'exact', head: true }).eq('is_published', true),
+            supabaseClient.from('membership_requests').select('*', { count: 'exact', head: true }).eq('status', 'approved')
+          ]);
+          if (statNumbers[0]) statNumbers[0].setAttribute('data-target', memRes.count || 0);
+          if (statNumbers[1]) statNumbers[1].setAttribute('data-target', artRes.count || 0);
+        } catch (e) { console.warn('loadStats error:', e); }
       }
 
       async function loadLatestArticles() {
@@ -620,14 +620,16 @@
       var animateCounters = function (element) {
         var target = parseInt(element.getAttribute('data-target'), 10);
         if (isNaN(target) || target <= 0) { element.textContent = '0'; return; }
-        if (target === 2018) { element.textContent = '٢٠١٨'; return; }
+        if (target === 2018) { element.textContent = '\u0662\u0660\u0661\u0668'; return; }
+        if (target <= 10) { element.textContent = target.toLocaleString('ar-EG'); return; }
         var stepTime = Math.abs(Math.floor(counterDuration / target));
+        if (stepTime < 20) stepTime = 20;
         var current = 0;
         var timer = setInterval(function () {
           current += 1;
           if (current >= target) { element.textContent = target.toLocaleString('ar-EG'); clearInterval(timer); }
           else { element.textContent = current.toLocaleString('ar-EG'); }
-        }, Math.max(stepTime, 15));
+        }, stepTime);
       };
       
       var statsObserver = new IntersectionObserver(function (entries) {
