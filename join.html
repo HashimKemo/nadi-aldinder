@@ -291,7 +291,7 @@
       </div>
 
       <div class="reveal">
-        <form class="join-form" id="join-form" action="https://formspree.io/f/xnqkyorw" method="POST">
+        <form class="join-form" id="join-form">
           <h3 style="font-family: var(--font-heading); font-size: var(--text-lg); color: var(--color-primary-dark); margin-bottom: var(--space-6);">
             البيانات الشخصية
           </h3>
@@ -347,7 +347,7 @@
                 البحث والتوثيق
               </label>
               <label class="form-check-item">
-
+                <input type="checkbox" name="interests[]" value="events">
                 تنظيم الفعاليات
               </label>
               <label class="form-check-item">
@@ -399,7 +399,7 @@
               <div class="auth-card__icon" style="font-size: 3.5rem;"><i class="fas fa-gift" aria-hidden="true"></i></div>
               <h2 class="auth-card__title">تم استلام طلبك! <i class="fas fa-check-circle" aria-hidden="true" style="color: var(--color-success);"></i></h2>
               <p class="auth-card__description" style="font-size: var(--text-base); line-height: var(--leading-relaxed); margin-top: var(--space-4);">
-                شكراً لاهتمامك بالانضمام إلى نادي الدندر. سيراجع فريقنا طلبك ويتواصل معك عبر البريد الإلكتروني خلال أسبوع واحد. في الانتظار، يمكنك تصفح مقالاتنا والتعرف على أنشطة النادي.
+                شكراً لاهتمامك بالانضمام إلى نادي الدندر. سيراجع فريقنا طلبك خلال أسبوع واحد. بعد الموافقة، يمكنك إنشاء حسابك من صفحة <a href="login.html" style="color:var(--color-primary);font-weight:var(--weight-semibold);">تسجيل الدخول</a>.
               </p>
             </div>
             <div style="text-align: center; margin-top: var(--space-6);">
@@ -514,9 +514,9 @@
             successDiv.style.display = 'block';
             errorDiv.style.display = 'none';
           } else {
-            errorDiv.style.display = 'flex';
+            errorDiv.style.display = 'block';
             submitBtn.disabled = false;
-            submitBtn.innerHTML = 'إرسال الطلب';
+            submitBtn.innerHTML = 'أرسل طلب الانضمام';
           }
         });
       }

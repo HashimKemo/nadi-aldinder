@@ -142,7 +142,7 @@
                 <input type="checkbox" name="remember" value="1">
                 تذكرني
               </label>
-              <a href="#" class="form-forgot">نسيت كلمة المرور؟</a>
+              <a href="#" class="form-forgot" id="forgot-pwd-link">نسيت كلمة المرور؟</a>
             </div>
 
             <button type="submit" class="btn btn--primary login-btn">دخول</button>
@@ -152,7 +152,7 @@
 
           <p class="login-no-account">
             ليس لديك حساب بعد؟<br>
-            <a href="join.html">قدّم طلب انضمامك</a>
+            <a href="join.html">قدّم طلب انضمامك</a> · <a href="signup.html">أنشئ حسابك</a>
           </p>
         </div>
       </div>
@@ -219,8 +219,8 @@
       const successDiv = document.getElementById('login-success');
       const submitBtn = form.querySelector('button[type="submit"]');
 
-      let attemptCount = 0;
-      let lockedUntil = 0;
+      let attemptCount = parseInt(sessionStorage.getItem('loginAttempts') || '0', 10);
+      let lockedUntil = parseInt(sessionStorage.getItem('loginLocked') || '0', 10);
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -254,9 +254,12 @@
 
           if (error) {
             attemptCount++;
+            sessionStorage.setItem('loginAttempts', String(attemptCount));
             if (attemptCount >= 5) {
               lockedUntil = now + 30000;
+              sessionStorage.setItem('loginLocked', String(lockedUntil));
               attemptCount = 0;
+              sessionStorage.setItem('loginAttempts', '0');
               errorDiv.textContent = 'محاولات كثيرة. انتظر 30 ثانية.';
             } else {
               errorDiv.textContent = (error.message === 'Invalid login credentials')
@@ -301,6 +304,8 @@
             }
 
             attemptCount = 0;
+            sessionStorage.removeItem('loginAttempts');
+            sessionStorage.removeItem('loginLocked');
             successDiv.textContent = 'مرحباً بك أيها المشرف الأول! جارٍ تحميل لوحة التحكم...';
             successDiv.style.display = 'block';
             setTimeout(function () { window.location.href = 'admin.html'; }, 800);
@@ -313,11 +318,15 @@
 
             if (profile && profile.role === 'viewer' && profile.is_approved) {
               attemptCount = 0;
+              sessionStorage.removeItem('loginAttempts');
+              sessionStorage.removeItem('loginLocked');
               successDiv.textContent = 'مرحباً بك! تم تسجيل الدخول كمشاهد.';
               successDiv.style.display = 'block';
               setTimeout(function () { window.location.href = 'index.html'; }, 800);
             } else if (profile && (profile.role === 'admin' || profile.role === 'editor' || profile.role === 'publisher') && profile.is_approved) {
               attemptCount = 0;
+              sessionStorage.removeItem('loginAttempts');
+              sessionStorage.removeItem('loginLocked');
               successDiv.textContent = 'تم تسجيل الدخول بنجاح! جارٍ تحميل لوحة التحكم...';
               successDiv.style.display = 'block';
               setTimeout(function () { window.location.href = 'admin.html'; }, 800);
@@ -338,6 +347,33 @@
           submitBtn.innerHTML = 'دخول';
         }
       });
+
+      var forgotLink = document.getElementById('forgot-pwd-link');
+      if (forgotLink) {
+        forgotLink.addEventListener('click', async function (e) {
+          e.preventDefault();
+          var email = document.getElementById('username').value.trim();
+          if (!email) {
+            errorDiv.textContent = 'أدخل بريدك الإلكتروني أولاً ثم اضغط على "نسيت كلمة المرور".';
+            errorDiv.style.display = 'block';
+            return;
+          }
+          forgotLink.textContent = 'جارٍ الإرسال...';
+          forgotLink.style.pointerEvents = 'none';
+          var { error: resetErr } = await supabaseClient.auth.resetPasswordForEmail(email);
+          if (resetErr) {
+            errorDiv.textContent = 'خطأ في إرسال رابط إعادة التعيين: ' + resetErr.message;
+            errorDiv.style.display = 'block';
+            forgotLink.textContent = 'نسيت كلمة المرور؟';
+            forgotLink.style.pointerEvents = '';
+          } else {
+            successDiv.textContent = 'تم إرسال رابط إعادة تعيين كلمة المرور على بريدك الإلكتروني.';
+            successDiv.style.display = 'block';
+            forgotLink.textContent = 'نسيت كلمة المرور؟';
+            forgotLink.style.pointerEvents = '';
+          }
+        });
+      }
 
       var pwdToggle = document.getElementById('pwd-toggle');
       var pwdInput = document.getElementById('password');

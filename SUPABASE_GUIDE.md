@@ -81,10 +81,11 @@ CREATE TABLE membership_requests (
   full_name TEXT NOT NULL,
   email TEXT NOT NULL,
   phone TEXT,
-  birth_year INT,
-  qualification TEXT,
+  city TEXT,
+  origin TEXT,
   interests TEXT,
-  message TEXT,
+  bio TEXT,
+  how_knew TEXT,
   status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected')),
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -144,6 +145,27 @@ AS $$
   SELECT EXISTS (
     SELECT 1 FROM public.profiles
     WHERE id = auth.uid() AND role IN ('admin', 'editor', 'publisher') AND is_approved = true
+  );
+$$;
+
+-- التحقق مما إذا كان أول مستخدم يسجل الدخول (لإنشاء أول أدمن تلقائياً)
+CREATE OR REPLACE FUNCTION public.should_create_admin()
+RETURNS BOOLEAN
+LANGUAGE sql SECURITY DEFINER STABLE
+AS $$
+  SELECT NOT EXISTS (
+    SELECT 1 FROM public.profiles WHERE role = 'admin' AND is_approved = true
+  );
+$$;
+
+-- التحقق مما إذا كان البريد الإلكتروني معتمداً (لديه طلب عضوية مقبول)
+CREATE OR REPLACE FUNCTION public.is_email_approved(user_email TEXT)
+RETURNS BOOLEAN
+LANGUAGE sql SECURITY DEFINER STABLE
+AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM public.membership_requests
+    WHERE email = user_email AND status = 'approved'
   );
 $$;
 
@@ -829,6 +851,69 @@ var commentsRes = await supabaseClient
   .from('article_comments')
   .select('*', { count: 'exact', head: true });
 ```
+
+---
+
+## الجزء 14: تدفق الانضمام الكامل (Join → Signup → Login)
+
+### سير العمل الكامل
+
+```
+1. يملأ الزائر استمارة join.html ← يُدرج في membership_requests (status = 'pending')
+2. يرى المشرف الطلب في لوحة التحكم admin.html ← يضغط "قبول"
+3. يظهر إشعار للمشرف مع رابط signup.html ليشاركه مع العضو
+4. يذهب العضو إلى signup.html ← يدخل البريد والاسم وكلمة المرور
+5. signup.html يتأكد via is_email_approved(email) أن الطلب معتمد
+6. ينشئ حساب Auth عبر signUp() ← يُدرج profile مع role='viewer', is_approved=true
+7. يوقّع الخروج تلقائياً ← يُوجّه إلى login.html
+8. يسجل العضو الدخول ← يُوجّه حسب صلاحياته
+```
+
+### SQL المطلوب للقاعدة (شغّل في SQL Editor)
+
+للتحديث من النظام القديم إلى الجديد:
+
+```sql
+-- إضافة الأعمدة الجديدة لجدول طلبات العضوية
+ALTER TABLE membership_requests 
+  ADD COLUMN IF NOT EXISTS city TEXT,
+  ADD COLUMN IF NOT EXISTS origin TEXT,
+  ADD COLUMN IF NOT EXISTS bio TEXT,
+  ADD COLUMN IF NOT EXISTS how_knew TEXT;
+
+-- حذف الأعمدة القديمة غير المستخدمة
+ALTER TABLE membership_requests 
+  DROP COLUMN IF EXISTS birth_year,
+  DROP COLUMN IF EXISTS qualification,
+  DROP COLUMN IF EXISTS message;
+
+-- إنشاء دالة التحقق من البريد المعتمد
+CREATE OR REPLACE FUNCTION public.is_email_approved(user_email TEXT)
+RETURNS BOOLEAN
+LANGUAGE sql SECURITY DEFINER STABLE
+AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM public.membership_requests
+    WHERE email = user_email AND status = 'approved'
+  );
+$$;
+
+-- إنشاء دالة أول مشرف (ضرورية لتسجيل الدخول الأول)
+CREATE OR REPLACE FUNCTION public.should_create_admin()
+RETURNS BOOLEAN
+LANGUAGE sql SECURITY DEFINER STABLE
+AS $$
+  SELECT NOT EXISTS (
+    SELECT 1 FROM public.profiles WHERE role = 'admin' AND is_approved = true
+  );
+$$;
+```
+
+### الصفحات الجديدة
+
+| الملف | الدور |
+|-------|-------|
+| `signup.html` | إنشاء حساب جديد للأعضاء المعتمدين — يتحقق من الموافقة قبل إنشاء الحساب |
 
 ---
 
