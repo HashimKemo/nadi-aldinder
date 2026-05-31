@@ -647,27 +647,32 @@
         return;
       }
 
-      var profileRes = await supabaseClient.from('profiles').select('email, role, is_approved');
+      var profileRes = await supabaseClient.from('profiles').select('id, name, email, role, is_approved');
       var profiles = profileRes.data || [];
-      var profileByEmail = {};
-      profiles.forEach(function (p) { if (p.email) profileByEmail[p.email.toLowerCase().trim()] = p; });
+      var profileByEmail = {}, profileByName = {};
+      profiles.forEach(function (p) {
+        if (p.email) profileByEmail[p.email.toLowerCase().trim()] = p;
+        if (p.name) profileByName[p.name.toLowerCase().trim()] = p;
+      });
 
       (res.data || []).forEach(function (r) {
         var html = '<div class="admin-list-item"><div class="admin-list-item__info"><div class="admin-list-item__title">' + r.full_name + '</div><div class="admin-list-item__meta">' + r.email + (r.phone ? ' · ' + r.phone : '') + '</div></div>';
 
         var match = r.email ? profileByEmail[r.email.toLowerCase().trim()] : null;
+        if (!match && r.full_name) match = profileByName[r.full_name.toLowerCase().trim()] || null;
+
         if (match && match.role !== 'admin' && userRole === 'admin') {
           if (match.role === 'editor') {
             html += '<div style="font-size:11px;color:var(--color-success);flex-shrink:0;">محرر</div>';
           } else if (match.role === 'publisher') {
             html += '<div style="font-size:11px;color:var(--color-success);flex-shrink:0;">ناشر</div>';
           } else if (match.role === 'viewer') {
-            html += '<div class="pending-member__actions" style="flex-shrink:0;"><button class="btn btn--primary btn--sm" onclick="promoteMember(\'' + r.email.replace(/'/g, "\\'") + '\', \'publisher\', this)" style="font-size:11px;"><i class="fas fa-arrow-up"></i> ناشر</button><button class="btn btn--primary btn--sm" onclick="promoteMember(\'' + r.email.replace(/'/g, "\\'") + '\', \'editor\', this)" style="font-size:11px;"><i class="fas fa-arrow-up"></i> محرر</button></div>';
+            html += '<div class="pending-member__actions" style="flex-shrink:0;"><button class="btn btn--primary btn--sm" onclick="promoteMember(\'' + match.id + '\', \'publisher\', this)" style="font-size:11px;"><i class="fas fa-arrow-up"></i> ناشر</button><button class="btn btn--primary btn--sm" onclick="promoteMember(\'' + match.id + '\', \'editor\', this)" style="font-size:11px;"><i class="fas fa-arrow-up"></i> محرر</button></div>';
           } else {
-            html += '<button class="btn btn--primary btn--sm" onclick="promoteMember(\'' + r.email.replace(/'/g, "\\'") + '\', \'editor\', this)" style="flex-shrink:0;"><i class="fas fa-arrow-up"></i> ترقية إلى Editor</button>';
+            html += '<button class="btn btn--primary btn--sm" onclick="promoteMember(\'' + match.id + '\', \'editor\', this)" style="flex-shrink:0;"><i class="fas fa-arrow-up"></i> ترقية إلى Editor</button>';
           }
         } else if (!match && userRole === 'admin') {
-          html += '<div style="font-size:11px;color:var(--text-muted);flex-shrink:0;">ليس لديه حساب دخول</div>';
+          html += '<div class="pending-member__actions" style="flex-shrink:0;"><input type="email" id="link-email-' + r.id + '" placeholder="البريد الإلكتروني للحساب" style="font-size:11px;padding:2px 6px;width:140px;border:1px solid var(--border-color);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--text-primary);"><button class="btn btn--primary btn--sm" onclick="linkMemberAccount(' + r.id + ', this)" style="font-size:11px;"><i class="fas fa-link"></i> ربط حساب</button></div>';
         }
 
         html += '<div style="font-size:11px;color:var(--text-muted);flex-shrink:0;margin-right:var(--space-2);">' + new Date(r.created_at).toLocaleDateString('ar-SD') + '</div></div>';
@@ -675,13 +680,13 @@
       });
     }
 
-    async function promoteMember(email, targetRole, btn) {
+    async function promoteMember(profileId, targetRole, btn) {
       btn.disabled = true;
       btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-      var profileRes = await supabaseClient.from('profiles').select('id, role').eq('email', email).maybeSingle();
+      var profileRes = await supabaseClient.from('profiles').select('id, role').eq('id', profileId).maybeSingle();
       var profile = profileRes.data;
       if (!profile) {
-        showNotification('لم يتم العثور على حساب بهذا البريد الإلكتروني', 'error');
+        showNotification('لم يتم العثور على الحساب', 'error');
         btn.closest('.pending-member__actions').querySelectorAll('button').forEach(function (b) { b.disabled = false; });
         return;
       }
@@ -696,9 +701,36 @@
         showNotification('خطأ: ' + updRes.error.message, 'error');
         btn.closest('.pending-member__actions').querySelectorAll('button').forEach(function (b) { b.disabled = false; });
       } else {
-        showNotification('تمت الترقية إلى ' + (targetRole === 'editor' ? 'محرر' : 'ناشر') + ' بنجاح', 'success');
+        showNotification('تمت الترقية إلى ' + roleLabel + ' بنجاح', 'success');
         btn.closest('.pending-member__actions').outerHTML = '<div style="font-size:11px;color:var(--color-success);flex-shrink:0;">' + roleLabel + '</div>';
       }
+    }
+
+    async function linkMemberAccount(reqId, btn) {
+      var emailInput = document.getElementById('link-email-' + reqId);
+      var email = emailInput ? emailInput.value.trim() : '';
+      if (!email) { showNotification('الرجاء إدخال البريد الإلكتروني للحساب', 'error'); return; }
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+      var profileRes = await supabaseClient.from('profiles').select('id, name, email, role').eq('email', email).maybeSingle();
+      var profile = profileRes.data;
+      if (!profile) {
+        showNotification('لم يتم العثور على حساب بهذا البريد الإلكتروني', 'error');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-link"></i> ربط حساب';
+        return;
+      }
+      if (profile.role === 'admin') {
+        showNotification('هذا الحساب أدمن ولا يمكن ربطه', 'error');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-link"></i> ربط حساب';
+        return;
+      }
+      var roleNames = { editor: 'محرر', publisher: 'ناشر', viewer: 'مشاهد' };
+      showNotification('تم ربط العضو بالحساب: ' + profile.name + ' (' + (roleNames[profile.role] || profile.role) + ')', 'success');
+      btn.closest('.pending-member__actions').outerHTML = '<div style="display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0;">' +
+        '<button class="btn btn--primary btn--sm" onclick="promoteMember(\'' + profile.id + '\', \'publisher\', this)" style="font-size:11px;"><i class="fas fa-arrow-up"></i> ناشر</button>' +
+        '<button class="btn btn--primary btn--sm" onclick="promoteMember(\'' + profile.id + '\', \'editor\', this)" style="font-size:11px;"><i class="fas fa-arrow-up"></i> محرر</button></div>';
     }
 
     /* ---- مشتركون ---- */
