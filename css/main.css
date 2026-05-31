@@ -1,4 +1,4 @@
-/* ============================================
+﻿/* ============================================
    نادي الدندر الثقافي الاجتماعي
    نظام التصميم الموحد — main.css
    الإصدار: 1.0
@@ -255,6 +255,9 @@ html { transition: background var(--transition-slow), color var(--transition-slo
 [data-theme="dark"] .form-select {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23dca83e' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
 }
+[data-theme="dark"] .form-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23dca83e' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+}
 
 /* ============================================
     2. Reset وإعدادات أساسية
@@ -318,7 +321,14 @@ select {
   color: inherit;
   border: none;
   outline: none;
-  background: none;
+  background:
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--color-primary, #1b4d3e);
+  outline-offset: 2px;
+} none;
 }
 
 h1, h2, h3, h4, h5, h6 {

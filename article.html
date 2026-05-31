@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -59,6 +59,13 @@
     .article-nav-link:hover { background: var(--color-secondary-bg); }
     .article-nav-link__dir { font-size: var(--text-xs); color: var(--text-muted); margin-bottom: var(--space-1); }
     .article-nav-link__title { font-size: var(--text-sm); font-weight: var(--weight-bold); color: var(--color-primary); }
+      /* Confirm Modal for comment deletion */
+    .confirm-modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-overlay, rgba(0,0,0,.5)); z-index: 1001; justify-content: center; align-items: center; }
+    .confirm-modal-overlay--open { display: flex; }
+    .confirm-modal { background: var(--bg-card, #fff); border-radius: var(--radius-xl, 16px); padding: var(--space-8, 32px); max-width: 400px; width: 90%; text-align: center; box-shadow: var(--shadow-xl, 0 20px 60px rgba(0,0,0,.2)); }
+    .confirm-modal__icon { font-size: 2rem; color: var(--color-error, #c0392b); margin-bottom: var(--space-4, 16px); }
+    .confirm-modal__text { font-size: var(--text-base, 1rem); color: var(--text-primary, #3d2e1e); margin-bottom: var(--space-6, 24px); line-height: var(--leading-relaxed, 1.6); }
+    .confirm-modal__actions { display: flex; gap: var(--space-3, 12px); justify-content: center; }
       /* Confirm Modal for comment deletion */
     .confirm-modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-overlay, rgba(0,0,0,.5)); z-index: 1001; justify-content: center; align-items: center; }
     .confirm-modal-overlay--open { display: flex; }
@@ -653,16 +660,35 @@
       });
 
       window.deleteComment = async function (commentId) {
-        if (!confirm('هل أنت متأكد من حذف هذا التعليق؟')) return;
-        try {
-          var { error } = await supabaseClient.from('article_comments').delete().eq('id', commentId);
-          if (error) { showCommentMsg('خطأ: ' + error.message, 'error'); return; }
-          showCommentMsg('تم حذف التعليق', 'success');
-          loadComments();
-        } catch (e) { showCommentMsg('خطأ في الحذف', 'error'); }
-      };
-
-      function showCommentMsg(msg, type) {
+        var modal = document.getElementById('comment-delete-modal');
+        var confirmBtn = document.getElementById('confirm-delete-comment');
+        var cancelBtn = document.getElementById('cancel-delete-comment');
+        if (!modal || !confirmBtn) return;
+        
+        modal.classList.add('confirm-modal-overlay--open');
+        
+        var cleanup = function () {
+          modal.classList.remove('confirm-modal-overlay--open');
+          confirmBtn.removeEventListener('click', doDelete);
+          cancelBtn.removeEventListener('click', cleanup);
+        };
+        
+        var doDelete = async function () {
+          cleanup();
+          try {
+            var { error } = await supabaseClient.from('article_comments').delete().eq('id', commentId);
+            if (error) { showCommentMsg('خطأ: ' + error.message, 'error'); return; }
+            showCommentMsg('تم حذف التعليق', 'success');
+            loadComments();
+          } catch (e) { showCommentMsg('خطأ في الحذف', 'error'); }
+        };
+        
+        confirmBtn.addEventListener('click', doDelete);
+        cancelBtn.addEventListener('click', cleanup);
+        modal.addEventListener('click', function (e) {
+          if (e.target === modal) cleanup();
+        });
+      };function showCommentMsg(msg, type) {
         var existing = document.querySelector('.comment-form__notif');
         if (existing) existing.remove();
         var div = document.createElement('div');
@@ -684,6 +710,18 @@
       <div class="confirm-modal__actions">
         <button class="btn btn--primary" id="confirm-delete-comment" style="background: var(--color-error);">???</button>
         <button class="btn" id="cancel-delete-comment">?????</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm Delete Comment Modal -->
+  <div class="confirm-modal-overlay" id="comment-delete-modal">
+    <div class="confirm-modal">
+      <div class="confirm-modal__icon"><i class="fas fa-trash-alt" aria-hidden="true"></i></div>
+      <p class="confirm-modal__text">هل أنت متأكد من حذف هذا التعليق؟ سيتم حذف جميع الردود المرتبطة به.</p>
+      <div class="confirm-modal__actions">
+        <button class="btn btn--primary" id="confirm-delete-comment" style="background: var(--color-error);">حذف</button>
+        <button class="btn" id="cancel-delete-comment">إلغاء</button>
       </div>
     </div>
   </div>

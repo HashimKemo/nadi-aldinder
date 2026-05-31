@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -490,7 +490,7 @@
         </div>
         
         <!-- ملاحظة: نموذج النشرة متصل بـ Formspree (عدّل Action عند الربط) -->
-        <form class="subscribe-card__form" id="newsletter-form" action="https://formspree.io/f/xnqkyorw" method="POST">
+        <form class="subscribe-card__form newsletter-form" id="newsletter-form">
           <input type="email" class="subscribe-card__input" placeholder="بريدك الإلكتروني" required aria-label="البريد الإلكتروني">
           <button type="submit" class="btn btn--primary">اشترك الآن</button>
         </form>
@@ -625,20 +625,6 @@
         loadStats().then(function () { statsObserver.observe(statsSection); });
       }
 
-      // 4. معالجة تقديم النشرة البريدية عبر النموذج
-      const newsletterForm = document.getElementById('newsletter-form');
-      const newsletterSuccess = document.getElementById('newsletter-success');
-      
-      if (newsletterForm && newsletterSuccess) {
-        newsletterForm.addEventListener('submit', (e) => {
-          e.preventDefault();
-          // إخفاء النموذج وإظهار رسالة النجاح
-          newsletterForm.style.display = 'none';
-          newsletterSuccess.style.display = 'flex';
-          
-          // في الإنتاج الفعلي استخدم Formspree الحقيقي
-          console.log('Newsletter subscription successful');
-        });
       }
       
     });

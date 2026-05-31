@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -482,14 +482,16 @@
           submitBtn.disabled = true;
           submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جارٍ الإرسال...';
 
+                    const interests = Array.from(formData.getAll('interests[]')).join(', ');
           const { error } = await supabaseClient.from('membership_requests').insert({
             full_name: formData.get('full_name'),
             email: formData.get('email'),
-            phone: formData.get('phone'),
-            birth_year: parseInt(formData.get('birth_year')) || null,
-            qualification: formData.get('qualification') || null,
-            interests: formData.get('interests') || null,
-            message: formData.get('message') || null
+            phone: formData.get('phone') || null,
+            city: formData.get('city'),
+            origin: formData.get('origin') || null,
+            interests: interests || null,
+            bio: formData.get('bio'),
+            how_knew: formData.get('how_knew') || null
           });
 
           if (!error) {
