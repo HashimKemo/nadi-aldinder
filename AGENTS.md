@@ -7,8 +7,8 @@ Static multi-page Arabic HTML site (10 pages: 9 original + 404.html). **No build
 
 | Layer | File(s) | Role |
 |-------|---------|------|
-| Styles | `css/main.css` (~2700 lines) | CSS custom properties, RTL, responsive, dark mode vars |
-| Shared JS | `js/main.js` | Menu toggle, scroll reveal, `checkUserSession()` (session badge), dark mode toggle |
+| Styles | `css/main.css` (~2650 lines) | CSS custom properties, RTL, responsive |
+| Shared JS | `js/main.js` | Menu toggle, scroll reveal, `checkUserSession()` (session badge) |
 | Favicon | `images/favicon.svg`, `favicon.ico`, `images/favicon-{16,32}.png`, `images/apple-touch-icon.png` | Multi-format favicon set |
 | OG Image | `images/og-cover.jpg` | 1200×630 Open Graph image |
 | 404 | `404.html` | Custom error page |
@@ -48,7 +48,6 @@ Static multi-page Arabic HTML site (10 pages: 9 original + 404.html). **No build
 - **Arabic RTL**: `dir="rtl"` on `<html>`. CSS vars for spacing, no hardcoded margins.
 - **Animations**: `class="reveal"` + IntersectionObserver in `main.js`.
 - **Mobile menu**: Dropdown below header (not full-screen). `nav--open` / `menu-toggle--active` classes.
-- **Dark Mode**: `data-theme="dark"` on `<html>`. Toggle button (`.theme-toggle`) in nav. Preference saved to `localStorage`. Falls back to `prefers-color-scheme`. CSS variables overridden in `[data-theme="dark"]` block.
 - **Favicon**: Multi-format set in `images/` + root `favicon.ico`. All 10 HTML files reference all formats.
 - **JSON-LD**: Organization + WebSite on `index.html` and `about.html`. Article schema injected dynamically in `article.html`.
 - **Admin Profile**: `الإعدادات` tab in admin panel. Edits name, avatar, password via Supabase Auth.

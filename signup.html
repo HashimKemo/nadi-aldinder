@@ -94,7 +94,7 @@
         <a href="#">سياسة الخصوصية</a>
         <a href="#">الشروط والأحكام</a>
       </div>
-      <button class="theme-toggle nav__drawer-theme" aria-label="الوضع الليلي"><i class="fas fa-moon"></i> الوضع الليلي</button>
+
     </div>
   </nav>
 
@@ -289,12 +289,10 @@
             return;
           }
 
-          var { error: profileErr } = await supabaseClient.from('profiles').insert({
-            id: authData.user.id,
-            name: name,
-            email: email,
-            role: 'viewer',
-            is_approved: true
+          var { error: profileErr } = await supabaseClient.rpc('create_profile_on_signup', {
+            user_id: authData.user.id,
+            user_name: name,
+            user_email: email
           });
 
           if (profileErr) {
