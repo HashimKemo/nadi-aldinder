@@ -50,7 +50,7 @@ serve(async (req) => {
     });
   }
 
-  const { email, full_name } = await req.json();
+  const { email, full_name, redirect_to } = await req.json();
   if (!email) {
     return new Response(JSON.stringify({ error: "Email is required" }), {
       status: 400,
@@ -60,7 +60,7 @@ serve(async (req) => {
 
   const { data, error } = await supabase.auth.admin.inviteUserByEmail(email, {
     data: { full_name },
-    redirect_to: `${new URL(req.url).origin}/login.html`,
+    redirect_to: redirect_to || undefined,
   });
 
   if (error) {

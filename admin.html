@@ -628,7 +628,7 @@
           await fetch(SUPABASE_FUNCTIONS_URL + '/invite-member', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-            body: JSON.stringify({ email: reqRes.data.email, full_name: reqRes.data.full_name })
+            body: JSON.stringify({ email: reqRes.data.email, full_name: reqRes.data.full_name, redirect_to: window.location.origin + '/login.html' })
           });
         } catch (_) {}
       }
