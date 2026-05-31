@@ -212,12 +212,10 @@
       
       <nav class="nav" id="main-nav">
         <ul class="nav__list">
-          <li><a href="index.html" class="nav__link nav__link--active">الرئيسية</a></li>
+          <li><a href="index.html" class="nav__link nav__link--active" aria-current="page">الرئيسية</a></li>
           <li><a href="articles.html" class="nav__link">المقالات</a></li>
           <li><a href="about.html" class="nav__link">عن النادي</a></li>
-          <li><a href="activities.html" class="nav__link">الأنشطة</a></li>
           <li><a href="join.html" class="nav__link">انضم إلينا</a></li>
-          <li><a href="events.html" class="nav__link">الفعاليات</a></li>
           <li><a href="contact.html" class="nav__link">تواصل معنا</a></li>
           <li><a href="login.html" class="nav__link btn btn--primary btn--sm" style="color: var(--text-on-primary); margin-right: var(--space-4);">دخول الأعضاء</a></li>
           <li><button class="theme-toggle" aria-label="الوضع الليلي"><i class="fas fa-moon"></i></button></li>
@@ -257,12 +255,12 @@
        ============================================ -->
   <section class="stats-section reveal">
     <div class="container">
-      <div class="grid grid--4 grid--centered">
+      <div class="grid grid--3 grid--centered">
         
         <!-- إحصاء 1 -->
         <div class="stat-box">
           <div class="stat-box__icon"><i class="fas fa-users" aria-hidden="true"></i></div>
-          <div class="stat-box__number" data-target="120">0</div>
+          <div class="stat-box__number" role="status" aria-live="polite" data-target="120">0</div>
           <span class="stat-box__number-suffix" style="font-family: var(--font-heading); font-size: var(--text-4xl); font-weight: var(--weight-bold); color: var(--color-primary-dark);">+</span>
           <div class="stat-box__label">عضو نشط</div>
         </div>
@@ -270,23 +268,15 @@
         <!-- إحصاء 2 -->
         <div class="stat-box">
           <div class="stat-box__icon"><i class="fas fa-pen" aria-hidden="true"></i></div>
-          <div class="stat-box__number" data-target="85">0</div>
+          <div class="stat-box__number" role="status" aria-live="polite" data-target="85">0</div>
           <span class="stat-box__number-suffix" style="font-family: var(--font-heading); font-size: var(--text-4xl); font-weight: var(--weight-bold); color: var(--color-primary-dark);">+</span>
           <div class="stat-box__label">مقالة منشورة</div>
         </div>
         
         <!-- إحصاء 3 -->
         <div class="stat-box">
-          <div class="stat-box__icon"><i class="fas fa-calendar-alt" aria-hidden="true"></i></div>
-          <div class="stat-box__number" data-target="30">0</div>
-          <span class="stat-box__number-suffix" style="font-family: var(--font-heading); font-size: var(--text-4xl); font-weight: var(--weight-bold); color: var(--color-primary-dark);">+</span>
-          <div class="stat-box__label">فعالية أُقيمت</div>
-        </div>
-        
-        <!-- إحصاء 4 -->
-        <div class="stat-box">
           <div class="stat-box__icon"><i class="fas fa-calendar-check" aria-hidden="true"></i></div>
-          <div class="stat-box__number" data-target="2018">0</div>
+          <div class="stat-box__number" role="status" aria-live="polite" data-target="2018">0</div>
           <div class="stat-box__label">عام التأسيس</div>
         </div>
         
@@ -374,91 +364,6 @@
         </div>
         
       </div>
-    </div>
-  </section>
-
-  <!-- ============================================
-       معاينة الفعاليات القادمة (Upcoming Events Preview)
-       ============================================ -->
-  <section class="section">
-    <div class="container">
-      
-      <!-- عنوان القسم -->
-      <div class="section-header reveal">
-        <span class="section-header__label">فعاليات قادمة</span>
-        <h2 class="section-header__title">أبرز الفعاليات القادمة</h2>
-        <p class="section-header__description">
-          لا تفوّت فرصة المشاركة في فعالياتنا المتنوعة — سجّل حضورك الآن في أقرب المواعيد.
-        </p>
-      </div>
-      
-      <!-- بطاقات الفعاليات -->
-      <div class="grid grid--3">
-        
-        <!-- فعالية 1 -->
-        <article class="event-card reveal">
-          <img class="event-card__image" src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=600&q=80" alt="أمسية ذاكرة النهر" loading="lazy" decoding="async">
-          <div class="event-card__body">
-            <div class="event-card__date">
-              <span class="event-card__date-icon"><i class="fas fa-calendar-alt" aria-hidden="true"></i></span>
-              <span>15 مايو 2026 — 6:00 مساء</span>
-            </div>
-            <h3 class="event-card__title">أمسية "ذاكرة النهر" — شعر وحكايات</h3>
-            <p class="event-card__description">
-              أمسية شعرية وأدبية تستحضر صور النهر والريف وحياة الناس في الدندر من خلال قصائد وقصص قصيرة يؤديها نخبة من شعراء النادي.
-            </p>
-            <div class="event-card__footer">
-              <span class="event-card__location"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> قاعة المركز الثقافي — الخرطوم</span>
-              <a href="join.html" class="event-card__link">سجّل حضورك</a>
-            </div>
-          </div>
-        </article>
-        
-        <!-- فعالية 2 -->
-        <article class="event-card reveal" style="transition-delay: 100ms;">
-          <img class="event-card__image" src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=600&q=80" alt="ورشة الكتابة" loading="lazy" decoding="async">
-          <div class="event-card__body">
-            <div class="event-card__date">
-              <span class="event-card__date-icon"><i class="fas fa-calendar-alt" aria-hidden="true"></i></span>
-              <span>30 مايو 2026 — 8:00 مساء</span>
-            </div>
-            <h3 class="event-card__title">ورشة "ابدأ من هنا" — مدخل إلى كتابة المقالة</h3>
-            <p class="event-card__description">
-              ورشة مكثفة تقدم أساسيات بناء المقالة الفكرية من الفكرة حتى التنقيح، يديرها الكاتب المتطوع الأستاذ أحمد عمر.
-            </p>
-            <div class="event-card__footer">
-              <span class="event-card__location"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> عبر الإنترنت (أونلاين)</span>
-              <a href="join.html" class="event-card__link">سجّل حضورك</a>
-            </div>
-          </div>
-        </article>
-        
-        <!-- فعالية 3 -->
-        <article class="event-card reveal" style="transition-delay: 200ms;">
-          <img class="event-card__image" src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=600&q=80" alt="ندوة فكرية" loading="lazy" decoding="async">
-          <div class="event-card__body">
-            <div class="event-card__date">
-              <span class="event-card__date-icon"><i class="fas fa-calendar-alt" aria-hidden="true"></i></span>
-              <span>12 يونيو 2026 — 5:00 مساء</span>
-            </div>
-            <h3 class="event-card__title">ندوة فكرية: الهوية المحلية في مواجهة العولمة</h3>
-            <p class="event-card__description">
-              حوار فكري مفتوح يتناول إشكاليات الهوية الثقافية في عصر التحولات المتسارعة، بمشاركة باحثين وأكاديميين.
-            </p>
-            <div class="event-card__footer">
-              <span class="event-card__location"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> عبر الإنترنت + حضوري</span>
-              <a href="join.html" class="event-card__link">سجّل حضورك</a>
-            </div>
-          </div>
-        </article>
-        
-      </div>
-      
-      <!-- رابط عرض كل الفعاليات -->
-      <div style="text-align: center; margin-top: var(--space-10);" class="reveal">
-        <a href="join.html" class="btn btn--secondary">تصفّح كل الفعاليات القادمة</a>
-      </div>
-      
     </div>
   </section>
 
@@ -624,8 +529,6 @@
             <li><a href="index.html" class="footer__link">الرئيسية</a></li>
             <li><a href="articles.html" class="footer__link">المقالات</a></li>
             <li><a href="about.html" class="footer__link">عن النادي</a></li>
-            <li><a href="activities.html" class="footer__link">الأنشطة</a></li>
-            <li><a href="events.html" class="footer__link">الفعاليات</a></li>
           </ul>
         </div>
         
@@ -642,7 +545,7 @@
         <!-- القسم الرابع: النشرة البريدية -->
         <div>
           <h4 class="footer__heading">النشرة البريدية</h4>
-          <p style="font-size: var(--text-sm); color: rgba(245,240,232,.7); margin-bottom: var(--space-3);">آخر المقالات والفعاليات إلى بريدك مباشرة</p>
+          <p style="font-size: var(--text-sm); color: rgba(245,240,232,.7); margin-bottom: var(--space-3);">آخر المقالات إلى بريدك مباشرة</p>
           <form class="newsletter-form" style="display: flex; gap: var(--space-2);">
             <input type="email" name="email" placeholder="بريدك الإلكتروني" style="flex:1; padding: var(--space-2) var(--space-3); background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: var(--radius-md); color: var(--text-light); font-size: var(--text-xs); direction: rtl;">
             <button type="submit" class="btn btn--primary btn--sm" style="font-size: var(--text-xs); padding: var(--space-2) var(--space-3);">اشترك</button>
@@ -677,14 +580,12 @@
       var statNumbers = document.querySelectorAll('.stat-box__number');
       
       async function loadStats() {
-        var [artRes, memRes, evtRes] = await Promise.all([
+        var [artRes, memRes] = await Promise.all([
           supabaseClient.from('articles').select('*', { count: 'exact', head: true }).eq('is_published', true),
-          supabaseClient.from('membership_requests').select('*', { count: 'exact', head: true }).eq('status', 'approved'),
-          supabaseClient.from('events').select('*', { count: 'exact', head: true }).eq('is_active', true)
+          supabaseClient.from('membership_requests').select('*', { count: 'exact', head: true }).eq('status', 'approved')
         ]);
         if (statNumbers[0]) statNumbers[0].setAttribute('data-target', memRes.count || 120);
         if (statNumbers[1]) statNumbers[1].setAttribute('data-target', artRes.count || 85);
-        if (statNumbers[2]) statNumbers[2].setAttribute('data-target', evtRes.count || 30);
       }
       
       var counterDuration = 1500;

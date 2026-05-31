@@ -51,6 +51,36 @@
   </style>
 
   <link rel="stylesheet" href="lib/fontawesome/all.min.css">
+  <style>
+    .filter-btn {
+      padding: 8px 16px;
+      border: 1px solid var(--border-color, #d4c4a8);
+      background: var(--bg-card, #fff);
+      border-radius: 999px;
+      font-size: var(--text-sm, 0.875rem);
+      font-family: var(--font-body, inherit);
+      cursor: pointer;
+      color: var(--text-body, #3d2e1e);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .filter-btn:hover {
+      background: var(--color-primary, #1b4d3e);
+      color: var(--text-on-primary, #fff);
+      border-color: var(--color-primary, #1b4d3e);
+    }
+    .filter-btn--active {
+      background: var(--color-primary, #1b4d3e);
+      color: var(--text-on-primary, #fff);
+      border-color: var(--color-primary, #1b4d3e);
+    }
+    #load-more-btn {
+      display: none;
+    }
+    #load-more-btn[style*="block"] {
+      display: block !important;
+    }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -62,10 +92,8 @@
       <nav class="nav" id="main-nav">
         <ul class="nav__list">
           <li><a href="index.html" class="nav__link">الرئيسية</a></li>
-          <li><a href="articles.html" class="nav__link nav__link--active">المقالات</a></li>
+          <li><a href="articles.html" class="nav__link nav__link--active" aria-current="page">المقالات</a></li>
           <li><a href="about.html" class="nav__link">عن النادي</a></li>
-          <li><a href="activities.html" class="nav__link">الأنشطة</a></li>
-          <li><a href="events.html" class="nav__link">الفعاليات</a></li>
           <li><a href="join.html" class="nav__link">انضم إلينا</a></li>
           <li><a href="contact.html" class="nav__link">تواصل معنا</a></li>
           <li><a href="login.html" class="nav__link btn btn--primary btn--sm" style="color: var(--text-on-primary); margin-right: var(--space-4);">دخول الأعضاء</a></li>
@@ -236,9 +264,6 @@
           <ul class="footer__links">
             <li><a href="index.html" class="footer__link">الرئيسية</a></li>
             <li><a href="articles.html" class="footer__link">المقالات</a></li>
-            <li><a href="about.html" class="footer__link">عن النادي</a></li>
-            <li><a href="activities.html" class="footer__link">الأنشطة</a></li>
-            <li><a href="events.html" class="footer__link">الفعاليات</a></li>
           </ul>
         </div>
         <div>
@@ -251,7 +276,7 @@
         </div>
         <div>
           <h4 class="footer__heading">النشرة البريدية</h4>
-          <p style="font-size: var(--text-sm); color: rgba(245,240,232,.7); margin-bottom: var(--space-3);">آخر المقالات والفعاليات إلى بريدك مباشرة</p>
+          <p style="font-size: var(--text-sm); color: rgba(245,240,232,.7); margin-bottom: var(--space-3);">آخر المقالات إلى بريدك مباشرة</p>
           <form class="newsletter-form" style="display: flex; gap: var(--space-2);">
             <input type="email" name="email" placeholder="بريدك الإلكتروني" style="flex:1; padding: var(--space-2) var(--space-3); background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: var(--radius-md); color: var(--text-light); font-size: var(--text-xs); direction: rtl;">
             <button type="submit" class="btn btn--primary btn--sm" style="font-size: var(--text-xs); padding: var(--space-2) var(--space-3);">اشترك</button>
@@ -341,7 +366,7 @@
       if (sort === 'popular') filtered.sort((a, b) => (b.views || 0) - (a.views || 0));
 
       const totalFiltered = filtered.length;
-      const start = 0;
+      const start = append ? currentPage * pageSize : 0;
       const end = (currentPage + 1) * pageSize;
       const page = filtered.slice(start, end);
 
@@ -352,13 +377,13 @@
         card.className = 'news-card reveal';
         card.setAttribute('data-category', a.category);
         card.innerHTML = `
-          <img class="news-card__image" src="${a.cover_image}" alt="${a.title}" loading="lazy" decoding="async">
+          <img class="news-card__image" src="${a.cover_image || ""images/og-cover.jpg""}" alt="${a.title}" loading="lazy" decoding="async">
           <div class="news-card__body">
             <div class="news-card__meta"><span class="news-card__category">${categoryNames[a.category] || a.category}</span><span class="news-card__date">${new Date(a.published_at).toLocaleDateString('ar-SD')}</span></div>
             <h3 class="news-card__title"><a href="article.html?id=${a.id}">${a.title}</a></h3>
             <p class="news-card__excerpt">${a.excerpt || ''}</p>
             <div class="news-card__author">
-              <img class="news-card__author-avatar" src="${a.author_avatar}" alt="${a.author}" loading="lazy" decoding="async">
+              <img class="news-card__author-avatar" src="${a.author_avatar || ""images/default-avatar.png""}" alt="${a.author}" loading="lazy" decoding="async">
               <div><div class="news-card__author-name">${a.author}</div><div class="news-card__author-title">كاتب</div></div>
             </div>
           </div>`;
