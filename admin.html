@@ -289,53 +289,52 @@
 
   <div class="confirm-modal-overlay" id="article-modal">
     <div class="confirm-modal" style="max-width: 600px; text-align: right;">
-      <div class="confirm-modal__icon" style="margin-bottom: var(--space-4);"><i class="fas fa-file-alt" aria-hidden="true" style="color: var(--color-primary); font-size: 1.5rem;"></i></div>
-      <h3 class="admin-section__title" id="article-modal-title" style="margin-bottom: var(--space-4);">مقالة جديدة</h3>
-      <form id="article-form" style="display: flex; flex-direction: column; gap: var(--space-3);">
+      <div class="confirm-modal__icon" style="margin-bottom: var(--space-2);"><i class="fas fa-file-alt" aria-hidden="true" style="color: var(--color-primary); font-size: 1.25rem;"></i></div>
+      <h3 class="admin-section__title" id="article-modal-title" style="margin-bottom: var(--space-3);">مقالة جديدة</h3>
+      <form id="article-form" style="display: flex; flex-direction: column; gap: var(--space-2);">
         <input type="hidden" id="article-id">
         <div>
           <label class="form-label" style="display: block; margin-bottom: var(--space-1); font-size: var(--text-sm);">العنوان *</label>
           <input type="text" id="article-title" class="form-input" required placeholder="عنوان المقالة" style="width: 100%;">
         </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-2);">
           <div>
-            <label class="form-label" style="display: block; margin-bottom: var(--space-1); font-size: var(--text-sm);">التصنيف *</label>
+            <label class="form-label" style="display: block; margin-bottom: var(--space-1); font-size: var(--text-sm);">التصنيف</label>
             <select id="article-category" class="form-input form-select" style="width: 100%;">
               <option value="opinion">رأي</option>
               <option value="literature">أدب</option>
-              <option value="history">تاريخ وتراث</option>
+              <option value="history">تاريخ</option>
               <option value="society">مجتمع</option>
               <option value="culture">ثقافة</option>
             </select>
           </div>
           <div>
             <label class="form-label" style="display: block; margin-bottom: var(--space-1); font-size: var(--text-sm);">الكاتب *</label>
-            <input type="text" id="article-author" class="form-input" required placeholder="اسم الكاتب" style="width: 100%;">
+            <input type="text" id="article-author" class="form-input" required placeholder="الكاتب" style="width: 100%;">
+          </div>
+          <div>
+            <label class="form-label" style="display: block; margin-bottom: var(--space-1); font-size: var(--text-sm);">وقت القراءة</label>
+            <input type="number" id="article-read-time" class="form-input" value="5" min="1" style="width: 100%;">
           </div>
         </div>
         <div>
           <label class="form-label" style="display: block; margin-bottom: var(--space-1); font-size: var(--text-sm);">الملخص</label>
-          <textarea id="article-excerpt" class="form-input" rows="2" placeholder="ملخص قصير للمقالة" style="width: 100%; resize: vertical;"></textarea>
+          <textarea id="article-excerpt" class="form-input" rows="1" placeholder="ملخص قصير" style="width: 100%; resize: vertical;"></textarea>
         </div>
         <div>
           <label class="form-label" style="display: block; margin-bottom: var(--space-1); font-size: var(--text-sm);">المحتوى *</label>
-          <textarea id="article-content" class="form-input" rows="8" required placeholder="محتوى المقالة (يدعم HTML)" style="width: 100%; resize: vertical; font-family: monospace;"></textarea>
+          <textarea id="article-content" class="form-input" rows="5" required placeholder="محتوى المقالة (يدعم HTML)" style="width: 100%; resize: vertical; font-family: monospace;"></textarea>
         </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3);">
-          <div>
-            <label class="form-label" style="display: block; margin-bottom: var(--space-1); font-size: var(--text-sm);">صورة الغلاف</label>
-            <input type="url" id="article-cover" class="form-input" placeholder="رابط الصورة" style="width: 100%;" value="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800">
+        <div style="display: flex; align-items: center; gap: var(--space-3);">
+          <div style="flex: 1;">
+            <input type="url" id="article-cover" class="form-input" placeholder="رابط صورة الغلاف" style="width: 100%;" value="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800">
           </div>
-          <div>
-            <label class="form-label" style="display: block; margin-bottom: var(--space-1); font-size: var(--text-sm);">وقت القراءة (دقائق)</label>
-            <input type="number" id="article-read-time" class="form-input" value="5" min="1" style="width: 100%;">
+          <div style="display: flex; align-items: center; gap: var(--space-2); white-space: nowrap;">
+            <input type="checkbox" id="article-published" checked>
+            <label for="article-published" style="font-size: var(--text-sm);">نشر فوراً</label>
           </div>
         </div>
-        <div style="display: flex; align-items: center; gap: var(--space-2);">
-          <input type="checkbox" id="article-published" checked>
-          <label for="article-published" style="font-size: var(--text-sm);">منشورة فوراً</label>
-        </div>
-        <div class="confirm-modal__actions" style="margin-top: var(--space-2);">
+        <div class="confirm-modal__actions" style="margin-top: var(--space-1);">
           <button type="submit" class="btn btn--primary" id="article-save-btn">حفظ المقالة</button>
           <button type="button" class="btn btn--secondary" id="article-cancel-btn">إلغاء</button>
         </div>
