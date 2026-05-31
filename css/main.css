@@ -478,8 +478,17 @@ blockquote {
 /* ��� 3.2 ????? ?????? ��� */
 
 .nav {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  z-index: 1000;
   display: flex;
+  justify-content: center;
   align-items: center;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: var(--shadow-header);
 }
 
 .nav__list {
@@ -1141,13 +1150,6 @@ blockquote {
   body.nav-open {
     overflow: hidden !important;
     height: 100vh !important;
-  }
-
-  html.nav-open .header,
-  body.nav-open .header {
-    background: transparent;
-    box-shadow: none;
-    border-bottom: none;
   }
 
   .theme-toggle:not(.nav__drawer-theme) {
