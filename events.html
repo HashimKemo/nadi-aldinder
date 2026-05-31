@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
@@ -9,34 +9,34 @@
   <link rel="shortcut icon" href="favicon.ico">
   <meta name="theme-color" content="#1b4d3e">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>الفعاليات — نادي الدندر الثقافي الاجتماعي</title>
-  <meta name="description" content="تابع أحدث فعاليات وأنشطة نادي الدندر من ندوات وأمسيات شعرية وورش عمل ثقافية وسجّل حضورك الآن.">
+  <title>????????? � ???? ?????? ??????? ?????????</title>
+  <meta name="description" content="???? ???? ??????? ?????? ???? ?????? ?? ????? ??????? ????? ???? ??? ?????? ????? ????? ????.">
   
   <!-- Open Graph / Social Media -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://dinderclub.sd/events.html">
-  <meta property="og:title" content="الفعاليات — نادي الدندر الثقافي الاجتماعي">
-  <meta property="og:description" content="تابع أحدث فعاليات وأنشطة نادي الدندر من ندوات وأمسيات شعرية وورش عمل ثقافية وسجّل حضورك الآن.">
+  <meta property="og:title" content="????????? � ???? ?????? ??????? ?????????">
+  <meta property="og:description" content="???? ???? ??????? ?????? ???? ?????? ?? ????? ??????? ????? ???? ??? ?????? ????? ????? ????.">
   <meta property="og:image" content="https://dinderclub.sd/images/og-cover.jpg">
   
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="الفعاليات — نادي الدندر الثقافي الاجتماعي">
-  <meta name="twitter:description" content="تابع أحدث فعاليات وأنشطة نادي الدندر من ندوات وأمسيات شعرية وورش عمل ثقافية وسجّل حضورك الآن.">
+  <meta name="twitter:title" content="????????? � ???? ?????? ??????? ?????????">
+  <meta name="twitter:description" content="???? ???? ??????? ?????? ???? ?????? ?? ????? ??????? ????? ???? ??? ?????? ????? ????? ????.">
   <meta name="twitter:image" content="https://dinderclub.sd/images/og-cover.jpg">
   
-  <!-- تحميل خطوط Google Fonts -->
+  <!-- ????? ???? Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Noto+Naskh+Arabic:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
   
-  <!-- ربط ملف التنسيق الرئيسي -->
+  <!-- ??? ??? ??????? ??????? -->
   <link rel="stylesheet" href="css/main.css">
   
   <style>
-    /* تنسيق خلفية قسم الفعاليات */
+    /* ????? ????? ??? ????????? */
 
-    /* تنسيق العد التنازلي للفعاليات */
+    /* ????? ???? ???????? ????????? */
     .hero--events {
       background: linear-gradient(
         135deg,
@@ -75,22 +75,24 @@
       color: rgba(245, 240, 232, 0.4);
     }
 
-    /* تنسيق العد التنازلي للحدث لأغراض التصميم */
+    /* ????? ???? ???????? ????? ?????? ??????? */
     .countdown {
       display: flex;
       gap: var(--space-4);
       justify-content: center;
       margin-top: var(--space-6);
-      direction: ltr; /* اتجاه من اليسار لليمين للعد التنازلي */
+      direction: ltr; /* ????? ?? ?????? ?????? ???? ???????? */
     }
 
     .countdown-item {
+      /* fallback */
       background: rgba(0, 0, 0, 0.35);
       border: 1px solid rgba(255, 255, 255, 0.15);
       padding: var(--space-3) var(--space-4);
       border-radius: var(--radius-lg);
       min-width: 75px;
       text-align: center;
+      /* modern */
       backdrop-filter: blur(8px);
     }
 
@@ -108,7 +110,7 @@
       font-family: var(--font-body);
     }
 
-    /* أزرار التصفية (Tabs) */
+    /* ????? ??????? (Tabs) */
     .filter-tabs {
       display: flex;
       justify-content: center;
@@ -139,7 +141,7 @@
       border-color: var(--color-primary);
     }
 
-    /* تصميم بطاقة التقويم Calendar */
+    /* ????? ????? ??????? Calendar */
     .calendar-card {
       background: var(--bg-card);
       border-radius: var(--radius-2xl);
@@ -228,14 +230,14 @@
       background: white;
     }
 
-    /* تصميم متجاوب للشاشات الصغيرة */
+    /* ????? ?????? ??????? ??????? */
     @media (max-width: 480px) {
       .calendar-card {
         padding: var(--space-3);
       }
     }
 
-    /* نافذة Modal للتسجيل في الفعاليات */
+    /* ????? Modal ??????? ?? ????????? */
     .modal {
       position: fixed;
       inset: 0;
@@ -256,7 +258,9 @@
     .modal__overlay {
       position: absolute;
       inset: 0;
+      /* fallback */
       background: var(--bg-overlay);
+      /* modern */
       backdrop-filter: blur(4px);
       -webkit-backdrop-filter: blur(4px);
     }
@@ -312,17 +316,17 @@
 <body>
 
   <!-- ============================================
-       شريط التنقل العلوي للموقع
+       ???? ?????? ?????? ??????
        ============================================ -->
   <header class="header">
     <div class="header__inner">
       <a href="index.html" class="header__logo">
-        <span class="header__logo-decoration">✦</span>
-        نادي الدندر
-        <span class="header__logo-sub">الثقافي الاجتماعي</span>
+        <span class="header__logo-decoration">?</span>
+        ???? ??????
+        <span class="header__logo-sub">??????? ?????????</span>
       </a>
       
-      <button class="menu-toggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="main-nav">
+      <button class="menu-toggle" aria-label="??? ???????" aria-expanded="false" aria-controls="main-nav">
         <span class="menu-toggle__bar"></span>
         <span class="menu-toggle__bar"></span>
         <span class="menu-toggle__bar"></span>
@@ -330,254 +334,254 @@
       
       <nav class="nav" id="main-nav">
         <ul class="nav__list">
-          <li><a href="index.html" class="nav__link">الرئيسية</a></li>
-          <li><a href="articles.html" class="nav__link">المقالات</a></li>
-          <li><a href="about.html" class="nav__link">عن النادي</a></li>
-          <li><a href="activities.html" class="nav__link">الأنشطة</a></li>
-          <li><a href="join.html" class="nav__link">انضم إلينا</a></li>
-          <li><a href="events.html" class="nav__link nav__link--active" aria-current="page">الفعاليات</a></li>
-          <li><a href="contact.html" class="nav__link">تواصل معنا</a></li>
-          <li><a href="login.html" class="nav__link btn btn--primary btn--sm" style="color: var(--text-on-primary); margin-right: var(--space-4);">دخول الأعضاء</a></li>
-          <li><button class="theme-toggle" aria-label="الوضع الليلي"><i class="fas fa-moon"></i></button></li>
+          <li><a href="index.html" class="nav__link">????????</a></li>
+          <li><a href="articles.html" class="nav__link">????????</a></li>
+          <li><a href="about.html" class="nav__link">?? ??????</a></li>
+          <li><a href="activities.html" class="nav__link">???????</a></li>
+          <li><a href="join.html" class="nav__link">???? ?????</a></li>
+          <li><a href="events.html" class="nav__link nav__link--active" aria-current="page">?????????</a></li>
+          <li><a href="contact.html" class="nav__link">????? ????</a></li>
+          <li><a href="login.html" class="nav__link btn btn--primary btn--sm" style="color: var(--text-on-primary); margin-right: var(--space-4);">???? ???????</a></li>
+          <li><button class="theme-toggle" aria-label="????? ??????"><i class="fas fa-moon"></i></button></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <!-- ============================================
-       قسم الترحيب في صفحة الفعاليات (Hero with Countdown)
+       ??? ??????? ?? ???? ????????? (Hero with Countdown)
        ============================================ -->
   <section class="hero hero--events">
     <div class="hero__content animate-fade-in-up">
-      <nav class="hero__breadcrumbs" aria-label="مسار الصفحة">
-        <a href="index.html">الرئيسية</a>
-        <span>الفعاليات</span>
+      <nav class="hero__breadcrumbs" aria-label="???? ??????">
+        <a href="index.html">????????</a>
+        <span>?????????</span>
       </nav>
-      <h1 class="hero__title">الفعاليات</h1>
+      <h1 class="hero__title">?????????</h1>
       <p class="hero__description" style="margin-bottom: var(--space-4);">
-        لقاءات تصنع الذاكرة وتُحيي الروح.
+        ?????? ???? ??????? ?????? ?????.
       </p>
       
-      <!-- حاوية العد التنازلي للفعاليات -->
+      <!-- ????? ???? ???????? ????????? -->
       <div style="margin-top: var(--space-8);">
-        <span style="font-size: var(--text-xs); color: var(--color-secondary); font-weight: var(--weight-semibold); letter-spacing: 1px; text-transform: uppercase;">العد التنازلي للفعالية القادمة:</span>
+        <span style="font-size: var(--text-xs); color: var(--color-secondary); font-weight: var(--weight-semibold); letter-spacing: 1px; text-transform: uppercase;">???? ???????? ???????? ???????:</span>
         
-        <!-- عناصر العد التنازلي -->
+        <!-- ????? ???? ???????? -->
         <div class="countdown" id="event-countdown" data-date="2026-06-20T20:00:00">
           <div class="countdown-item">
             <span class="countdown-number" id="countdown-days">00</span>
-            <span class="countdown-label">أيام</span>
+            <span class="countdown-label">????</span>
           </div>
           <div class="countdown-item">
             <span class="countdown-number" id="countdown-hours">00</span>
-            <span class="countdown-label">ساعة</span>
+            <span class="countdown-label">????</span>
           </div>
           <div class="countdown-item">
             <span class="countdown-number" id="countdown-minutes">00</span>
-            <span class="countdown-label">دقيقة</span>
+            <span class="countdown-label">?????</span>
           </div>
           <div class="countdown-item">
             <span class="countdown-number" id="countdown-seconds">00</span>
-            <span class="countdown-label">ثانية</span>
+            <span class="countdown-label">?????</span>
           </div>
         </div>
       </div>
     </div>
     
-    <!-- نجوم زخرفية للقسم -->
-    <span class="hero__decoration-star" style="top: 20%; right: 12%;">✦</span>
-    <span class="hero__decoration-star" style="bottom: 15%; left: 15%;">✦</span>
+    <!-- ???? ?????? ????? -->
+    <span class="hero__decoration-star" style="top: 20%; right: 12%;">?</span>
+    <span class="hero__decoration-star" style="bottom: 15%; left: 15%;">?</span>
   </section>
 
   <!--        ============================================
-       الفعاليات القادمة مع التصفية (Upcoming Events with Filtering)
+       ????????? ??????? ?? ??????? (Upcoming Events with Filtering)
        ============================================ -->
   <section class="section">
     <div class="container">
       
-      <!-- رأس القسم -->
+      <!-- ??? ????? -->
       <div class="section-header reveal">
-        <span class="section-header__label">ألبوم الذكريات</span>
-        <h2 class="section-header__title">فعاليات سابقة</h2>
+        <span class="section-header__label">????? ????????</span>
+        <h2 class="section-header__title">??????? ?????</h2>
         <p class="section-header__description">
-          نستعرض أبرز محطات النادي الماضية — لحظات جمعتنا على الخير والمعرفة والثقافة.
+          ?????? ???? ????? ?????? ??????? � ????? ?????? ??? ????? ???????? ????????.
         </p>
       </div>
 
-      <!-- أزرار التصفية -->
+      <!-- ????? ??????? -->
       <div class="filter-tabs">
-        <button class="filter-btn filter-btn--active" data-filter="all">الكل</button>
-        <button class="filter-btn" data-filter="culture">نشاط ثقافي</button>
-        <button class="filter-btn" data-filter="literature">ملتقى أدبي</button>
-        <button class="filter-btn" data-filter="social">نشاط مجتمعي</button>
-        <button class="filter-btn" data-filter="workshop">ورشة عمل</button>
+        <button class="filter-btn filter-btn--active" data-filter="all">????</button>
+        <button class="filter-btn" data-filter="culture">???? ?????</button>
+        <button class="filter-btn" data-filter="literature">????? ????</button>
+        <button class="filter-btn" data-filter="social">???? ??????</button>
+        <button class="filter-btn" data-filter="workshop">???? ???</button>
       </div>
 
-      <!-- شبكة الفعاليات — تُحمّل ديناميكياً من Supabase -->
+      <!-- ???? ????????? � ?????? ?????????? ?? Supabase -->
       <div class="grid grid--3" id="events-grid"></div>
       <div id="no-events-message" class="tab-empty" style="display: none;">
         <i class="fas fa-calendar-alt" aria-hidden="true" style="font-size: 2rem; margin-bottom: var(--space-3); display: block;"></i>
-        <span>لا توجد فعاليات في هذا التصنيف حالياً — تابعنا لمعرفة الجديد!</span>
+        <span>?? ???? ??????? ?? ??? ??????? ?????? � ?????? ?????? ??????!</span>
       </div>
     </div>
   </section>
 
   <!-- ============================================
-       النشرة البريدية (Newsletter Block)
+       ?????? ???????? (Newsletter Block)
        ============================================ -->
   <section class="section">
     <div class="container" style="max-width: 700px;">
       <div class="reveal" style="text-align: center;">
         <div class="section-header" style="margin-bottom: var(--space-6);">
-          <span class="section-header__label">النشرة البريدية</span>
-          <h2 class="section-header__title">كن أول من يعلم بكل جديد</h2>
+          <span class="section-header__label">?????? ????????</span>
+          <h2 class="section-header__title">?? ??? ?? ???? ??? ????</h2>
           <p class="section-header__description" style="font-size: var(--text-sm);">
-            اشترك في نشرتنا البريدية ليصلك كل جديد من مقالات وفعاليات وأخبار النادي مباشرةً إلى بريدك.
+            ????? ?? ?????? ???????? ????? ?? ???? ?? ?????? ???????? ?????? ?????? ??????? ??? ?????.
           </p>
         </div>
         
-        <!-- نموذج الاشتراك في النشرة البريدية عبر Supabase -->
+        <!-- ????? ???????? ?? ?????? ???????? ??? Supabase -->
         <form class="subscribe-card__form newsletter-form" id="newsletter-form">
-          <input type="email" name="email" class="subscribe-card__input" placeholder="بريدك الإلكتروني" required aria-label="البريد الإلكتروني">
-          <button type="submit" class="btn btn--primary">اشترك الآن</button>
+          <input type="email" name="email" class="subscribe-card__input" placeholder="????? ??????????" required aria-label="?????? ??????????">
+          <button type="submit" class="btn btn--primary">????? ????</button>
         </form>
         <div id="newsletter-success" class="alert alert--success" style="display: none; margin-top: var(--space-4); max-width: 450px; margin-left: auto; margin-right: auto;">
-          <span>شكراً! سيصلك كل جديد قريباً.</span>
+          <span>?????! ????? ?? ???? ??????.</span>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ============================================
-       نافذة Modal للتسجيل في الفعاليات
+       ????? Modal ??????? ?? ?????????
        ============================================ -->
   <div class="modal" id="register-modal">
     <div class="modal__overlay" id="modal-overlay"></div>
     <div class="modal__content">
       <span class="modal__close" id="modal-close">&times;</span>
-      <h3 class="modal__title">التسجيل في الفعالية</h3>
-      <p class="modal__desc" id="modal-event-desc">يرجى تعبئة النموذج أدناه لتأكيد حضورك في الفعالية.</p>
+      <h3 class="modal__title">??????? ?? ????????</h3>
+      <p class="modal__desc" id="modal-event-desc">???? ????? ??????? ????? ?????? ????? ?? ????????.</p>
       
-      <!-- نموذج التسجيل في الفعالية عبر Supabase -->
+      <!-- ????? ??????? ?? ???????? ??? Supabase -->
       <form id="register-form">
         <input type="hidden" name="event_name" id="hidden-event-name">
         <input type="hidden" name="event_id" id="hidden-event-id">
         
         <div class="form-group">
-          <label for="reg-name" class="form-label">الاسم الكامل</label>
-          <input type="text" id="reg-name" name="name" class="form-input" placeholder="أدخل اسمك الكامل" required>
+          <label for="reg-name" class="form-label">????? ??????</label>
+          <input type="text" id="reg-name" name="name" class="form-input" placeholder="???? ???? ??????" required>
         </div>
         
         <div class="form-group">
-          <label for="reg-email" class="form-label">البريد الإلكتروني</label>
+          <label for="reg-email" class="form-label">?????? ??????????</label>
           <input type="email" id="reg-email" name="email" class="form-input" placeholder="name@example.com" required>
         </div>
 
         <div class="form-group">
-          <label for="reg-phone" class="form-label">رقم الهاتف (اختياري)</label>
+          <label for="reg-phone" class="form-label">??? ?????? (???????)</label>
           <input type="tel" id="reg-phone" name="phone" class="form-input" placeholder="09xxxxxxx">
         </div>
 
         <div class="form-group">
-          <label for="reg-guests" class="form-label">عدد الضيوف المرافقين</label>
+          <label for="reg-guests" class="form-label">??? ?????? ?????????</label>
           <select id="reg-guests" name="guests" class="form-input form-select">
-            <option value="1">شخص واحد (فقط أنا)</option>
-            <option value="2">شخصان</option>
-            <option value="3">ثلاثة أشخاص</option>
-            <option value="4">أربعة أو أكثر</option>
+            <option value="1">??? ???? (??? ???)</option>
+            <option value="2">?????</option>
+            <option value="3">????? ?????</option>
+            <option value="4">????? ?? ????</option>
           </select>
         </div>
 
-        <button type="submit" class="btn btn--gold btn--full" style="margin-top: var(--space-4);">تأكيد التسجيل</button>
+        <button type="submit" class="btn btn--gold btn--full" style="margin-top: var(--space-4);">????? ???????</button>
       </form>
 
-      <!-- رسالة النجاح بعد التسجيل -->
+      <!-- ????? ?????? ??? ??????? -->
       <div id="register-success" class="alert alert--success" style="display: none; margin-top: var(--space-4);">
-        <span>تم التسجيل بنجاح! سيتم إرسال تأكيد الحجز إلى بريدك الإلكتروني. شكراً لاهتمامك.</span>
+        <span>?? ??????? ?????! ???? ????? ????? ????? ??? ????? ??????????. ????? ????????.</span>
       </div>
     </div>
   </div>
 
   <!-- ============================================
-       التذييل (Footer)
+       ??????? (Footer)
        ============================================ -->
   <footer class="footer">
     <div class="container">
       <div class="footer__grid">
         
-        <!-- العلامة التجارية للنادي -->
+        <!-- ??????? ???????? ?????? -->
         <div class="footer__brand">
-          <div class="footer__logo">نادي الدندر الثقافي الاجتماعي</div>
+          <div class="footer__logo">???? ?????? ??????? ?????????</div>
           <p class="footer__description">
-            فضاء ثقافي اجتماعي يجمع أبناء الدندر أينما كانوا.
+            ???? ????? ??????? ???? ????? ?????? ????? ?????.
           </p>
           <div class="footer__social">
-            <a href="#" class="footer__social-link" aria-label="فيسبوك"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
-            <a href="#" class="footer__social-link" aria-label="تويتر"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
-            <a href="#" class="footer__social-link" aria-label="يوتيوب"><i class="fab fa-youtube" aria-hidden="true"></i></a>
-            <a href="#" class="footer__social-link" aria-label="واتساب"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="??????"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="?????"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="??????"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+            <a href="#" class="footer__social-link" aria-label="??????"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
           </div>
         </div>
         
-        <!-- روابط سريعة للصفحات -->
+        <!-- ????? ????? ??????? -->
         <div>
-          <h4 class="footer__heading">روابط سريعة</h4>
+          <h4 class="footer__heading">????? ?????</h4>
           <ul class="footer__links">
-            <li><a href="index.html" class="footer__link">الرئيسية</a></li>
-            <li><a href="articles.html" class="footer__link">المقالات</a></li>
-            <li><a href="about.html" class="footer__link">عن النادي</a></li>
-            <li><a href="activities.html" class="footer__link">الأنشطة</a></li>
-            <li><a href="events.html" class="footer__link">الفعاليات</a></li>
+            <li><a href="index.html" class="footer__link">????????</a></li>
+            <li><a href="articles.html" class="footer__link">????????</a></li>
+            <li><a href="about.html" class="footer__link">?? ??????</a></li>
+            <li><a href="activities.html" class="footer__link">???????</a></li>
+            <li><a href="events.html" class="footer__link">?????????</a></li>
           </ul>
         </div>
         
-        <!-- روابط الحساب الشخصي -->
+        <!-- ????? ?????? ?????? -->
         <div>
-          <h4 class="footer__heading">حسابك</h4>
+          <h4 class="footer__heading">?????</h4>
           <ul class="footer__links">
-            <li><a href="join.html" class="footer__link">انضم إلينا</a></li>
-            <li><a href="contact.html" class="footer__link">تواصل معنا</a></li>
-            <li><a href="login.html" class="footer__link">دخول الأعضاء</a></li>
+            <li><a href="join.html" class="footer__link">???? ?????</a></li>
+            <li><a href="contact.html" class="footer__link">????? ????</a></li>
+            <li><a href="login.html" class="footer__link">???? ???????</a></li>
           </ul>
         </div>
         
-        <!-- حقل الاشتراك في النشرة البريدية -->
+        <!-- ??? ???????? ?? ?????? ???????? -->
         <div>
-          <h4 class="footer__heading">النشرة البريدية</h4>
-          <p style="font-size: var(--text-sm); color: rgba(245,240,232,.7); margin-bottom: var(--space-3);">آخر المقالات والفعاليات إلى بريدك مباشرة</p>
+          <h4 class="footer__heading">?????? ????????</h4>
+          <p style="font-size: var(--text-sm); color: rgba(245,240,232,.7); margin-bottom: var(--space-3);">??? ???????? ?????????? ??? ????? ??????</p>
           <form class="newsletter-form" style="display: flex; gap: var(--space-2);">
-            <input type="email" name="email" placeholder="بريدك الإلكتروني" style="flex:1; padding: var(--space-2) var(--space-3); background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: var(--radius-md); color: var(--text-light); font-size: var(--text-xs); direction: rtl;">
-            <button type="submit" class="btn btn--primary btn--sm" style="font-size: var(--text-xs); padding: var(--space-2) var(--space-3);">اشترك</button>
+            <input type="email" name="email" placeholder="????? ??????????" style="flex:1; padding: var(--space-2) var(--space-3); background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: var(--radius-md); color: var(--text-light); font-size: var(--text-xs); direction: rtl;">
+            <button type="submit" class="btn btn--primary btn--sm" style="font-size: var(--text-xs); padding: var(--space-2) var(--space-3);">?????</button>
           </form>
         </div>
         
       </div>
       
-      <!-- الشريط السفلي لحقوق النشر -->
+      <!-- ?????? ?????? ????? ????? -->
       <div class="footer__bottom">
         <p class="footer__copyright">
-          © ٢٠٢٦ نادي الدندر الثقافي الاجتماعي — جميع الحقوق محفوظة. صُنع بواسطة م/هاشم كمال.
+          � ???? ???? ?????? ??????? ????????? � ???? ?????? ??????. ???? ?????? ?/???? ????.
         </p>
         <div class="footer__legal">
-          <a href="about.html" class="footer__legal-link">سياسة الخصوصية</a>
-          <a href="about.html" class="footer__legal-link">شروط الاستخدام</a>
+          <a href="about.html" class="footer__legal-link">????? ????????</a>
+          <a href="about.html" class="footer__legal-link">???? ?????????</a>
         </div>
       </div>
     </div>
   </footer>
 
   <!-- ============================================
-       ملف جافاسكريبت الرئيسي — تصفية — عد تنازلي — Modal التسجيل
+       ??? ?????????? ??????? � ????? � ?? ?????? � Modal ???????
        ============================================ -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase.js"></script>
   <script src="js/main.js"></script>
   <script>
     var categoryNames = {
-      culture: 'نشاط ثقافي',
-      literature: 'ملتقى أدبي',
-      social: 'نشاط مجتمعي',
-      workshop: 'ورشة عمل'
+      culture: '???? ?????',
+      literature: '????? ????',
+      social: '???? ??????',
+      workshop: '???? ???'
     };
 
     var categoryBadgeColors = {
@@ -601,7 +605,7 @@
     async function loadEvents() {
       var { data, error } = await supabaseClient.from('events').select('*').order('event_date', { ascending: true });
       if (error) {
-        console.warn('⚠️ Supabase غير متاح - الفعاليات غير متوفرة:', error.message);
+        console.warn('?? Supabase ??? ???? - ????????? ??? ??????:', error.message);
         return;
       }
       allEvents = data || [];
@@ -643,7 +647,7 @@
             '<h3 class="news-card__title">' + e.title + '</h3>' +
             '<p class="news-card__excerpt">' + (e.description || '') + '</p>' +
             '<div class="news-card__author" style="border: none; padding-top: 0; margin-top: auto; display: flex; justify-content: space-between; align-items: center;">' +
-              '<span class="badge ' + (isPast ? 'badge--success' : 'badge--gold') + '">' + (isPast ? 'تم بنجاح' : 'قادم') + '</span>' +
+              '<span class="badge ' + (isPast ? 'badge--success' : 'badge--gold') + '">' + (isPast ? '?? ?????' : '????') + '</span>' +
               (e.location ? '<span style="font-size: var(--text-xs); color: var(--text-muted);"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> ' + e.location + '</span>' : '') +
             '</div>' +
           '</div>';
@@ -660,7 +664,7 @@
       futureEvents.sort(function (a, b) { return new Date(a.event_date) - new Date(b.event_date); });
 
       if (futureEvents.length === 0) {
-        countdownEl.innerHTML = '<div class="alert alert--info" style="margin: 0; font-family: var(--font-body); direction: rtl;"><i class="fas fa-calendar-alt" aria-hidden="true"></i> لا توجد فعاليات قادمة حالياً — تابعنا لمعرفة الجديد!</div>';
+        countdownEl.innerHTML = '<div class="alert alert--info" style="margin: 0; font-family: var(--font-body); direction: rtl;"><i class="fas fa-calendar-alt" aria-hidden="true"></i> ?? ???? ??????? ????? ?????? � ?????? ?????? ??????!</div>';
         return;
       }
 
@@ -674,7 +678,7 @@
         var now = new Date().getTime();
         var distance = targetDate - now;
         if (distance < 0) {
-          countdownEl.innerHTML = '<div class="alert alert--info" style="margin: 0; font-family: var(--font-body); direction: rtl;"><i class="fas fa-gift" aria-hidden="true"></i> انطلقت الفعالية بالفعل! تابع صفحاتنا للفعاليات القادمة.</div>';
+          countdownEl.innerHTML = '<div class="alert alert--info" style="margin: 0; font-family: var(--font-body); direction: rtl;"><i class="fas fa-gift" aria-hidden="true"></i> ?????? ???????? ??????! ???? ??????? ????????? ???????.</div>';
           clearInterval(interval);
           return;
         }
@@ -731,7 +735,7 @@
         t.addEventListener('click', function () {
           hiddenId.value = t.getAttribute('data-event-id') || '';
           hiddenName.value = t.getAttribute('data-event-title') || '';
-          modalDesc.innerHTML = 'أنت على وشك التسجيل في الفعالية: <strong style="color: var(--color-primary);">' + (t.getAttribute('data-event-title') || '') + '</strong>';
+          modalDesc.innerHTML = '??? ??? ??? ??????? ?? ????????: <strong style="color: var(--color-primary);">' + (t.getAttribute('data-event-title') || '') + '</strong>';
           regForm.style.display = 'block';
           regSuccess.style.display = 'none';
           regForm.reset();
@@ -760,7 +764,7 @@
 
           var btn = regForm.querySelector('button[type="submit"]');
           btn.disabled = true;
-          btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جارٍ التسجيل...';
+          btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ???? ???????...';
 
           var { error } = await supabaseClient.from('event_registrations').insert({
             event_id: hiddenId.value ? parseInt(hiddenId.value) : null,
@@ -772,13 +776,13 @@
           });
 
           btn.disabled = false;
-          btn.innerHTML = 'تأكيد التسجيل';
+          btn.innerHTML = '????? ???????';
 
           if (!error) {
             regForm.style.display = 'none';
             regSuccess.style.display = 'flex';
           } else {
-            alert('حدث خطأ أثناء التسجيل. حاول مرة أخرى.');
+            alert('??? ??? ????? ???????. ???? ??? ????.');
           }
         });
       }

@@ -1,15 +1,15 @@
-﻿/* ============================================
-   نادي الدندر الثقافي الاجتماعي
-   نظام التصميم الموحد — main.css
-   الإصدار: 1.0
+/* ============================================
+   ???? ?????? ??????? ?????????
+   ???? ??????? ?????? � main.css
+   ???????: 1.0
    ============================================ */
 
 /* ============================================
-   1. المتغيرات الجذرية
+   1. ????????? ???????
    ============================================ */
 
 :root {
-  /* ——— الألوان الأساسية ——— */
+  /* ��� ??????? ???????? ��� */
   --color-primary: #1B4D3E;
   --color-primary-light: #256b56;
   --color-primary-dark: #12352a;
@@ -20,13 +20,13 @@
   --color-secondary-dark: #a6771e;
   --color-secondary-bg: rgba(200, 146, 42, 0.1);
 
-  /* ——— ألوان الخلفية ——— */
+  /* ��� ????? ??????? ��� */
   --bg-body: #F5EDD8;
   --bg-card: #FDFAF4;
   --bg-section-alt: #efe4ca;
   --bg-overlay: rgba(0, 0, 0, 0.55);
 
-  /* ——— ألوان النصوص ——— */
+  /* ��� ????? ?????? ��� */
   --text-primary: #1a1a1a;
   --text-secondary: #6B4226;
   --text-muted: #6B5B4E;
@@ -34,23 +34,22 @@
   --text-on-primary: #ffffff;
   --text-on-secondary: #ffffff;
 
-  /* ——— ألوان الحدود والفواصل ——— */
+  /* ��� ????? ?????? ???????? ��� */
   --border-color: #E8E0D0;
   --border-light: #f0ebe0;
-  --divider: #ddd6c4;
 
-  /* ——— ألوان إضافية ——— */
+  /* ��� ????? ?????? ��� */
   --color-success: #2d8f5c;
   --color-error: #c0392b;
   --color-warning: #d4a017;
   --color-info: #2c6fbb;
 
-  /* ——— منظومة الخطوط ——— */
+  /* ��� ?????? ?????? ��� */
   --font-heading: 'Amiri', 'Traditional Arabic', serif;
   --font-body: 'Noto Naskh Arabic', 'Traditional Arabic', serif;
   --font-latin: 'Playfair Display', Georgia, serif;
 
-  /* ——— أحجام الخطوط (مقياس معياري) ——— */
+  /* ��� ????? ?????? (????? ??????) ��� */
   --text-xs: 0.75rem;     /* 12px */
   --text-sm: 0.875rem;    /* 14px */
   --text-base: 1rem;      /* 16px */
@@ -62,7 +61,7 @@
   --text-5xl: 3.25rem;    /* 52px */
   --text-6xl: 4rem;       /* 64px */
 
-  /* ——— أحجام العناوين ——— */
+  /* ��� ????? ???????? ��� */
   --h1-size: var(--text-5xl);
   --h2-size: var(--text-4xl);
   --h3-size: var(--text-3xl);
@@ -70,19 +69,18 @@
   --h5-size: var(--text-xl);
   --h6-size: var(--text-lg);
 
-  /* ——— الأوزان ——— */
+  /* ��� ??????? ��� */
   --weight-normal: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
   --weight-bold: 700;
 
-  /* ——— ارتفاعات الأسطر ——— */
+  /* ��� ???????? ?????? ��� */
   --leading-tight: 1.15;
-  --leading-snug: 1.35;
   --leading-relaxed: 1.65;
   --leading-loose: 1.85;
 
-  /* ——— المسافات (Spacing Scale) ——— */
+  /* ��� ???????? (Spacing Scale) ��� */
   --space-1: 0.25rem;   /* 4px */
   --space-2: 0.5rem;    /* 8px */
   --space-3: 0.75rem;   /* 12px */
@@ -96,7 +94,7 @@
   --space-20: 5rem;     /* 80px */
   --space-24: 6rem;     /* 96px */
 
-  /* ——— نصف القطر (Border Radius) ——— */
+  /* ��� ??? ????? (Border Radius) ��� */
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
@@ -105,7 +103,7 @@
   --radius-full: 9999px;
   --radius-card: var(--radius-lg);
 
-  /* ——— الظلال ——— */
+  /* ��� ?????? ��� */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
@@ -114,13 +112,13 @@
   --shadow-card-hover: 0 8px 25px rgba(0, 0, 0, 0.12);
   --shadow-header: 0 2px 20px rgba(0, 0, 0, 0.1);
 
-  /* ——— الانتقالات ——— */
+  /* ��� ?????????? ��� */
   --transition-fast: 150ms ease;
   --transition-base: 250ms ease;
   --transition-slow: 400ms ease;
   --transition-menu: 300ms cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* ——— متغيرات التخطيط ——— */
+  /* ��� ??????? ??????? ��� */
   --header-height: 70px;
   --container-max: 1200px;
   --container-narrow: 800px;
@@ -129,7 +127,7 @@
   --section-padding: var(--space-20) 0;
 }
 
-/* ——— الوضع الليلي ——— */
+/* ��� ????? ?????? ��� */
 html { transition: background var(--transition-slow), color var(--transition-slow); }
 
 [data-theme="dark"] {
@@ -145,7 +143,6 @@ html { transition: background var(--transition-slow), color var(--transition-slo
   --text-light: #f5f0e8;
   --border-color: #3a3a3a;
   --border-light: #333333;
-  --divider: #444444;
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
   --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
   --shadow-lg: 0 8px 30px rgba(0,0,0,0.4);
@@ -260,7 +257,7 @@ html { transition: background var(--transition-slow), color var(--transition-slo
 }
 
 /* ============================================
-    2. Reset وإعدادات أساسية
+    2. Reset ???????? ??????
    ============================================ */
 
 *,
@@ -362,7 +359,7 @@ blockquote {
   color: var(--text-on-primary);
 }
 
-/* ——— شريط التمرير المخصص ——— */
+/* ��� ???? ??????? ?????? ��� */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -380,7 +377,7 @@ blockquote {
   background: var(--text-muted);
 }
 
-/* ——— فئات المساعدة ——— */
+/* ��� ???? ???????? ��� */
 .container {
   width: 100%;
   max-width: var(--container-max);
@@ -412,10 +409,10 @@ blockquote {
 
 
 /* ============================================
-   3. مكونات القالب الأساسي
+   3. ?????? ?????? ???????
    ============================================ */
 
-/* ——— 3.1 الهيدر ——— */
+/* ��� 3.1 ?????? ��� */
 
 .header {
   position: fixed;
@@ -424,7 +421,9 @@ blockquote {
   right: 0;
   z-index: 1000;
   height: var(--header-height);
+  /* fallback for browsers that do not support backdrop-filter */
   background: rgba(253, 250, 244, 0.92);
+  /* modern */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
@@ -475,7 +474,7 @@ blockquote {
   }
 }
 
-/* ——— 3.2 قائمة التنقل ——— */
+/* ��� 3.2 ????? ?????? ��� */
 
 .nav {
   display: flex;
@@ -530,7 +529,7 @@ blockquote {
   transform: scaleX(1);
 }
 
-/* ——— زر الوضع الليلي ——— */
+/* ��� ?? ????? ?????? ��� */
 .theme-toggle {
   display: inline-flex;
   align-items: center;
@@ -549,7 +548,7 @@ blockquote {
   background: var(--color-secondary-bg);
 }
 
-/* ——— شارة المستخدم (تظهر عند تسجيل الدخول) ——— */
+/* ��� ???? ???????? (???? ??? ????? ??????) ��� */
 
 .user-badge {
   display: none;
@@ -618,7 +617,7 @@ blockquote {
   .user-badge__link { font-size: 10px; padding: var(--space-1) var(--space-2); }
 }
 
-/* ——— زر القائمة للجوال ——— */
+/* ��� ?? ??????? ?????? ��� */
 
 .menu-toggle {
   display: none;
@@ -661,7 +660,7 @@ blockquote {
   transform: rotate(-45deg) translate(5px, -5px);
 }
 
-/* ——— 3.3 القسم البطولي ——— */
+/* ��� 3.3 ????? ??????? ��� */
 
 .hero {
   position: relative;
@@ -690,9 +689,9 @@ blockquote {
   pointer-events: none;
 }
 
-/* ——— زخرفة النجمة ——— */
+/* ��� ????? ?????? ��� */
 .hero::after {
-  content: '✦';
+  content: '?';
   position: absolute;
   top: 15%;
   left: 10%;
@@ -776,7 +775,7 @@ blockquote {
   flex-wrap: wrap;
 }
 
-/* ——— 3.4 التذييل ——— */
+/* ��� 3.4 ??????? ��� */
 
 .footer {
   background: var(--color-primary-dark);
@@ -938,7 +937,7 @@ blockquote {
   color: var(--color-secondary);
 }
 
-/* ——— 3.5 قائمة الجوال (المتحرك) ——— */
+/* ��� 3.5 ????? ?????? (???????) ��� */
 
 @media (max-width: 767px) {
   .menu-toggle {
@@ -1014,7 +1013,7 @@ blockquote {
   }
 
   .nav__link.btn--primary {
-    margin-right: 0 !important;
+    margin-right: 0;
     margin-top: var(--space-1);
   }
 
@@ -1029,10 +1028,10 @@ blockquote {
 
 
 /* ============================================
-   4. المكونات المتكررة
+   4. ???????? ????????
    ============================================ */
 
-/* ——— 4.1 رأس القسم ——— */
+/* ��� 4.1 ??? ????? ��� */
 
 .section-header {
   text-align: center;
@@ -1085,7 +1084,7 @@ blockquote {
   }
 }
 
-/* ——— 4.2 الزر الأساسي ——— */
+/* ��� 4.2 ???? ??????? ��� */
 
 .btn {
   display: inline-flex;
@@ -1171,7 +1170,7 @@ blockquote {
   width: 100%;
 }
 
-/* ——— 4.3 الشارة / الوسم ——— */
+/* ��� 4.3 ?????? / ????? ��� */
 
 .badge {
   display: inline-flex;
@@ -1216,9 +1215,9 @@ blockquote {
   color: var(--text-muted);
 }
 
-/* ——— 4.4 بطاقة الفعالية ——— */
+/* ��� 4.4 ????? ???????? ��� */
 
-/* ——— 4.5 بطاقة الخبر ——— */
+/* ��� 4.5 ????? ????? ��� */
 
 .news-card {
   background: var(--bg-card);
@@ -1328,7 +1327,7 @@ blockquote {
   color: var(--text-muted);
 }
 
-/* ——— 4.6 بطاقة العضو ——— */
+/* ��� 4.6 ????? ????? ��� */
 
 .member-card {
   background: var(--bg-card);
@@ -1409,7 +1408,7 @@ blockquote {
   transform: translateY(-2px);
 }
 
-/* ——— 4.7 بطاقة النشرة البريدية ——— */
+/* ��� 4.7 ????? ?????? ???????? ��� */
 
 .subscribe-card {
   background: var(--color-primary-dark);
@@ -1533,7 +1532,7 @@ blockquote {
   gap: var(--space-4);
 }
 
-/* ——— الصفوف التلقائية ——— */
+/* ��� ?????? ????????? ��� */
 .auto-grid {
   display: grid;
   gap: var(--grid-gap);
@@ -1553,7 +1552,7 @@ blockquote {
    6. Animations
    ============================================ */
 
-/* ——— 6.1 ظهور العناصر عند التمرير ——— */
+/* ��� 6.1 ???? ??????? ??? ??????? ��� */
 
 .reveal {
   opacity: 0;
@@ -1590,7 +1589,7 @@ blockquote {
   transform: scale(1);
 }
 
-/* ——— 6.2 تأثير hover على البطاقات ——— */
+/* ��� 6.2 ????? hover ??? ???????? ��� */
 
 .card-hover {
   transition: all var(--transition-base);
@@ -1613,13 +1612,13 @@ blockquote {
   transition: transform var(--transition-slow);
 }
 
-/* ——— 6.3 تأثيرات hover على الأزرار المذكورة أعلاه ——— */
-/* انظر: .btn:hover, .btn--primary:hover, إلخ. */
+/* ��� 6.3 ??????? hover ??? ??????? ???????? ????? ��� */
+/* ????: .btn:hover, .btn--primary:hover, ???. */
 
-/* ——— 6.4 انتقالات القائمة على الجوال ——— */
-/* انظر: @media (max-width: 767px) في قسم .nav */
+/* ��� 6.4 ???????? ??????? ??? ?????? ��� */
+/* ????: @media (max-width: 767px) ?? ??? .nav */
 
-/* ——— 6.5 حركات مخصصة ——— */
+/* ��� 6.5 ????? ????? ��� */
 
 @keyframes floatStar {
   0%, 100% {
@@ -1693,10 +1692,10 @@ blockquote {
 
 
 /* ============================================
-   7. مكونات إضافية
+   7. ?????? ??????
    ============================================ */
 
-/* ——— 7.1 مسارات التنقل (Breadcrumbs) ——— */
+/* ��� 7.1 ?????? ?????? (Breadcrumbs) ��� */
 
 .breadcrumbs {
   display: flex;
@@ -1734,7 +1733,7 @@ blockquote {
   font-weight: var(--weight-medium);
 }
 
-/* ——— 7.2 صفحة المحتوى (مقالة) ——— */
+/* ��� 7.2 ???? ??????? (?????) ��� */
 
 .article-content {
   font-size: var(--text-lg);
@@ -1800,7 +1799,7 @@ blockquote {
   margin-bottom: 0;
 }
 
-/* ——— 7.3 حقول النموذج ——— */
+/* ��� 7.3 ???? ??????? ��� */
 
 .form-group {
   margin-bottom: var(--space-5);
@@ -1864,7 +1863,7 @@ blockquote {
   padding-left: 36px;
 }
 
-/* ——— 7.4 التباعد بين الأقسام ——— */
+/* ��� 7.4 ??????? ??? ??????? ��� */
 
 .section {
   padding: var(--section-padding);
@@ -1890,7 +1889,7 @@ blockquote {
   padding: 0;
 }
 
-/* ——— 7.5 صفحة تسجيل الدخول ——— */
+/* ��� 7.5 ???? ????? ?????? ��� */
 
 .auth-card {
   max-width: 420px;
@@ -1958,7 +1957,7 @@ blockquote {
   text-decoration: underline;
 }
 
-/* ——— 7.6 لوحة التحكم ——— */
+/* ��� 7.6 ???? ?????? ��� */
 
 .admin-layout {
   display: flex;
@@ -2074,7 +2073,7 @@ blockquote {
   color: var(--text-muted);
 }
 
-/* ——— 7.7 لوادر / أشكال الانتظار ——— */
+/* ��� 7.7 ????? / ????? ???????? ��� */
 
 .spinner {
   display: inline-block;
@@ -2095,7 +2094,7 @@ blockquote {
   to { transform: rotate(360deg); }
 }
 
-/* ——— 7.8 رسائل التنبيه ——— */
+/* ��� 7.8 ????? ??????? ��� */
 
 .alert {
   padding: var(--space-4) var(--space-5);
@@ -2134,10 +2133,10 @@ blockquote {
 
 
 /* ============================================
-   8. استعلامات الوسائط العامة
+   8. ????????? ??????? ??????
    ============================================ */
 
-/* شاشات صغيرة جداً (320px - 480px) */
+/* ????? ????? ???? (320px - 480px) */
 @media (max-width: 480px) {
   :root {
     --h1-size: var(--text-3xl);
@@ -2168,7 +2167,7 @@ blockquote {
   }
 }
 
-/* شاشات متوسطة (481px - 767px) */
+/* ????? ?????? (481px - 767px) */
 @media (min-width: 481px) and (max-width: 767px) {
   :root {
     --h1-size: var(--text-4xl);
@@ -2176,14 +2175,14 @@ blockquote {
   }
 }
 
-/* شاشات تابلت (768px - 991px) */
+/* ????? ????? (768px - 991px) */
 @media (min-width: 768px) and (max-width: 991px) {
   .hero__title {
     font-size: var(--text-4xl);
   }
 }
 
-/* شاشات كبيرة (1920px+) */
+/* ????? ????? (1920px+) */
 @media (min-width: 1920px) {
   .container {
     max-width: var(--container-wide);
@@ -2200,33 +2199,33 @@ blockquote {
 
 
 /* ============================================
-   9. تحسينات الجوال الشاملة
+   9. ??????? ?????? ???????
    ============================================ */
 
 @media (max-width: 767px) {
-  /* --- الهيدر --- */
+  /* --- ?????? --- */
   .header__inner { padding: 0 var(--space-4); }
   .header__logo { font-size: var(--text-lg); }
-  .header__logo-sub { display: none !important; }
+  .header__logo-sub { display: none; }
 
-  /* --- الهيرو --- */
-  .hero { min-height: 60vh !important; }
+  /* --- ?????? --- */
+  .hero { min-height: 60vh; }
   .hero--articles,
-  .hero--join { min-height: 40vh !important; }
+  .hero--join { min-height: 40vh; }
   .hero__content { padding: var(--space-6) var(--space-4); }
-  .hero__title { font-size: var(--text-3xl) !important; }
-  .hero__description { font-size: var(--text-sm) !important; }
+  .hero__title { font-size: var(--text-3xl); }
+  .hero__description { font-size: var(--text-sm); }
   .hero__actions { flex-direction: column; align-items: stretch; }
   .hero__actions .btn { width: 100%; justify-content: center; }
 
-  /* --- الأقسام --- */
+  /* --- ??????? --- */
   .section { padding: var(--space-10) 0; }
   .container { padding-left: var(--space-4); padding-right: var(--space-4); }
   .section-header { margin-bottom: var(--space-8); }
-  .section-header__title { font-size: var(--h3-size) !important; }
+  .section-header__title { font-size: var(--h3-size); }
   .section-header__description { font-size: var(--text-sm); }
 
-  /* --- المقالات (articles.html) --- */
+  /* --- ???????? (articles.html) --- */
   .articles-toolbar { flex-direction: column; align-items: stretch; }
   .articles-toolbar__right { overflow-x: auto; padding-bottom: var(--space-2); }
   .articles-toolbar__right .btn { white-space: nowrap; flex-shrink: 0; }
@@ -2235,64 +2234,64 @@ blockquote {
   .search-box__input { width: 100%; }
   .sort-select { width: 100%; }
 
-  /* --- المقالة الفردية (article.html) --- */
-  .article-hero { min-height: 30vh !important; }
-  .article-hero__title { font-size: var(--text-2xl) !important; }
+  /* --- ??????? ??????? (article.html) --- */
+  .article-hero { min-height: 30vh; }
+  .article-hero__title { font-size: var(--text-2xl); }
   .article-meta { flex-wrap: wrap; gap: var(--space-2); }
-  .article-content { font-size: var(--text-base) !important; }
+  .article-content { font-size: var(--text-base); }
   .article-sidebar { margin-top: var(--space-6); }
 
-  /* --- النماذج (join.html, contact.html, login.html) --- */
-  .form-grid { grid-template-columns: 1fr !important; }
-  .auth-card { margin: var(--space-6) var(--space-3) !important; padding: var(--space-6) var(--space-4) !important; }
-  .auth-card__title { font-size: var(--text-xl) !important; }
-  .subscribe-card { padding: var(--space-6) var(--space-4) !important; }
-  .subscribe-card__title { font-size: var(--text-xl) !important; }
+  /* --- ??????? (join.html, contact.html, login.html) --- */
+  .form-grid { grid-template-columns: 1fr; }
+  .auth-card { margin: var(--space-6) var(--space-3); padding: var(--space-6) var(--space-4); }
+  .auth-card__title { font-size: var(--text-xl); }
+  .subscribe-card { padding: var(--space-6) var(--space-4); }
+  .subscribe-card__title { font-size: var(--text-xl); }
   .subscribe-card__form { flex-direction: column; }
   .subscribe-card__input { min-width: auto; width: 100%; }
 
-  /* --- عن النادي (about.html) --- */
-  .about-grid { grid-template-columns: 1fr !important; }
+  /* --- ?? ?????? (about.html) --- */
+  .about-grid { grid-template-columns: 1fr; }
   .about-image { min-height: 200px; }
 
-  /* --- التذييل (footer) --- */
-  .footer__grid { grid-template-columns: 1fr !important; gap: var(--space-6); }
+  /* --- ??????? (footer) --- */
+  .footer__grid { grid-template-columns: 1fr; gap: var(--space-6); }
   .footer { padding: var(--space-10) 0 var(--space-6); }
   .footer__bottom { flex-direction: column; text-align: center; }
   .footer__legal { justify-content: center; }
-      .newsletter-form { flex-direction: column; }
+  .newsletter-form { flex-direction: column; }
 
-  /* --- الجداول في لوحة التحكم --- */
+  /* --- ??????? ?? ???? ?????? --- */
   .admin-table { font-size: 11px; }
   .admin-table th, .admin-table td { padding: var(--space-1) var(--space-1); }
   .admin-table th:nth-child(2),
   .admin-table td:nth-child(2) { display: none; }
 
-  /* --- عام --- */
-  .grid--2, .grid--3, .grid--4 { grid-template-columns: 1fr !important; }
-  .auto-grid { grid-template-columns: 1fr !important; }
-  .auto-grid--narrow { grid-template-columns: 1fr !important; }
-  .auto-grid--wide { grid-template-columns: 1fr !important; }
-  .stat-grid { grid-template-columns: repeat(2, 1fr) !important; gap: var(--space-2); }
+  /* --- ??? --- */
+  .grid--2, .grid--3, .grid--4 { grid-template-columns: 1fr; }
+  .auto-grid { grid-template-columns: 1fr; }
+  .auto-grid--narrow { grid-template-columns: 1fr; }
+  .auto-grid--wide { grid-template-columns: 1fr; }
+  .dashboard-main .stat-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-2); }
 }
 
-/* شاشات صغيرة جداً */
+/* ????? ????? ???? */
 @media (max-width: 480px) {
   .btn { white-space: normal; }
   .hero__actions .btn { font-size: var(--text-sm); padding: var(--space-3) var(--space-4); }
 }
 
 @media (max-width: 380px) {
-  .hero { min-height: 50vh !important; }
-  .hero__title { font-size: var(--text-2xl) !important; }
-  .stat-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .hero { min-height: 50vh; }
+  .hero__title { font-size: var(--text-2xl); }
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
   .stat-card__number { font-size: var(--text-lg); }
   .dashboard-header__logo { font-size: var(--text-base); }
   .dashboard-header__user span { font-size: 11px; }
 }
 
 /* ============================================
-   10. دعم الطباعة
+   10. ??? ???????
    ============================================ */
 
 @media print {
@@ -2337,7 +2336,7 @@ blockquote {
 }
 
 /* ============================================
-   11. نظام التعليقات
+   11. ???? ?????????
    ============================================ */
 
 .comments-section {
@@ -2475,7 +2474,7 @@ blockquote {
   color: var(--color-error);
 }
 
-/* ——— نموذج التعليق ——— */
+/* ��� ????? ??????? ��� */
 
 .comment-form-container {
   background: var(--color-primary-bg);
