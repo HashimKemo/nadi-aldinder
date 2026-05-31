@@ -929,15 +929,16 @@ blockquote {
     left: 0;
     right: 0;
     background: var(--bg-card);
-    padding: var(--space-3) var(--space-3);
+    padding: var(--space-5) var(--space-4);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
     transition: opacity var(--transition-menu), visibility var(--transition-menu);
     box-shadow: 0 8px 24px rgba(0,0,0,.12);
-    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-    overflow-y: hidden;
-    max-height: calc(100vh - var(--header-height));
+    border-radius: 0;
+    overflow-y: hidden !important;
+    height: calc(100vh - var(--header-height)) !important;
+    max-height: calc(100vh - var(--header-height)) !important;
     z-index: 999;
   }
 
@@ -952,8 +953,11 @@ blockquote {
   }
 
   .nav__list {
+    display: flex;
     flex-direction: column;
-    gap: var(--space-1);
+    gap: var(--space-3);
+    justify-content: center;
+    height: 85%;
     max-width: 100%;
     margin: 0;
   }
@@ -986,8 +990,10 @@ blockquote {
     display: none;
   }
 
+  html.nav-open,
   body.nav-open {
-    overflow: hidden;
+    overflow: hidden !important;
+    height: 100vh !important;
   }
 
   .theme-toggle {

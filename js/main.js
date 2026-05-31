@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
       nav.classList.toggle('nav--open');
       toggle.classList.toggle('menu-toggle--active');
       document.body.classList.toggle('nav-open');
+      document.documentElement.classList.toggle('nav-open');
       toggle.setAttribute('aria-expanded', !isOpen);
     });
     document.querySelectorAll('.nav__link').forEach(function (l) {
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         nav.classList.remove('nav--open');
         toggle.classList.remove('menu-toggle--active');
         document.body.classList.remove('nav-open');
+        document.documentElement.classList.remove('nav-open');
         toggle.setAttribute('aria-expanded', 'false');
       });
     });
