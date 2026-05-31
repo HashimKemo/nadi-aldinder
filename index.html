@@ -403,7 +403,7 @@
       </div>
       
       <!-- بطاقات المقالات -->
-      <div class="grid grid--3">
+      <div class="grid grid--3" id="articles-grid">
         
         <!-- مقال 1 -->
         <article class="news-card reveal">
@@ -603,7 +603,7 @@
       };
 
       async function loadLatestArticles() {
-        var grid = document.querySelector('.grid--3 .news-card') ? document.querySelector('.grid--3') : null;
+        var grid = document.getElementById('articles-grid');
         if (!grid) return;
         var res = await supabaseClient.from('articles').select('*').eq('is_published', true).order('published_at', { ascending: false }).limit(3);
         if (!res.data || res.data.length === 0) return;
