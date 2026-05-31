@@ -34,10 +34,12 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.theme-toggle').forEach(function (btn) {
     btn.addEventListener('click', toggleTheme);
   });
+  window.addEventListener('resize', applyTheme);
 });
 
 /* ——— الوضع الليلي ——— */
 function getPreferredTheme() {
+  if (window.innerWidth < 768) return 'light';
   var stored = localStorage.getItem('theme');
   if (stored) return stored;
   if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
