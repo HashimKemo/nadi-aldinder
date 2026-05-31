@@ -151,10 +151,10 @@
 
         <div class="article-share reveal">
           <span class="article-share__title">شارك المقالة</span>
-          <a href="#" class="article-share__btn" aria-label="شارك على فيسبوك"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
-          <a href="#" class="article-share__btn" aria-label="شارك على تويتر"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
-          <a href="#" class="article-share__btn" aria-label="شارك على واتساب"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
-          <a href="#" class="article-share__btn" aria-label="نسخ الرابط"><i class="fas fa-link" aria-hidden="true"></i></a>
+          <a href="#" class="article-share__btn share-facebook" target="_blank" rel="noopener" aria-label="شارك على فيسبوك"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+          <a href="#" class="article-share__btn share-twitter" target="_blank" rel="noopener" aria-label="شارك على تويتر"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
+          <a href="#" class="article-share__btn share-whatsapp" target="_blank" rel="noopener" aria-label="شارك على واتساب"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+          <a href="#" class="article-share__btn share-copy" aria-label="نسخ الرابط"><i class="fas fa-link" aria-hidden="true"></i></a>
         </div>
 
         <div class="article-tags reveal">
@@ -281,10 +281,10 @@
           <div class="footer__logo">نادي الدندر الثقافي الاجتماعي</div>
           <p class="footer__description">فضاء ثقافي اجتماعي يجمع أبناء الدندر أينما كانوا.</p>
           <div class="footer__social">
-            <a href="#" class="footer__social-link" aria-label="فيسبوك"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
-            <a href="#" class="footer__social-link" aria-label="تويتر"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
-            <a href="#" class="footer__social-link" aria-label="يوتيوب"><i class="fab fa-youtube" aria-hidden="true"></i></a>
-            <a href="#" class="footer__social-link" aria-label="واتساب"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+            <a href="https://www.facebook.com/DinderClub" target="_blank" rel="noopener" class="footer__social-link" aria-label="فيسبوك"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+            <a href="https://x.com/DinderClub" target="_blank" rel="noopener" class="footer__social-link" aria-label="تويتر"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
+            <a href="https://www.youtube.com/@DinderClub" target="_blank" rel="noopener" class="footer__social-link" aria-label="يوتيوب"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+            <a href="contact.html" target="_blank" rel="noopener" class="footer__social-link" aria-label="واتساب"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
           </div>
         </div>
         <div>
@@ -407,6 +407,21 @@
       }
 
       try { await supabaseClient.rpc('increment_views', { article_id: articleId }); } catch (e) {}
+
+      var shareUrl = window.location.href;
+      var shareTitle = article.title;
+      document.querySelector('.share-facebook').href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shareUrl);
+      document.querySelector('.share-twitter').href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareTitle) + '&url=' + encodeURIComponent(shareUrl);
+      document.querySelector('.share-whatsapp').href = 'https://wa.me/?text=' + encodeURIComponent(shareTitle + '\n' + shareUrl);
+      document.querySelector('.share-copy').addEventListener('click', function(e) {
+        e.preventDefault();
+        navigator.clipboard.writeText(shareUrl).then(function() {
+          var original = this.innerHTML;
+          this.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i>';
+          var self = this;
+          setTimeout(function() { self.innerHTML = original; }, 2000);
+        }.bind(this));
+      });
 
       const { data: related } = await supabaseClient
         .from('articles')
