@@ -215,9 +215,13 @@
           <li><a href="index.html" class="nav__link nav__link--active" aria-current="page">الرئيسية</a></li>
           <li><a href="articles.html" class="nav__link">المقالات</a></li>
           <li><a href="about.html" class="nav__link">عن النادي</a></li>
+          <li><a href="events.html" class="nav__link">الفعاليات</a></li>
           <li><a href="join.html" class="nav__link">انضم إلينا</a></li>
           <li><a href="contact.html" class="nav__link">تواصل معنا</a></li>
-          <li><a href="login.html" class="nav__link btn btn--primary btn--sm" style="color: var(--text-on-primary); margin-right: var(--space-4);">دخول الأعضاء</a></li>
+          <li id="nav-dashboard" style="display:none;"><a href="admin.html" class="nav__link"><i class="fas fa-tachometer-alt" style="margin-left:var(--space-2);"></i>لوحة التحكم</a></li>
+          <li id="nav-user-info" class="nav__user-info" style="display:none;"><i class="fas fa-user" style="margin-left:var(--space-2);"></i><span id="nav-user-name"></span></li>
+          <li id="nav-logout" style="display:none;"><a href="#" class="nav__link nav__logout"><i class="fas fa-sign-out-alt" style="margin-left:var(--space-2);"></i>تسجيل الخروج</a></li>
+          <li><a href="login.html" class="nav__link btn btn--primary btn--sm" id="nav-login-btn" style="color: var(--text-on-primary); margin-right: var(--space-4);">دخول الأعضاء</a></li>
           <li><button class="theme-toggle" aria-label="الوضع الليلي"><i class="fas fa-moon"></i></button></li>
         </ul>
       </nav>
@@ -529,6 +533,7 @@
             <li><a href="index.html" class="footer__link">الرئيسية</a></li>
             <li><a href="articles.html" class="footer__link">المقالات</a></li>
             <li><a href="about.html" class="footer__link">عن النادي</a></li>
+            <li><a href="events.html" class="footer__link">الفعاليات</a></li>
           </ul>
         </div>
         
@@ -582,7 +587,7 @@
         culture: 'ثقافة', society: 'مجتمع', events: 'فعاليات', news: 'أخبار'
       };
 
-      async function loadStats() {
+      async function loadStats(cb) {
         try {
           var [artRes, memRes] = await Promise.all([
             supabaseClient.from('articles').select('*', { count: 'exact', head: true }).eq('is_published', true),
@@ -591,6 +596,7 @@
           if (statNumbers[0]) statNumbers[0].setAttribute('data-target', memRes.count || 0);
           if (statNumbers[1]) statNumbers[1].setAttribute('data-target', artRes.count || 0);
         } catch (e) { console.warn('loadStats error:', e); }
+        if (cb) cb();
       }
 
       async function loadLatestArticles() {
@@ -640,13 +646,11 @@
           }
         });
       }, { threshold: 0.3 });
-      
-      var statsSection = document.querySelector('.stats-section');
-      if (statsSection) {
-        statsObserver.observe(statsSection);
-      }
 
-      loadStats();
+      loadStats(function () {
+        var statsSection = document.querySelector('.stats-section');
+        if (statsSection) statsObserver.observe(statsSection);
+      });
 
       loadLatestArticles();
       
