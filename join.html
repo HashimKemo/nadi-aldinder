@@ -570,7 +570,31 @@
 
         var userId = authData.user.id;
 
-        // Step 2: Create profile
+        // Ensure we have a session (user may not be auto-confirmed)
+        if (!authData.session) {
+          console.log('[DEBUG-join] No session after signUp, attempting signIn...');
+          var { error: siErr } = await supabaseClient.auth.signInWithPassword({
+            email: email, password: pass
+          });
+          if (siErr) {
+            console.log('[DEBUG-join] signIn failed:', siErr.message);
+            // Can't get a session — likely email confirmation required.
+            // Insert membership request (anon-allowed per RLS) as partial save.
+            await supabaseClient.from('membership_requests').insert({
+              full_name: name, email: email, phone: phone,
+              city: city, origin: origin, interests: interests || null,
+              bio: bio, how_knew: howKnew, profile_id: userId,
+              status: 'pending'
+            }).then(function(){}, function(){});
+            await supabaseClient.auth.signOut().then(function(){}, function(){});
+            showError('تم إنشاء الحساب. يرجى تأكيد البريد الإلكتروني أولاً، ثم تواصل مع الإدارة لتفعيل العضوية.');
+            resetBtn(submitBtn);
+            return;
+          }
+          console.log('[DEBUG-join] signIn succeeded, session obtained.');
+        }
+
+        // Step 2: Create profile (now authenticated)
         var { error: profileErr } = await supabaseClient.from('profiles').insert({
           id: userId,
           name: name,
@@ -580,10 +604,28 @@
         });
 
         if (profileErr) {
-          await supabaseClient.auth.signOut();
-          showError('خطأ في إعداد الحساب: ' + profileErr.message);
-          resetBtn(submitBtn);
-          return;
+          console.log('[DEBUG-join] profile insert failed:', profileErr.message, profileErr.code);
+          // If still 401, try via RPC as fallback
+          if (profileErr.code === '401' || profileErr.status === 401) {
+            try {
+              await supabaseClient.rpc('create_join_request', {
+                p_user_id: userId, p_name: name, p_email: email,
+                p_phone: phone, p_city: city, p_origin: origin,
+                p_interests: interests || null, p_bio: bio,
+                p_how_knew: howKnew
+              });
+            } catch (rpcErr) {
+              await supabaseClient.auth.signOut();
+              showError('تعذر إنشاء الملف الشخصي. يرجى إبلاغ الإدارة.');
+              resetBtn(submitBtn);
+              return;
+            }
+          } else {
+            await supabaseClient.auth.signOut();
+            showError('خطأ في إعداد الحساب: ' + profileErr.message);
+            resetBtn(submitBtn);
+            return;
+          }
         }
 
         // Step 3: Create membership request
@@ -601,7 +643,7 @@
         });
 
         if (reqErr) {
-          console.error('membership_requests error:', reqErr);
+          console.error('[DEBUG-join] membership_requests error:', reqErr);
         }
 
         // Sign out and show success

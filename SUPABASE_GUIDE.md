@@ -905,6 +905,29 @@ GRANT EXECUTE ON FUNCTION public.create_profile_on_signup TO anon, authenticated
 
 يوجد نسخة من هذا الكود في `sql/member_role_migration.sql` يمكن رفعها مباشرة إلى SQL Editor.
 
+### دالة إنشاء الحساب + طلب العضوية (لحل مشكلة 401)
+
+إذا ظهر خطأ `401 (Unauthorized)` عند محاولة إنشاء ملف شخصي في `join.html`، فهذا يعني أن Supabase Auth لا يوفّر جلسة (session) بعد `signUp()` — غالباً لأن "تأكيد البريد" مفعّل. الحل: شغّل دالة `create_join_request` في SQL Editor ثم ينفّذها الكود كحل احتياطي.
+
+```sql
+-- يوجد نسخة في sql/create_join_request_function.sql
+CREATE OR REPLACE FUNCTION public.create_join_request(
+  p_user_id UUID, p_name TEXT, p_email TEXT,
+  p_phone TEXT DEFAULT NULL, p_city TEXT DEFAULT NULL,
+  p_origin TEXT DEFAULT NULL, p_interests TEXT DEFAULT NULL,
+  p_bio TEXT DEFAULT NULL, p_how_knew TEXT DEFAULT NULL
+) RETURNS void LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $$
+BEGIN
+  INSERT INTO public.profiles (id, name, email, role, is_approved)
+  VALUES (p_user_id, p_name, p_email, 'pending', true)
+  ON CONFLICT (id) DO NOTHING;
+  INSERT INTO public.membership_requests (...)
+  VALUES (...);
+END;
+$$;
+GRANT EXECUTE ON FUNCTION public.create_join_request TO anon, authenticated;
+```
+
 ### SQL المطلوب للقاعدة (شغّل في SQL Editor)
 
 للتحديث من النظام القديم إلى الجديد:

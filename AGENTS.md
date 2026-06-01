@@ -101,6 +101,7 @@ User logs in → dashboard.html (member/publisher/editor) or admin.html (admin)
 - `SUPABASE_GUIDE.md` — Full SQL for tables, RLS policies, setup steps
 - `CONTENT.md` — All Arabic text content for the site
 - `sql/seed_articles.sql` — 8 initial articles INSERT
+- `sql/create_join_request_function.sql` — SECURITY DEFINER function to fix 401 during signup
 - `supabase/functions/invite-member/index.ts` — Edge Function for invite emails
 - `DEPLOY.md` — GitHub Pages deployment guide (Arabic)
 - `MAINTENANCE.md` — Regular maintenance guide (Arabic)
@@ -116,6 +117,7 @@ User logs in → dashboard.html (member/publisher/editor) or admin.html (admin)
 | Manage all users | admin.html → إدارة المستخدمين |
 | Moderate comments | admin.html → التعليقات |
 | Deploy Edge Function | `supabase functions deploy invite-member` (requires Supabase CLI, احتياطي فقط) |
+| Create join function | Run `sql/create_join_request_function.sql` in Supabase SQL Editor (يُحل مشكلة 401) |
 | Fix RLS issues | Re-run SECURITY DEFINER functions + policies from SUPABASE_GUIDE.md Part 3 |
 | Wake up Supabase | Supabase Dashboard → project → Resume (if paused) |
 
@@ -125,6 +127,7 @@ User logs in → dashboard.html (member/publisher/editor) or admin.html (admin)
 - All `<script>` tags load Supabase CDN first, then `supabase.js`, then page-specific code. Order matters.
 - `signup.html` — صفحة توجيه تخبر المستخدم بأنه سيصله رابط دعوة على الإيميل (تم إلغاء النموذج)
 - `SUPABASE_FUNCTIONS_URL` in `supabase.js` derives from `SUPABASE_URL` automatically.
+- If email confirmation is ON in Supabase Auth, `signUp()` returns no session → profiles INSERT gets 401. Fix: run `sql/create_join_request_function.sql` in Supabase SQL Editor, or disable email confirmation in Supabase Dashboard.
 - `membership_requests` keeps records with status `pending`/`approved`/`rejected`.
 - Comments on articles are published instantly (no moderation queue).
 - When deleting a comment via admin panel, all child replies are CASCADE deleted.
