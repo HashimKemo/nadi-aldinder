@@ -19,21 +19,6 @@ var SUPABASE_PAUSED = false;
     SUPABASE_PAUSED = true;
     console.warn('⚠️ Supabase DB: تعذر الاتصال — ' + e.message);
   }
-  // Also check Auth endpoint independently
-  if (!SUPABASE_PAUSED) {
-    try {
-      var authRes = await fetch(SUPABASE_URL + '/auth/v1/user', {
-        headers: { 'apikey': SUPABASE_ANON_KEY }
-      });
-      if (authRes.status === 503 || authRes.status === 502) {
-        SUPABASE_PAUSED = true;
-        console.warn('⚠️ Supabase Auth: غير متاح (' + authRes.status + ')');
-      }
-    } catch (e) {
-      SUPABASE_PAUSED = true;
-      console.warn('⚠️ Supabase Auth: تعذر الاتصال — ' + e.message);
-    }
-  }
   if (SUPABASE_PAUSED) {
     var banner = document.createElement('div');
     banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#c0392b;color:#fff;text-align:center;padding:12px 16px;font-size:14px;font-family:sans-serif;';
