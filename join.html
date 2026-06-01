@@ -566,11 +566,15 @@
 
         // Ensure we have a session (user may not be auto-confirmed)
         if (!authData.session) {
-          var { error: siErr } = await supabaseClient.auth.signInWithPassword({
-            email: email, password: pass
-          });
-          if (siErr) {
-            // Can't get a session — likely email confirmation required.
+          try {
+            var { error: siErr } = await supabaseClient.auth.signInWithPassword({
+              email: email, password: pass
+            });
+            if (siErr) {
+              throw siErr;
+            }
+          } catch (siErr) {
+            // Can't get a session — network error or email confirmation required.
             // Insert membership request (anon-allowed per RLS) as partial save.
             await supabaseClient.from('membership_requests').insert({
               full_name: name, email: email, phone: phone,
@@ -579,7 +583,12 @@
               status: 'pending'
             }).then(function(){}, function(){});
             await supabaseClient.auth.signOut().then(function(){}, function(){});
-            showError('تم إنشاء الحساب. يرجى تأكيد البريد الإلكتروني أولاً، ثم تواصل مع الإدارة لتفعيل العضوية.');
+            var siMsg = (siErr && siErr.message) || '';
+            if (siMsg.includes('fetch') || siMsg.includes('network') || siMsg.includes('Network') || siMsg.includes('Failed')) {
+              showError('تعذر الاتصال بالخادم. تحقق من اتصالك بالإنترنت وجرّب مرة أخرى.');
+            } else {
+              showError('تم إنشاء الحساب. يرجى تأكيد البريد الإلكتروني أولاً، ثم تواصل مع الإدارة لتفعيل العضوية.');
+            }
             resetBtn(submitBtn);
             return;
           }

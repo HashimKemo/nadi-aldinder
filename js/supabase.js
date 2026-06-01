@@ -17,7 +17,22 @@ var SUPABASE_PAUSED = false;
     }
   } catch (e) {
     SUPABASE_PAUSED = true;
-    console.warn('⚠️ Supabase: تعذر الاتصال — ' + e.message);
+    console.warn('⚠️ Supabase DB: تعذر الاتصال — ' + e.message);
+  }
+  // Also check Auth endpoint independently
+  if (!SUPABASE_PAUSED) {
+    try {
+      var authRes = await fetch(SUPABASE_URL + '/auth/v1/user', {
+        headers: { 'apikey': SUPABASE_ANON_KEY }
+      });
+      if (authRes.status === 503 || authRes.status === 502) {
+        SUPABASE_PAUSED = true;
+        console.warn('⚠️ Supabase Auth: غير متاح (' + authRes.status + ')');
+      }
+    } catch (e) {
+      SUPABASE_PAUSED = true;
+      console.warn('⚠️ Supabase Auth: تعذر الاتصال — ' + e.message);
+    }
   }
   if (SUPABASE_PAUSED) {
     var banner = document.createElement('div');

@@ -246,6 +246,14 @@
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جارٍ تسجيل الدخول...';
 
+        if (typeof SUPABASE_PAUSED !== 'undefined' && SUPABASE_PAUSED) {
+          errorDiv.textContent = '⚠️ قاعدة البيانات غير متاحة حالياً. يرجى المحاولة لاحقاً.';
+          errorDiv.style.display = 'block';
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'دخول';
+          return;
+        }
+
         try {
           const { data, error } = await supabaseClient.auth.signInWithPassword({
             email: email,
@@ -357,7 +365,12 @@
             }
           }
         } catch (err) {
-          errorDiv.textContent = 'حدث خطأ في الاتصال. تحقق من اتصالك بالإنترنت.';
+          var msg = (err && err.message) || '';
+          if (msg.includes('fetch') || msg.includes('network') || msg.includes('Network') || msg.includes('Failed')) {
+            errorDiv.textContent = 'تعذر الاتصال بالخادم. تحقق من اتصالك بالإنترنت وجرّب مرة أخرى.';
+          } else {
+            errorDiv.textContent = 'حدث خطأ غير متوقع: ' + msg;
+          }
           errorDiv.style.display = 'block';
           submitBtn.disabled = false;
           submitBtn.innerHTML = 'دخول';
