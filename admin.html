@@ -619,22 +619,28 @@
         btn.innerHTML = '<i class="fas fa-check"></i> قبول';
         return;
       }
-      // Find and approve the profile by email
-      var profRes = await supabaseClient.from('profiles').select('id').eq('email', reqRes.data.email).maybeSingle();
-      if (profRes.data) {
-        await supabaseClient.from('profiles').update({ is_approved: true }).eq('id', profRes.data.id);
+      // Find profile by user_id first, fallback to email
+      var profRes;
+      if (reqRes.data.user_id) {
+        profRes = await supabaseClient.from('profiles').select('id').eq('id', reqRes.data.user_id).maybeSingle();
+      }
+      if (!profRes || !profRes.data) {
+        profRes = await supabaseClient.from('profiles').select('id').eq('email', reqRes.data.email).maybeSingle();
+      }
+      if (profRes && profRes.data) {
+        // Profile found — approve and set role to member
+        await supabaseClient.from('profiles').update({ role: 'member', is_approved: true }).eq('id', profRes.data.id);
       } else if (reqRes.data.user_id) {
-        // Profile doesn't exist yet — create it via RPC
-        try {
-          await supabaseClient.rpc('create_join_request', {
-            p_user_id: reqRes.data.user_id,
-            p_name: reqRes.data.full_name,
-            p_email: reqRes.data.email,
-            p_phone: null, p_city: '', p_origin: null,
-            p_interests: null, p_bio: '', p_how_knew: null
-          });
-        } catch (rpcErr) {
-          showNotification('تعذر إنشاء البروفايل. أنشئه يدوياً من لوحة Supabase.', 'error');
+        // Profile doesn't exist — create it via upsert (no duplicate membership request)
+        var { error: upsErr } = await supabaseClient.from('profiles').upsert({
+          id: reqRes.data.user_id,
+          name: reqRes.data.full_name,
+          email: reqRes.data.email,
+          role: 'member',
+          is_approved: true
+        });
+        if (upsErr) {
+          showNotification('خطأ في إنشاء البروفايل: ' + upsErr.message, 'error');
           btn.disabled = false;
           btn.innerHTML = '<i class="fas fa-check"></i> قبول';
           return;
