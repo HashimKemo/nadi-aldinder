@@ -6,17 +6,25 @@ const SUPABASE_FUNCTIONS_URL = SUPABASE_URL.replace('.supabase.co', '.supabase.c
 const { createClient } = supabase;
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+var SUPABASE_PAUSED = false;
+
 (async function checkSupabase() {
   try {
-    var { error } = await supabaseClient.from('profiles').select('id', { count: 'exact', head: true }).limit(0);
-    if (error && error.code === 'PGRST301') {
-      console.warn('⚠️ Supabase: المشروع متوقف (Paused). اذهب إلى dashboard.supabase.com وأعد تفعيله.');
-      var banner = document.createElement('div');
-      banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#c0392b;color:#fff;text-align:center;padding:12px 16px;font-size:14px;font-family:sans-serif;';
-      banner.textContent = '⚠️ قاعدة البيانات متوقفة — اذهب إلى Supabase Dashboard وأعد تفعيل المشروع.';
-      document.body.prepend(banner);
+    var res = await supabaseClient.from('profiles').select('id', { count: 'exact', head: true }).limit(0);
+    if (res.error) {
+      if (res.error.code === 'PGRST301') SUPABASE_PAUSED = true;
+      console.warn('⚠️ Supabase: ' + (res.error.message || 'غير متاح'));
     }
-  } catch (e) {}
+  } catch (e) {
+    SUPABASE_PAUSED = true;
+    console.warn('⚠️ Supabase: تعذر الاتصال — ' + e.message);
+  }
+  if (SUPABASE_PAUSED) {
+    var banner = document.createElement('div');
+    banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#c0392b;color:#fff;text-align:center;padding:12px 16px;font-size:14px;font-family:sans-serif;';
+    banner.textContent = '⚠️ قاعدة البيانات غير متاحة — تحقق من اتصالك أو راجع لوحة Supabase.';
+    document.body.prepend(banner);
+  }
 })();
 
 document.addEventListener('DOMContentLoaded', () => {

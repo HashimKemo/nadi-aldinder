@@ -514,6 +514,12 @@
       submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جارٍ إنشاء الحساب...';
 
       try {
+        if (typeof SUPABASE_PAUSED !== 'undefined' && SUPABASE_PAUSED) {
+          showError('⚠️ قاعدة البيانات غير متاحة حالياً. يرجى المحاولة لاحقاً.');
+          resetBtn(submitBtn);
+          return;
+        }
+
         // Step 1: Create Auth user
         var { data: authData, error: authErr } = await supabaseClient.auth.signUp({
           email: email,
@@ -523,9 +529,17 @@
         if (authErr) {
           if (authErr.message === 'User already registered') {
             showError('هذا البريد مسجل مسبقاً. <a href="login.html" style="color:var(--color-primary);font-weight:600;">سجّل دخولك</a>');
+          } else if (authErr.status === 0 || authErr.message === 'Failed to fetch' || authErr.message === 'NetworkError') {
+            showError('تعذر الاتصال بالخادم. تحقق من اتصالك بالإنترنت وجرّب مرة أخرى.');
           } else {
             showError(authErr.message);
           }
+          resetBtn(submitBtn);
+          return;
+        }
+
+        if (!authData || !authData.user) {
+          showError('تعذر إنشاء الحساب. الخادم غير متاح حالياً.');
           resetBtn(submitBtn);
           return;
         }
@@ -571,7 +585,12 @@
         showSuccess();
 
       } catch (err) {
-        showError('حدث خطأ في الاتصال. تحقق من اتصالك بالإنترنت.');
+        var msg = (err && err.message) || '';
+        if (msg.includes('fetch') || msg.includes('network') || msg.includes('Network')) {
+          showError('تعذر الاتصال بالخادم. تحقق من اتصالك بالإنترنت وجرّب مرة أخرى.');
+        } else {
+          showError('حدث خطأ غير متوقع: ' + msg);
+        }
         resetBtn(submitBtn);
       }
     }
