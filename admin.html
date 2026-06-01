@@ -631,16 +631,14 @@
         // Profile found — approve and set role to member
         await supabaseClient.from('profiles').update({ role: 'member', is_approved: true }).eq('id', profRes.data.id);
       } else if (reqRes.data.user_id) {
-        // Profile doesn't exist — create it via upsert (no duplicate membership request)
-        var { error: upsErr } = await supabaseClient.from('profiles').upsert({
-          id: reqRes.data.user_id,
-          name: reqRes.data.full_name,
-          email: reqRes.data.email,
-          role: 'member',
-          is_approved: true
+        // Profile doesn't exist — create via SECURITY DEFINER RPC (bypasses RLS, no dup request)
+        var { error: rpcErr } = await supabaseClient.rpc('admin_approve_profile', {
+          p_user_id: reqRes.data.user_id,
+          p_name: reqRes.data.full_name,
+          p_email: reqRes.data.email
         });
-        if (upsErr) {
-          showNotification('خطأ في إنشاء البروفايل: ' + upsErr.message, 'error');
+        if (rpcErr) {
+          showNotification('خطأ في إنشاء البروفايل: ' + rpcErr.message, 'error');
           btn.disabled = false;
           btn.innerHTML = '<i class="fas fa-check"></i> قبول';
           return;
