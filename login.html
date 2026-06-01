@@ -323,6 +323,15 @@
               successDiv.textContent = 'مرحباً بك! تم تسجيل الدخول كعضو.';
               successDiv.style.display = 'block';
               setTimeout(function () { window.location.href = 'dashboard.html'; }, 800);
+            } else if (profile && profile.role === 'pending') {
+              await supabaseClient.auth.signOut();
+              attemptCount = 0;
+              sessionStorage.removeItem('loginAttempts');
+              sessionStorage.removeItem('loginLocked');
+              errorDiv.innerHTML = 'طلب عضويتك قيد المراجعة 🕐<br><span style="font-size:var(--text-xs);color:var(--text-muted);">سنعلمك فور الموافقة. يمكنك متابعة حالة طلبك لاحقاً.</span>';
+              errorDiv.style.display = 'block';
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = 'دخول';
             } else if (profile && profile.role === 'admin' && profile.is_approved) {
               attemptCount = 0;
               sessionStorage.removeItem('loginAttempts');
@@ -341,7 +350,7 @@
               await supabaseClient.auth.signOut();
               errorDiv.textContent = profile
                 ? 'حسابك غير مصرح له بالدخول. تواصل مع الإدارة.'
-                : 'لا يوجد حساب مشرف لهذا البريد. تواصل مع الإدارة.';
+                : 'لم يتم العثور على حساب. قدّم طلب انضمام أولاً.';
               errorDiv.style.display = 'block';
               submitBtn.disabled = false;
               submitBtn.innerHTML = 'دخول';

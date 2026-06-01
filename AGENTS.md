@@ -14,7 +14,7 @@ Static multi-page Arabic HTML site. **No build tools, no frameworks, no package.
 | 404 | `404.html` | Custom error page |
 | Supabase | `js/supabase.js` | Client init (`supabaseClient`), newsletter handler, health check, `SUPABASE_FUNCTIONS_URL` |
 | Page-specific JS | inline in each `.html` | Articles, admin, dashboard, login |
-| Edge Function | `supabase/functions/invite-member/index.ts` | Sends invite email (deploy via `supabase functions deploy invite-member`) |
+| Edge Function | `supabase/functions/invite-member/index.ts` | (احتياطي — غير مستخدم حالياً) |
 | DB | Supabase (remote) | Tables: `articles`, `profiles`, `subscribers`, `membership_requests`, `contact_messages`, `article_comments` |
 
 ## Critical Setup — Supabase
@@ -26,22 +26,19 @@ Static multi-page Arabic HTML site. **No build tools, no frameworks, no package.
 - **Free tier pauses after 7 days** inactivity. `supabase.js` has health check banner.
 - **First user** who logs in becomes admin via `should_create_admin()` RPC.
 - **Seed data**: `sql/seed_articles.sql` has 8 articles.
-- **Edge Function** needs deployment: `supabase functions deploy invite-member`
+- **Edge Function** needs deployment: `supabase functions deploy invite-member` (redundant now)
 
 ## Membership Flow
 
 ```
-join.html → membership_requests (status=pending)
+join.html (multi-step: info + account + submit)
+  ↓ creates Auth user (role=pending) + profile + membership_requests
   ↓
-admin.html → approveReq() → status=approved + Edge Function call
+User can't log in yet — login.html detects role=pending and shows message
   ↓
-Edge Function sends invite email via auth.admin.inviteUserByEmail()
+admin.html → approveReq() → profiles.role = 'member'
   ↓
-User clicks link → sets password → Auth + profile created (role=member)
-  ↓
-membership_requests record is deleted (profile is now source of truth)
-  ↓
-Login → dashboard.html (member/publisher/editor) or admin.html (admin)
+User logs in → dashboard.html (member/publisher/editor) or admin.html (admin)
 ```
 
 ## Roles & Navigation
@@ -75,7 +72,7 @@ Login → dashboard.html (member/publisher/editor) or admin.html (admin)
 
 - `loadMembers()` queries `profiles WHERE role = 'member'` (source of truth)
 - `linkMemberAccount()` and "ربط حساب" button **removed** (no longer needed)
-- `approveReq()` calls Edge Function `/invite-member` after approving a request
+- `approveReq()` updates `profiles.role = 'member'` directly (no Edge Function)
 
 ### Roles & CRUD
 
@@ -113,12 +110,12 @@ Login → dashboard.html (member/publisher/editor) or admin.html (admin)
 | Task | What to do |
 |------|-----------|
 | Add a new article | admin.html → المقالات → مقالة جديدة |
-| Approve member | admin.html → لوحة التحكم → طلبات العضوية → قبول (يُرسل دعوة تلقائياً) |
+| Approve member | admin.html → لوحة التحكم → طلبات العضوية → قبول |
 | Promote member | admin.html → الأعضاء → ناشر/محرر |
 | View all members | admin.html → الأعضاء |
 | Manage all users | admin.html → إدارة المستخدمين |
 | Moderate comments | admin.html → التعليقات |
-| Deploy Edge Function | `supabase functions deploy invite-member` (requires Supabase CLI) |
+| Deploy Edge Function | `supabase functions deploy invite-member` (requires Supabase CLI, احتياطي فقط) |
 | Fix RLS issues | Re-run SECURITY DEFINER functions + policies from SUPABASE_GUIDE.md Part 3 |
 | Wake up Supabase | Supabase Dashboard → project → Resume (if paused) |
 
@@ -126,11 +123,8 @@ Login → dashboard.html (member/publisher/editor) or admin.html (admin)
 
 - `published_at` can be `null` (for drafts). Always use `fmtDate()` not raw `new Date()`.
 - All `<script>` tags load Supabase CDN first, then `supabase.js`, then page-specific code. Order matters.
-- Edge Function `invite-member` must be deployed before approval can send invites.
-- `signup.html` is now an info page (no more form). Users receive invite emails instead.
-- `dashboard.html` redirects to login if no session or unapproved.
-- `admin.html` redirects members to login (publisher/editor are allowed in for articles).
+- `signup.html` — صفحة توجيه تخبر المستخدم بأنه سيصله رابط دعوة على الإيميل (تم إلغاء النموذج)
 - `SUPABASE_FUNCTIONS_URL` in `supabase.js` derives from `SUPABASE_URL` automatically.
-- `membership_requests` is a staging table — records are deleted after successful account creation.
+- `membership_requests` keeps records with status `pending`/`approved`/`rejected`.
 - Comments on articles are published instantly (no moderation queue).
 - When deleting a comment via admin panel, all child replies are CASCADE deleted.

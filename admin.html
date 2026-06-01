@@ -605,39 +605,34 @@
     async function approveReq(id, btn) {
       btn.disabled = true;
       btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-      var reqRes = await supabaseClient.from('membership_requests').select('email, full_name').eq('id', id).maybeSingle();
+      var reqRes = await supabaseClient.from('membership_requests').select('email, full_name, profile_id').eq('id', id).maybeSingle();
       if (!reqRes.data) {
         showNotification('لم يتم العثور على الطلب', 'error');
         btn.disabled = false;
         btn.innerHTML = '<i class="fas fa-check"></i> قبول';
         return;
       }
-      var { error } = await supabaseClient.from('membership_requests').update({ status: 'approved' }).eq('id', id);
-      if (error) {
-        showNotification('خطأ: ' + error.message, 'error');
+      var { error: reqErr } = await supabaseClient.from('membership_requests').update({ status: 'approved' }).eq('id', id);
+      if (reqErr) {
+        showNotification('خطأ: ' + reqErr.message, 'error');
         btn.disabled = false;
         btn.innerHTML = '<i class="fas fa-check"></i> قبول';
         return;
       }
+      if (reqRes.data.profile_id) {
+        await supabaseClient.from('profiles').update({ role: 'member' }).eq('id', reqRes.data.profile_id);
+      }
       var el = btn.closest('.pending-member');
       el.style.opacity = '0.4'; btn.innerHTML = 'تم';
-      var sessionRes = await supabaseClient.auth.getSession();
-      var token = sessionRes.data.session?.access_token;
-      if (token) {
-        try {
-          await fetch(SUPABASE_FUNCTIONS_URL + '/invite-member', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-            body: JSON.stringify({ email: reqRes.data.email, full_name: reqRes.data.full_name, redirect_to: window.location.origin + '/login.html' })
-          });
-        } catch (_) {}
-      }
-      showNotification('تم قبول الطلب و إرسال دعوة التسجيل إلى ' + reqRes.data.email, 'success');
+      showNotification('تم قبول العضو. يستطيع تسجيل الدخول الآن.', 'success');
+      loadDashboard();
+      loadMembers();
     }
 
     async function rejectReq(id, btn) {
       btn.disabled = true;
       btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+      var reqRes = await supabaseClient.from('membership_requests').select('profile_id').eq('id', id).maybeSingle();
       var { error } = await supabaseClient.from('membership_requests').update({ status: 'rejected' }).eq('id', id);
       if (error) {
         showNotification('خطأ: ' + error.message, 'error');
@@ -645,9 +640,13 @@
         btn.innerHTML = 'رفض';
         return;
       }
+      if (reqRes && reqRes.data && reqRes.data.profile_id) {
+        await supabaseClient.from('profiles').update({ is_approved: false }).eq('id', reqRes.data.profile_id);
+      }
       var el = btn.closest('.pending-member');
       el.style.opacity = '0.4'; el.style.pointerEvents = 'none';
       showNotification('تم رفض الطلب', 'success');
+      loadDashboard();
     }
 
     /* ---- مقالات ---- */

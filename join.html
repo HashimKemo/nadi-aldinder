@@ -11,190 +11,135 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>انضم إلى النادي — نادي الدندر الثقافي الاجتماعي</title>
   <meta name="description" content="قدّم طلب انضمامك إلى نادي الدندر الثقافي الاجتماعي وكن جزءاً من مجتمع ثقافي متماسك. العضوية مجانية ومفتوحة للجميع.">
-  
-  <!-- Open Graph / Social Media -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://dinderclub.sd/join.html">
   <meta property="og:title" content="انضم إلى النادي — نادي الدندر الثقافي الاجتماعي">
-  <meta property="og:description" content="قدّم طلب انضمامك إلى نادي الدندر الثقافي الاجتماعي وكن جزءاً من مجتمع ثقافي متماسك. العضوية مجانية ومفتوحة للجميع.">
+  <meta property="og:description" content="قدّم طلب انضمامك إلى نادي الدندر الثقافي الاجتماعي وكن جزءاً من مجتمع ثقافي متماسك.">
   <meta property="og:image" content="https://dinderclub.sd/images/og-cover.jpg">
-  
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="انضم إلى النادي — نادي الدندر الثقافي الاجتماعي">
-  <meta name="twitter:description" content="قدّم طلب انضمامك إلى نادي الدندر الثقافي الاجتماعي وكن جزءاً من مجتمع ثقافي متماسك. العضوية مجانية ومفتوحة للجميع.">
-  <meta name="twitter:image" content="https://dinderclub.sd/images/og-cover.jpg">
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Noto+Naskh+Arabic:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-  
   <link rel="stylesheet" href="css/main.css">
-  
   <style>
-    .hero--join {
-      background: linear-gradient(135deg, #0f2e24 0%, var(--color-primary) 50%, var(--color-primary-light) 100%);
-      min-height: 60vh;
+    .join-hero {
+      background: linear-gradient(135deg, #0f2e24 0%, var(--color-primary) 50%, #2a7a5a 100%);
+      min-height: 50vh; padding: var(--space-14) 0 var(--space-12);
+      position: relative; overflow: hidden; text-align: center;
     }
-
-    .hero__breadcrumbs {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-2);
-      background: rgba(0,0,0,.25);
-      padding: var(--space-2) var(--space-4);
-      border-radius: var(--radius-full);
-      margin-bottom: var(--space-4);
-      font-size: var(--text-xs);
-      color: rgba(245,240,232,.85);
-      border: 1px solid rgba(255,255,255,.1);
+    .join-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 20% 50%, rgba(255,215,0,.08) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 30%, rgba(255,255,255,.04) 0%, transparent 50%);
     }
+    .join-hero__star { position: absolute; font-size: 1.8rem; color: rgba(255,215,0,.15); animation: floatStar 6s ease-in-out infinite; }
+    @keyframes floatStar { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-18px) rotate(180deg); } }
+    .join-hero__title { font-family: var(--font-heading); font-size: clamp(2rem,5vw,3rem); color: var(--text-light); margin-bottom: var(--space-3); }
+    .join-hero__sub { color: rgba(245,240,232,.8); font-size: var(--text-base); max-width: 520px; margin: 0 auto; line-height: var(--leading-relaxed); }
 
-    .hero__breadcrumbs a {
-      color: var(--color-secondary);
-      transition: color var(--transition-fast);
-    }
-
-    .hero__breadcrumbs a:hover {
-      color: var(--color-secondary-light);
-    }
-
-    .hero__breadcrumbs span::before {
-      content: '/';
-      margin: 0 var(--space-2);
-      color: rgba(245,240,232,.4);
-    }
-
-    .benefit-card {
-      background: var(--bg-card);
-      border-radius: var(--radius-card);
-      padding: var(--space-8) var(--space-6);
-      border: 1px solid var(--border-light);
-      box-shadow: var(--shadow-card);
-      transition: all var(--transition-base);
-      text-align: center;
-    }
-
-    .benefit-card:hover {
-      transform: translateY(-6px);
-      box-shadow: var(--shadow-lg);
-      border-color: var(--color-secondary);
-    }
-
-    .benefit-card__icon {
-      font-size: 2.8rem;
-      margin-bottom: var(--space-4);
-      display: block;
-    }
-
-    .benefit-card__title {
-      font-family: var(--font-heading);
-      font-size: var(--text-xl);
-      font-weight: var(--weight-bold);
-      color: var(--color-primary-dark);
-      margin-bottom: var(--space-2);
-    }
-
-    .benefit-card__text {
-      font-size: var(--text-sm);
-      color: var(--text-muted);
-      line-height: var(--leading-relaxed);
-      margin-bottom: 0;
-    }
-
-    .join-form {
-      background: var(--bg-card);
-      border-radius: var(--radius-2xl);
-      padding: var(--space-10);
+    .form-section { padding: var(--space-12) 0; }
+    .form-card {
+      max-width: 680px; margin: 0 auto;
+      background: var(--bg-card); border-radius: var(--radius-2xl);
+      padding: var(--space-8) var(--space-8) var(--space-10);
       border: 1px solid var(--border-color);
-      box-shadow: var(--shadow-md);
-      max-width: 720px;
-      margin: 0 auto;
+      box-shadow: 0 8px 40px rgba(0,0,0,.06);
+      position: relative;
     }
+
+    /* ——— Progress Bar ——— */
+    .progress { display: flex; justify-content: center; gap: 0; margin-bottom: var(--space-8); position: relative; }
+    .progress__line { position: absolute; top: 20px; left: 15%; right: 15%; height: 3px; background: var(--border-color); z-index: 0; border-radius: 2px; overflow: hidden; }
+    .progress__line-fill { height: 100%; background: linear-gradient(90deg, var(--color-primary), var(--color-secondary)); border-radius: 2px; transition: width .5s ease; width: 0%; }
+    .progress__step { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: var(--space-2); flex: 1; }
+    .progress__circle {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: var(--text-sm); font-weight: var(--weight-bold);
+      background: var(--bg-section-alt); color: var(--text-muted);
+      border: 2px solid var(--border-color);
+      transition: all .4s ease; position: relative;
+    }
+    .progress__circle--active { background: var(--color-primary); color: #fff; border-color: var(--color-primary); box-shadow: 0 4px 14px rgba(27,77,62,.3); transform: scale(1.08); }
+    .progress__circle--done { background: var(--color-success); color: #fff; border-color: var(--color-success); }
+    .progress__label { font-size: 11px; color: var(--text-muted); transition: color .3s; white-space: nowrap; }
+    .progress__label--active { color: var(--color-primary); font-weight: var(--weight-semibold); }
+    .progress__label--done { color: var(--color-success); }
+
+    /* ——— Steps ——— */
+    .step { display: none; animation: stepIn .35s ease; }
+    .step--active { display: block; }
+    @keyframes stepIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+    .step__icon { text-align: center; font-size: 2.2rem; color: var(--color-primary); margin-bottom: var(--space-2); }
+    .step__title { text-align: center; font-family: var(--font-heading); font-size: var(--text-xl); color: var(--color-primary-dark); margin-bottom: var(--space-1); }
+    .step__desc { text-align: center; font-size: var(--text-sm); color: var(--text-muted); margin-bottom: var(--space-6); }
+    .step__fields { display: flex; flex-direction: column; gap: var(--space-4); }
+
+    .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+    @media (max-width: 576px) { .form-row-2 { grid-template-columns: 1fr; } }
+
+    .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); }
+    @media (max-width: 480px) { .check-grid { grid-template-columns: 1fr; } }
+    .check-item {
+      display: flex; align-items: center; gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      cursor: pointer; transition: all .2s;
+      font-size: var(--text-sm); color: var(--text-primary);
+    }
+    .check-item:hover { border-color: var(--color-primary); background: var(--color-primary-bg); }
+    .check-item input { accent-color: var(--color-primary); width: 16px; height: 16px; cursor: pointer; flex-shrink: 0; }
+
+    .step__actions { display: flex; justify-content: space-between; gap: var(--space-3); margin-top: var(--space-6); }
+    .btn--ghost { background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); }
+    .btn--ghost:hover { border-color: var(--color-primary); color: var(--color-primary); background: var(--color-primary-bg); }
+
+    /* ——— Password ——— */
+    .pwd-wrapper { position: relative; }
+    .pwd-wrapper input { padding-left: 2.5rem; }
+    .pwd-toggle { position: absolute; left: .75rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.1rem; }
+    .pwd-toggle:hover { color: var(--color-primary); }
+    .pwd-strength { height: 4px; border-radius: 2px; margin-top: var(--space-1); background: var(--border-color); overflow: hidden; transition: all .2s; }
+    .pwd-strength__fill { height: 100%; border-radius: 2px; transition: width .3s, background .3s; width: 0; }
+    .pwd-strength__fill--weak { width: 33%; background: var(--color-error); }
+    .pwd-strength__fill--medium { width: 66%; background: var(--color-secondary); }
+    .pwd-strength__fill--strong { width: 100%; background: var(--color-success); }
+
+    /* ——— Success ——— */
+    .success-state { display: none; text-align: center; padding: var(--space-8) 0; animation: stepIn .5s ease; }
+    .success-state--show { display: block; }
+    .success-state__icon { font-size: 4rem; color: var(--color-success); margin-bottom: var(--space-4); animation: pop .5s ease; }
+    @keyframes pop { 0% { transform: scale(0); } 60% { transform: scale(1.2); } 100% { transform: scale(1); } }
+    .success-state__title { font-family: var(--font-heading); font-size: var(--text-2xl); color: var(--color-primary-dark); margin-bottom: var(--space-2); }
+    .success-state__text { color: var(--text-muted); font-size: var(--text-base); line-height: var(--leading-relaxed); max-width: 450px; margin: 0 auto var(--space-6); }
+
+    .error-msg { display: none; padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); font-size: var(--text-sm); background: rgba(192,57,43,.08); color: var(--color-error); border: 1px solid rgba(192,57,43,.2); margin-bottom: var(--space-4); }
+
+    .policy-note {
+      background: var(--color-primary-bg); border: 1px solid rgba(27,77,62,.15);
+      border-radius: var(--radius-lg); padding: var(--space-6);
+      max-width: 680px; margin: var(--space-8) auto 0;
+    }
+    .policy-note__title { font-family: var(--font-heading); font-size: var(--text-lg); color: var(--color-primary-dark); margin-bottom: var(--space-2); }
+    .policy-note__text { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); margin-bottom: 0; }
 
     @media (max-width: 576px) {
-      .join-form {
-        padding: var(--space-6);
-      }
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--space-5);
-    }
-
-    @media (min-width: 600px) {
-      .form-row--2 {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    .form-check-list {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-3);
-    }
-
-    .form-check-item {
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-      cursor: pointer;
-      font-size: var(--text-sm);
-      color: var(--text-primary);
-      transition: color var(--transition-fast);
-    }
-
-    .form-check-item:hover {
-      color: var(--color-primary);
-    }
-
-    .form-check-item input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      accent-color: var(--color-primary);
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-
-    .policy-card {
-      background: var(--color-primary-bg);
-      border: 1px solid rgba(27,77,62,.15);
-      border-radius: var(--radius-lg);
-      padding: var(--space-6);
-    }
-
-    .policy-card__title {
-      font-family: var(--font-heading);
-      font-size: var(--text-lg);
-      color: var(--color-primary-dark);
-      margin-bottom: var(--space-2);
-    }
-
-    .policy-card__text {
-      font-size: var(--text-sm);
-      color: var(--text-secondary);
-      line-height: var(--leading-relaxed);
-      margin-bottom: 0;
+      .form-card { padding: var(--space-5); }
+      .progress__label { font-size: 10px; }
+      .progress__circle { width: 34px; height: 34px; font-size: 12px; }
     }
   </style>
-
   <link rel="stylesheet" href="lib/fontawesome/all.min.css">
 </head>
 <body>
 
   <header class="header">
     <div class="header__inner">
-      <a href="index.html" class="header__logo">
-        <span class="header__logo-decoration">✦</span>
-        نادي الدندر
-        <span class="header__logo-sub">الثقافي الاجتماعي</span>
-      </a>
+      <a href="index.html" class="header__logo"><span class="header__logo-decoration">✦</span> نادي الدندر <span class="header__logo-sub">الثقافي الاجتماعي</span></a>
       <button class="menu-toggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="main-nav">
-        <span class="menu-toggle__bar"></span>
-        <span class="menu-toggle__bar"></span>
-        <span class="menu-toggle__bar"></span>
+        <span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span><span class="menu-toggle__bar"></span>
       </button>
     </div>
   </header>
@@ -211,218 +156,183 @@
       <li><a href="index.html" class="nav__link"><i class="fas fa-home"></i><span class="nav__link-text"><span class="nav__link-title">الرئيسية</span><span class="nav__link-desc">الصفحة الرئيسية</span></span></a></li>
       <li><a href="articles.html" class="nav__link"><i class="fas fa-newspaper"></i><span class="nav__link-text"><span class="nav__link-title">المقالات</span><span class="nav__link-desc">مقالات ومحتوى ثقافي</span></span></a></li>
       <li><a href="about.html" class="nav__link"><i class="fas fa-info-circle"></i><span class="nav__link-text"><span class="nav__link-title">عن النادي</span><span class="nav__link-desc">تعرّف على نادينا</span></span></a></li>
-
       <li><a href="join.html" class="nav__link nav__link--active" aria-current="page"><i class="fas fa-hand-holding-heart"></i><span class="nav__link-text"><span class="nav__link-title">انضم إلينا</span><span class="nav__link-desc">أصبح عضو في النادي</span></span></a></li>
       <li><a href="contact.html" class="nav__link"><i class="fas fa-envelope"></i><span class="nav__link-text"><span class="nav__link-title">تواصل معنا</span><span class="nav__link-desc">نحن في الخدمة</span></span></a></li>
     </ul>
     <div class="nav__drawer-footer">
       <a href="login.html" class="btn btn--primary nav__drawer-login" id="nav-login-btn">دخول الأعضاء</a>
-      <div class="nav__drawer-legal">
-        <a href="#">سياسة الخصوصية</a>
-        <a href="#">الشروط والأحكام</a>
-      </div>
+      <div class="nav__drawer-legal"><a href="#">سياسة الخصوصية</a><a href="#">الشروط والأحكام</a></div>
       <button class="theme-toggle nav__drawer-theme" aria-label="الوضع الليلي"><i class="fas fa-moon"></i> الوضع الليلي</button>
     </div>
   </nav>
 
-  <section class="hero hero--join">
-    <div class="hero__content animate-fade-in-up">
-      <nav class="hero__breadcrumbs" aria-label="مسار الصفحة">
-        <a href="index.html">الرئيسية</a>
-        <span>انضم إلينا</span>
-      </nav>
-      <h1 class="hero__title">انضم إلى النادي</h1>
-      <p class="hero__description">
-        خطوة واحدة تفصلك عن مجتمع يستحق — انضم إلى نادي الدندر الثقافي الاجتماعي اليوم.
-      </p>
+  <section class="join-hero">
+    <span class="join-hero__star" style="top:12%;right:8%;">✦</span>
+    <span class="join-hero__star" style="bottom:18%;left:12%;animation-delay:2s;">✦</span>
+    <span class="join-hero__star" style="top:35%;left:25%;animation-delay:4s;font-size:1.2rem;">✦</span>
+    <div class="container" style="position:relative;z-index:1;">
+      <h1 class="join-hero__title">انضم إلى النادي</h1>
+      <p class="join-hero__sub">ثلاث خطوات بسيطة تفصلك عن مجتمع من الكتّاب والمفكرين والمبدعين.</p>
     </div>
-    <span class="hero__decoration-star" style="top: 25%; right: 12%;">✦</span>
-    <span class="hero__decoration-star" style="bottom: 20%; left: 15%;">✦</span>
   </section>
 
-  <section class="section">
+  <section class="form-section">
     <div class="container">
-      <div class="section-header reveal">
-        <span class="section-header__label">لماذا تنضم</span>
-        <h2 class="section-header__title">لماذا تنضم إلينا؟</h2>
-        <p class="section-header__description" style="max-width: 620px;">
-          عضوية نادي الدندر الثقافي الاجتماعي ليست مجرد اسم في قائمة — هي انتماء حقيقي لمجتمع يؤمن بقوة الكلمة ويحتفي بكل صاحب قلم أو فكرة. بمجرد قبول طلبك، ستتمكن من نشر مقالاتك، وحضور الفعاليات، والمشاركة في الأنشطة، والتواصل مع أعضاء النادي في كل مكان.
-        </p>
-      </div>
+      <div class="form-card" id="form-card">
 
-      <div class="auto-grid reveal">
-        
-        <div class="benefit-card">
-          <span class="benefit-card__icon"><i class="fas fa-newspaper" aria-hidden="true"></i></span>
-          <h3 class="benefit-card__title">حق النشر</h3>
-          <p class="benefit-card__text">انشر مقالاتك وأبحاثك وقصصك على موقع النادي وأمام جمهوره المتنوع.</p>
+        <!-- Progress -->
+        <div class="progress">
+          <div class="progress__line"><div class="progress__line-fill" id="progress-fill"></div></div>
+          <div class="progress__step">
+            <div class="progress__circle progress__circle--active" id="step-circle-1">1</div>
+            <div class="progress__label progress__label--active" id="step-label-1">من أنت</div>
+          </div>
+          <div class="progress__step">
+            <div class="progress__circle" id="step-circle-2">2</div>
+            <div class="progress__label" id="step-label-2">اهتماماتك</div>
+          </div>
+          <div class="progress__step">
+            <div class="progress__circle" id="step-circle-3">3</div>
+            <div class="progress__label" id="step-label-3">إنشاء الحساب</div>
+          </div>
         </div>
 
-        <div class="benefit-card">
-          <span class="benefit-card__icon"><i class="fas fa-ticket-alt" aria-hidden="true"></i></span>
-          <h3 class="benefit-card__title">أولوية في الفعاليات</h3>
-          <p class="benefit-card__text">احجز مقعدك في الورش والندوات قبل فتح التسجيل للعموم.</p>
-        </div>
-
-        <div class="benefit-card">
-          <span class="benefit-card__icon"><i class="fas fa-globe" aria-hidden="true"></i></span>
-          <h3 class="benefit-card__title">شبكة التواصل</h3>
-          <p class="benefit-card__text">تواصل مع أكثر من مئة عضو من الكتّاب والمثقفين وأصحاب الاهتمامات المشتركة.</p>
-        </div>
-
-        <div class="benefit-card">
-          <span class="benefit-card__icon"><i class="fas fa-bullhorn" aria-hidden="true"></i></span>
-          <h3 class="benefit-card__title">صوتك يُسمع</h3>
-          <p class="benefit-card__text">شارك في اتخاذ قرارات النادي وصياغة توجهاته في الاجتماعات الدورية.</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--alt">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-header__label">استمارة التقديم</span>
-        <h2 class="section-header__title">استمارة طلب الانضمام</h2>
-        <p class="section-header__description">
-          أكمل البيانات التالية وسيتواصل معك فريق النادي خلال أسبوع.
-        </p>
-      </div>
-
-      <div class="reveal">
-        <form class="join-form" id="join-form">
-          <h3 style="font-family: var(--font-heading); font-size: var(--text-lg); color: var(--color-primary-dark); margin-bottom: var(--space-6);">
-            البيانات الشخصية
-          </h3>
-
-          <div class="form-row form-row--2" style="margin-bottom: var(--space-5);">
-            <div class="form-group">
-              <label for="full-name" class="form-label">الاسم الكامل *</label>
-              <input type="text" id="full-name" name="full_name" class="form-input" placeholder="الاسم الرباعي كاملاً" required>
+        <div id="step-1" class="step step--active">
+          <div class="step__icon"><i class="fas fa-user-plus"></i></div>
+          <h2 class="step__title">من أنت؟</h2>
+          <p class="step__desc">نود أن نتعرف عليك. هذه المعلومات تساعدنا في فهم مجتمعنا.</p>
+          <div class="step__fields">
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="form-label">الاسم الكامل *</label>
+                <input type="text" id="full-name" class="form-input" placeholder="الاسم الرباعي" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">البريد الإلكتروني *</label>
+                <input type="email" id="email" class="form-input" placeholder="example@email.com" required>
+              </div>
+            </div>
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="form-label">رقم الهاتف</label>
+                <input type="tel" id="phone" class="form-input" placeholder="اختياري">
+              </div>
+              <div class="form-group">
+                <label class="form-label">المدينة / البلد *</label>
+                <input type="text" id="city" class="form-input" placeholder="مكان إقامتك" required>
+              </div>
             </div>
             <div class="form-group">
-              <label for="email" class="form-label">البريد الإلكتروني *</label>
-              <input type="email" id="email" name="email" class="form-input" placeholder="example@email.com" required>
+              <label class="form-label">الانتماء للدندر</label>
+              <input type="text" id="origin" class="form-input" placeholder="من الدندر أصلاً / مهتم بثقافتها">
+              <span style="font-size:var(--text-xs);color:var(--text-muted);">لا يشترط الانتماء الجغرافي</span>
             </div>
           </div>
-
-          <div class="form-row form-row--2" style="margin-bottom: var(--space-5);">
-            <div class="form-group">
-              <label for="phone" class="form-label">رقم الهاتف</label>
-              <input type="tel" id="phone" name="phone" class="form-input" placeholder="مع مفتاح الدولة (اختياري)">
-            </div>
-            <div class="form-group">
-              <label for="city" class="form-label">المدينة / البلد الحالي *</label>
-              <input type="text" id="city" name="city" class="form-input" placeholder="مكان إقامتك الحالي" required>
-            </div>
-          </div>
-
-          <div class="form-group" style="margin-bottom: var(--space-6);">
-            <label for="origin" class="form-label">الانتماء لمنطقة الدندر</label>
-            <input type="text" id="origin" name="origin" class="form-input" placeholder="(مثال: من الدندر أصلاً / من المهتمين بثقافتها)">
-            <span style="display: block; font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-1);">لا يشترط الانتماء الجغرافي للانضمام — الاهتمام كافٍ</span>
-          </div>
-
-          <hr style="border: none; border-top: 1px solid var(--border-light); margin: var(--space-6) 0;">
-
-          <h3 style="font-family: var(--font-heading); font-size: var(--text-lg); color: var(--color-primary-dark); margin-bottom: var(--space-4);">
-            اهتماماتك الثقافية
-          </h3>
-
-          <div class="form-group" style="margin-bottom: var(--space-6);">
-            <span class="form-label">اهتماماتك الثقافية *</span>
-            <span style="display: block; font-size: var(--text-xs); color: var(--text-muted); margin-bottom: var(--space-3);">اختر كل ما ينطبق عليك</span>
-            <div class="form-check-list">
-              <label class="form-check-item">
-                <input type="checkbox" name="interests[]" value="writing">
-                الكتابة والتأليف
-              </label>
-              <label class="form-check-item">
-                <input type="checkbox" name="interests[]" value="poetry">
-                الشعر والأدب
-              </label>
-              <label class="form-check-item">
-                <input type="checkbox" name="interests[]" value="research">
-                البحث والتوثيق
-              </label>
-              <label class="form-check-item">
-                <input type="checkbox" name="interests[]" value="events">
-                تنظيم الفعاليات
-              </label>
-              <label class="form-check-item">
-                <input type="checkbox" name="interests[]" value="media">
-                الإعلام والتصوير
-              </label>
-              <label class="form-check-item">
-                <input type="checkbox" name="interests[]" value="other">
-                أخرى
-              </label>
-            </div>
-          </div>
-
-          <div class="form-group" style="margin-bottom: var(--space-6);">
-            <label for="bio" class="form-label">نبذة مختصرة عنك *</label>
-            <textarea id="bio" name="bio" class="form-input form-textarea" placeholder="أخبرنا بجملتين أو ثلاث عن نفسك وعلاقتك بالثقافة والكتابة..." required></textarea>
-            <span style="display: block; font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-1);">لا يُشترط أن تكون كاتباً محترفاً — الحماس أهم من السيرة</span>
-          </div>
-
-          <div class="form-group" style="margin-bottom: var(--space-6);">
-            <label for="how-knew" class="form-label">كيف عرفت عن النادي؟</label>
-            <select id="how-knew" name="how_knew" class="form-input form-select">
-              <option value="">— اختر من القائمة —</option>
-              <option value="friend">من صديق أو معارف</option>
-              <option value="social">عبر وسائل التواصل الاجتماعي</option>
-              <option value="search">بحث على الإنترنت</option>
-              <option value="member">من عضو في النادي</option>
-              <option value="other">أخرى</option>
-            </select>
-          </div>
-
-          <hr style="border: none; border-top: 1px solid var(--border-light); margin: var(--space-6) 0;">
-
-          <div class="form-group" style="margin-bottom: var(--space-6);">
-            <label class="form-check-item" style="font-size: var(--text-sm);">
-              <input type="checkbox" name="agree" value="yes" required>
-              <span>أوافق على الالتزام بلائحة النادي وقواعد الأدب في النشر والتواصل *</span>
-            </label>
-          </div>
-
-          <button type="submit" class="btn btn--gold btn--lg btn--full">
-            أرسل طلب الانضمام
-          </button>
-        </form>
-
-        <div id="join-success" style="display: none; max-width: 720px; margin: 0 auto;">
-          <div class="auth-card" style="max-width: 100%;">
-            <div class="auth-card__header">
-              <div class="auth-card__icon" style="font-size: 3.5rem;"><i class="fas fa-gift" aria-hidden="true"></i></div>
-              <h2 class="auth-card__title">تم استلام طلبك! <i class="fas fa-check-circle" aria-hidden="true" style="color: var(--color-success);"></i></h2>
-              <p class="auth-card__description" style="font-size: var(--text-base); line-height: var(--leading-relaxed); margin-top: var(--space-4);">
-                شكراً لاهتمامك بالانضمام إلى نادي الدندر. سيراجع فريقنا طلبك خلال أسبوع واحد. بعد الموافقة، يمكنك إنشاء حسابك من صفحة <a href="login.html" style="color:var(--color-primary);font-weight:var(--weight-semibold);">تسجيل الدخول</a>.
-              </p>
-            </div>
-            <div style="text-align: center; margin-top: var(--space-6);">
-              <a href="articles.html" class="btn btn--primary">تصفّح المقالات</a>
-            </div>
+          <div class="step__actions">
+            <div></div>
+            <button class="btn btn--primary btn--lg" onclick="nextStep(1)">التالي <i class="fas fa-arrow-left"></i></button>
           </div>
         </div>
 
-        <div id="join-error" style="display: none; max-width: 720px; margin: var(--space-4) auto 0;">
-          <div class="alert alert--error" style="padding: var(--space-5); font-size: var(--text-base);">
-            حدث خطأ أثناء الإرسال. يرجى المحاولة مجدداً أو التواصل معنا مباشرةً عبر البريد الإلكتروني.
+        <div id="step-2" class="step">
+          <div class="step__icon"><i class="fas fa-heart"></i></div>
+          <h2 class="step__title">ما هي اهتماماتك؟</h2>
+          <p class="step__desc">اختر مجالاتك المفضلة وأخبرنا عن نفسك.</p>
+          <div class="step__fields">
+            <div class="form-group">
+              <label class="form-label">اهتماماتك الثقافية *</label>
+              <div class="check-grid">
+                <label class="check-item"><input type="checkbox" value="writing"> الكتابة والتأليف</label>
+                <label class="check-item"><input type="checkbox" value="poetry"> الشعر والأدب</label>
+                <label class="check-item"><input type="checkbox" value="research"> البحث والتوثيق</label>
+                <label class="check-item"><input type="checkbox" value="events"> تنظيم الفعاليات</label>
+                <label class="check-item"><input type="checkbox" value="media"> الإعلام والتصوير</label>
+                <label class="check-item"><input type="checkbox" value="other"> أخرى</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">نبذة عنك *</label>
+              <textarea id="bio" class="form-input form-textarea" rows="3" placeholder="جملتين أو ثلاث عن نفسك وعلاقتك بالثقافة..." required></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">كيف عرفت عن النادي؟</label>
+              <select id="how-knew" class="form-input form-select">
+                <option value="">اختر</option>
+                <option value="friend">من صديق</option>
+                <option value="social">وسائل التواصل</option>
+                <option value="search">بحث على الإنترنت</option>
+                <option value="member">من عضو</option>
+                <option value="other">أخرى</option>
+              </select>
+            </div>
+          </div>
+          <div class="step__actions">
+            <button class="btn btn--ghost btn--lg" onclick="prevStep(2)"><i class="fas fa-arrow-right"></i> السابق</button>
+            <button class="btn btn--primary btn--lg" onclick="nextStep(2)">التالي <i class="fas fa-arrow-left"></i></button>
           </div>
         </div>
+
+        <div id="step-3" class="step">
+          <div class="step__icon"><i class="fas fa-lock"></i></div>
+          <h2 class="step__title">أنشئ حسابك</h2>
+          <p class="step__desc">اختر كلمة مرور لتفعيل حسابك. بعد الموافقة، ستسجل دخولك مباشرة.</p>
+          <div class="step__fields">
+            <div class="form-group">
+              <label class="form-label">البريد الإلكتروني</label>
+              <input type="email" id="confirm-email" class="form-input" readonly style="background:var(--bg-section-alt);cursor:not-allowed;">
+            </div>
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="form-label">كلمة المرور *</label>
+                <div class="pwd-wrapper">
+                  <input type="password" id="password" class="form-input" placeholder="6 أحرف على الأقل" required minlength="6">
+                  <button type="button" class="pwd-toggle" id="pwd-toggle" tabindex="-1"><i class="fas fa-eye"></i></button>
+                </div>
+                <div class="pwd-strength"><div class="pwd-strength__fill" id="pwd-strength-fill"></div></div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">تأكيد كلمة المرور *</label>
+                <div class="pwd-wrapper">
+                  <input type="password" id="password-confirm" class="form-input" placeholder="أعد إدخالها" required minlength="6">
+                  <button type="button" class="pwd-toggle" id="pwd-confirm-toggle" tabindex="-1"><i class="fas fa-eye"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="check-item" style="font-size:var(--text-sm);border:none;padding:var(--space-2) 0;">
+                <input type="checkbox" id="agree" required>
+                <span>أوافق على الالتزام بلائحة النادي وقواعد الأدب في النشر والتواصل *</span>
+              </label>
+            </div>
+          </div>
+          <div id="join-error" class="error-msg"></div>
+          <div class="step__actions">
+            <button class="btn btn--ghost btn--lg" onclick="prevStep(3)"><i class="fas fa-arrow-right"></i> السابق</button>
+            <button class="btn btn--gold btn--lg" id="submit-btn" onclick="submitForm()">
+              <i class="fas fa-paper-plane"></i> أرسل الطلب
+            </button>
+          </div>
+        </div>
+
+        <!-- Success -->
+        <div class="success-state" id="success-state">
+          <div class="success-state__icon"><i class="fas fa-check-circle"></i></div>
+          <h2 class="success-state__title">تم استلام طلبك!</h2>
+          <p class="success-state__text">
+            شكراً لاهتمامك. سيراجع فريقنا طلبك، وعند الموافقة ستتمكن من تسجيل الدخول مباشرة بحسابك الجديد.
+          </p>
+          <div style="display:flex;gap:var(--space-3);justify-content:center;flex-wrap:wrap;">
+            <a href="login.html" class="btn btn--primary"><i class="fas fa-sign-in-alt"></i> تسجيل الدخول</a>
+            <a href="index.html" class="btn btn--secondary">العودة للرئيسية</a>
+          </div>
+        </div>
+
       </div>
-    </div>
-  </section>
 
-  <section class="section">
-    <div class="container container-narrow">
-      <div class="policy-card reveal">
-        <h3 class="policy-card__title">ملاحظة مهمة</h3>
-        <p class="policy-card__text">
-          تخضع طلبات الانضمام لمراجعة من قِبل مجلس الإدارة. يُراعى في القبول الالتزام بمبادئ النادي وقيمه، لا الكفاءة الأكاديمية أو المستوى الأدبي. يُرحَّب بالمبتدئين والمتحمسين من كل المستويات.
+      <div class="policy-note">
+        <h3 class="policy-note__title">ملاحظة مهمة</h3>
+        <p class="policy-note__text">
+          تخضع طلبات الانضمام لمراجعة مجلس الإدارة. يُراعى في القبول الالتزام بمبادئ النادي وقيمه، لا الكفاءة الأكاديمية. يُرحَّب بالمبتدئين والمتحمسين من كل المستويات.
         </p>
       </div>
     </div>
@@ -433,14 +343,12 @@
       <div class="footer__grid">
         <div class="footer__brand">
           <div class="footer__logo">نادي الدندر الثقافي الاجتماعي</div>
-          <p class="footer__description">
-            فضاء ثقافي اجتماعي يجمع أبناء الدندر أينما كانوا.
-          </p>
+          <p class="footer__description">فضاء ثقافي اجتماعي يجمع أبناء الدندر أينما كانوا.</p>
           <div class="footer__social">
-            <a href="https://www.facebook.com/DinderClub" target="_blank" rel="noopener" class="footer__social-link" aria-label="فيسبوك"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
-            <a href="https://x.com/DinderClub" target="_blank" rel="noopener" class="footer__social-link" aria-label="تويتر"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
-            <a href="https://www.youtube.com/@DinderClub" target="_blank" rel="noopener" class="footer__social-link" aria-label="يوتيوب"><i class="fab fa-youtube" aria-hidden="true"></i></a>
-            <a href="contact.html" target="_blank" rel="noopener" class="footer__social-link" aria-label="واتساب"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+            <a href="https://www.facebook.com/DinderClub" target="_blank" rel="noopener" class="footer__social-link" aria-label="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://x.com/DinderClub" target="_blank" rel="noopener" class="footer__social-link" aria-label="تويتر"><i class="fab fa-x-twitter"></i></a>
+            <a href="https://www.youtube.com/@DinderClub" target="_blank" rel="noopener" class="footer__social-link" aria-label="يوتيوب"><i class="fab fa-youtube"></i></a>
+            <a href="contact.html" target="_blank" rel="noopener" class="footer__social-link" aria-label="واتساب"><i class="fab fa-whatsapp"></i></a>
           </div>
         </div>
         <div>
@@ -461,21 +369,16 @@
         </div>
         <div>
           <h4 class="footer__heading">النشرة البريدية</h4>
-          <p style="font-size: var(--text-sm); color: rgba(245,240,232,.7); margin-bottom: var(--space-3);">آخر المقالات إلى بريدك مباشرة</p>
-          <form class="newsletter-form" style="display: flex; gap: var(--space-2);">
-            <input type="email" name="email" placeholder="بريدك الإلكتروني" style="flex:1; padding: var(--space-2) var(--space-3); background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: var(--radius-md); color: var(--text-light); font-size: var(--text-xs); direction: rtl;">
-            <button type="submit" class="btn btn--primary btn--sm" style="font-size: var(--text-xs); padding: var(--space-2) var(--space-3);">اشترك</button>
+          <p style="font-size:var(--text-sm);color:rgba(245,240,232,.7);margin-bottom:var(--space-3);">آخر المقالات إلى بريدك مباشرة</p>
+          <form class="newsletter-form" style="display:flex;gap:var(--space-2);">
+            <input type="email" name="email" placeholder="بريدك الإلكتروني" style="flex:1;padding:var(--space-2) var(--space-3);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:var(--radius-md);color:var(--text-light);font-size:var(--text-xs);">
+            <button type="submit" class="btn btn--primary btn--sm" style="font-size:var(--text-xs);padding:var(--space-2) var(--space-3);">اشترك</button>
           </form>
         </div>
       </div>
       <div class="footer__bottom">
-        <p class="footer__copyright">
-          © ٢٠٢٦ نادي الدندر الثقافي الاجتماعي — جميع الحقوق محفوظة. صُنع بواسطة م/هاشم كمال.
-        </p>
-        <div class="footer__legal">
-          <a href="about.html" class="footer__legal-link">سياسة الخصوصية</a>
-          <a href="about.html" class="footer__legal-link">شروط الاستخدام</a>
-        </div>
+        <p class="footer__copyright">© ٢٠٢٦ نادي الدندر الثقافي الاجتماعي — جميع الحقوق محفوظة. صُنع بواسطة م/هاشم كمال.</p>
+        <div class="footer__legal"><a href="about.html" class="footer__legal-link">سياسة الخصوصية</a><a href="about.html" class="footer__legal-link">شروط الاستخدام</a></div>
       </div>
     </div>
   </footer>
@@ -484,44 +387,204 @@
   <script src="js/supabase.js"></script>
   <script src="js/main.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById('join-form');
-      const successDiv = document.getElementById('join-success');
-      const errorDiv = document.getElementById('join-error');
+    var currentStep = 1;
 
-      if (form) {
-        form.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const formData = new FormData(form);
-          const submitBtn = form.querySelector('button[type="submit"]');
-          submitBtn.disabled = true;
-          submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جارٍ الإرسال...';
+    function goToStep(n) {
+      document.querySelectorAll('.step').forEach(function (el) { el.classList.remove('step--active'); });
+      document.getElementById('step-' + n).classList.add('step--active');
+      currentStep = n;
+      updateProgress(n);
+    }
 
-                    const interests = Array.from(formData.getAll('interests[]')).join(', ');
-          const { error } = await supabaseClient.from('membership_requests').insert({
-            full_name: formData.get('full_name'),
-            email: formData.get('email'),
-            phone: formData.get('phone') || null,
-            city: formData.get('city'),
-            origin: formData.get('origin') || null,
-            interests: interests || null,
-            bio: formData.get('bio'),
-            how_knew: formData.get('how_knew') || null
-          });
+    function updateProgress(n) {
+      var labels = ['من أنت', 'اهتماماتك', 'إنشاء الحساب'];
+      for (var i = 1; i <= 3; i++) {
+        var circle = document.getElementById('step-circle-' + i);
+        var label = document.getElementById('step-label-' + i);
+        circle.classList.remove('progress__circle--active', 'progress__circle--done');
+        label.classList.remove('progress__label--active', 'progress__label--done');
+        if (i < n) {
+          circle.classList.add('progress__circle--done');
+          circle.innerHTML = '<i class="fas fa-check" style="font-size:14px;"></i>';
+          label.classList.add('progress__label--done');
+        } else if (i === n) {
+          circle.classList.add('progress__circle--active');
+          circle.textContent = i;
+          label.classList.add('progress__label--active');
+        } else {
+          circle.textContent = i;
+        }
+      }
+      var pct = ((n - 1) / 2) * 100;
+      document.getElementById('progress-fill').style.width = pct + '%';
+    }
 
-          if (!error) {
-            form.style.display = 'none';
-            successDiv.style.display = 'block';
-            errorDiv.style.display = 'none';
-          } else {
-            errorDiv.style.display = 'block';
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = 'أرسل طلب الانضمام';
-          }
+    function nextStep(n) {
+      if (n === 1 && !validateStep1()) return;
+      if (n === 2 && !validateStep2()) return;
+      goToStep(n + 1);
+      if (n + 1 === 3) populateStep3();
+    }
+
+    function prevStep(n) { goToStep(n - 1); }
+
+    function validateStep1() {
+      var name = document.getElementById('full-name').value.trim();
+      var email = document.getElementById('email').value.trim();
+      var city = document.getElementById('city').value.trim();
+      if (!name) { showError('الرجاء إدخال الاسم الكامل'); return false; }
+      if (!email || !email.includes('@')) { showError('الرجاء إدخال بريد إلكتروني صحيح'); return false; }
+      if (!city) { showError('الرجاء إدخال المدينة'); return false; }
+      return true;
+    }
+
+    function validateStep2() {
+      var checks = document.querySelectorAll('#step-2 input[type="checkbox"]:checked');
+      var bio = document.getElementById('bio').value.trim();
+      if (checks.length === 0) { showError('اختر اهتماماً ثقافياً واحداً على الأقل'); return false; }
+      if (!bio || bio.length < 10) { showError('اكتب نبذة مختصرة عن نفسك (10 أحرف على الأقل)'); return false; }
+      return true;
+    }
+
+    function showError(msg) {
+      var el = document.getElementById('join-error');
+      if (!el) return;
+      el.textContent = msg; el.style.display = 'block';
+      setTimeout(function () { el.style.display = 'none'; }, 4000);
+    }
+
+    function populateStep3() {
+      document.getElementById('confirm-email').value = document.getElementById('email').value.trim();
+    }
+
+    // Password strength
+    document.addEventListener('DOMContentLoaded', function () {
+      var pwdInput = document.getElementById('password');
+      if (pwdInput) {
+        pwdInput.addEventListener('input', function () {
+          var v = pwdInput.value;
+          var fill = document.getElementById('pwd-strength-fill');
+          if (!v) { fill.style.width = '0'; fill.className = 'pwd-strength__fill'; return; }
+          var strong = v.length >= 8 && /[a-zA-Z]/.test(v) && /\d/.test(v);
+          var medium = v.length >= 6;
+          fill.className = 'pwd-strength__fill';
+          if (strong) fill.classList.add('pwd-strength__fill--strong');
+          else if (medium) fill.classList.add('pwd-strength__fill--medium');
+          else fill.classList.add('pwd-strength__fill--weak');
         });
       }
+
+      // Password toggle
+      function setupPwdToggle(btnId, inputId) {
+        var btn = document.getElementById(btnId);
+        var inp = document.getElementById(inputId);
+        if (btn && inp) {
+          btn.addEventListener('click', function () {
+            var isPass = inp.type === 'password';
+            inp.type = isPass ? 'text' : 'password';
+            btn.innerHTML = isPass ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
+          });
+        }
+      }
+      setupPwdToggle('pwd-toggle', 'password');
+      setupPwdToggle('pwd-confirm-toggle', 'password-confirm');
     });
+
+    async function submitForm() {
+      var name = document.getElementById('full-name').value.trim();
+      var email = document.getElementById('email').value.trim();
+      var phone = document.getElementById('phone').value.trim() || null;
+      var city = document.getElementById('city').value.trim();
+      var origin = document.getElementById('origin').value.trim() || null;
+      var pass = document.getElementById('password').value;
+      var passConfirm = document.getElementById('password-confirm').value;
+      var agree = document.getElementById('agree').checked;
+      var bio = document.getElementById('bio').value.trim();
+      var howKnew = document.getElementById('how-knew').value || null;
+      var interests = Array.from(document.querySelectorAll('#step-2 input[type="checkbox"]:checked')).map(function (c) { return c.value; }).join(', ');
+
+      var errorEl = document.getElementById('join-error');
+      var submitBtn = document.getElementById('submit-btn');
+
+      if (!agree) { showError('يجب الموافقة على لائحة النادي'); return; }
+      if (!pass || pass.length < 6) { showError('كلمة المرور يجب أن تكون 6 أحرف على الأقل'); return; }
+      if (pass !== passConfirm) { showError('كلمتا المرور غير متطابقتين'); return; }
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جارٍ إنشاء الحساب...';
+
+      try {
+        // Step 1: Create Auth user
+        var { data: authData, error: authErr } = await supabaseClient.auth.signUp({
+          email: email,
+          password: pass
+        });
+
+        if (authErr) {
+          if (authErr.message === 'User already registered') {
+            showError('هذا البريد مسجل مسبقاً. <a href="login.html" style="color:var(--color-primary);font-weight:600;">سجّل دخولك</a>');
+          } else {
+            showError(authErr.message);
+          }
+          resetBtn(submitBtn);
+          return;
+        }
+
+        var userId = authData.user.id;
+
+        // Step 2: Create profile
+        var { error: profileErr } = await supabaseClient.from('profiles').insert({
+          id: userId,
+          name: name,
+          email: email,
+          role: 'pending',
+          is_approved: true
+        });
+
+        if (profileErr) {
+          await supabaseClient.auth.signOut();
+          showError('خطأ في إعداد الحساب: ' + profileErr.message);
+          resetBtn(submitBtn);
+          return;
+        }
+
+        // Step 3: Create membership request
+        var { error: reqErr } = await supabaseClient.from('membership_requests').insert({
+          full_name: name,
+          email: email,
+          phone: phone,
+          city: city,
+          origin: origin,
+          interests: interests || null,
+          bio: bio,
+          how_knew: howKnew,
+          profile_id: userId,
+          status: 'pending'
+        });
+
+        if (reqErr) {
+          console.error('membership_requests error:', reqErr);
+        }
+
+        // Sign out and show success
+        await supabaseClient.auth.signOut();
+        showSuccess();
+
+      } catch (err) {
+        showError('حدث خطأ في الاتصال. تحقق من اتصالك بالإنترنت.');
+        resetBtn(submitBtn);
+      }
+    }
+
+    function resetBtn(btn) {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-paper-plane"></i> أرسل الطلب';
+    }
+
+    function showSuccess() {
+      document.getElementById('form-card').querySelectorAll('.step, .progress').forEach(function (el) { el.style.display = 'none'; });
+      document.getElementById('success-state').classList.add('success-state--show');
+    }
   </script>
 </body>
 </html>
-
