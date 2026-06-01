@@ -323,7 +323,7 @@
               successDiv.textContent = 'مرحباً بك! تم تسجيل الدخول كعضو.';
               successDiv.style.display = 'block';
               setTimeout(function () { window.location.href = 'dashboard.html'; }, 800);
-            } else if (profile && profile.role === 'pending') {
+            } else if (profile && !profile.is_approved) {
               await supabaseClient.auth.signOut();
               attemptCount = 0;
               sessionStorage.removeItem('loginAttempts');

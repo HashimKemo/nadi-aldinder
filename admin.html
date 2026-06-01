@@ -566,7 +566,7 @@
         supabaseClient.from('articles').select('*', { count: 'exact', head: true }).eq('is_published', true),
         supabaseClient.from('articles').select('*', { count: 'exact', head: true }).eq('is_published', false),
         supabaseClient.from('membership_requests').select('*', { count: 'exact', head: true }).eq('status', 'pending'),
-        supabaseClient.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'member'),
+        supabaseClient.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'member').eq('is_approved', true),
         supabaseClient.from('subscribers').select('*', { count: 'exact', head: true })
       ]);
 
@@ -620,7 +620,7 @@
         return;
       }
       if (reqRes.data.profile_id) {
-        await supabaseClient.from('profiles').update({ role: 'member' }).eq('id', reqRes.data.profile_id);
+        await supabaseClient.from('profiles').update({ is_approved: true }).eq('id', reqRes.data.profile_id);
       }
       var el = btn.closest('.pending-member');
       el.style.opacity = '0.4'; btn.innerHTML = 'تم';
@@ -675,7 +675,7 @@
     async function loadMembers() {
       var container = document.getElementById('members-list');
       if (!container) return;
-      var res = await supabaseClient.from('profiles').select('*').eq('role', 'member').order('created_at', { ascending: false });
+      var res = await supabaseClient.from('profiles').select('*').eq('role', 'member').eq('is_approved', true).order('created_at', { ascending: false });
       container.innerHTML = '';
 
       if (!res.data || res.data.length === 0) {

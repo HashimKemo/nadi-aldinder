@@ -919,7 +919,7 @@ CREATE OR REPLACE FUNCTION public.create_join_request(
 ) RETURNS void LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $$
 BEGIN
   INSERT INTO public.profiles (id, name, email, role, is_approved)
-  VALUES (p_user_id, p_name, p_email, 'pending', true)
+  VALUES (p_user_id, p_name, p_email, 'member', false)
   ON CONFLICT (id) DO NOTHING;
   INSERT INTO public.membership_requests (...)
   VALUES (...);

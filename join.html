@@ -424,14 +424,10 @@
     }
 
     function nextStep(n) {
-      console.log('[DEBUG-join] nextStep(' + n + ') called');
-      if (n === 1 && !validateStep1()) { console.log('[DEBUG-join] step1 validation failed'); return; }
+      if (n === 1 && !validateStep1()) return;
       if (n === 2) {
-        var v = validateStep2();
-        console.log('[DEBUG-join] validateStep2 returned:', v);
-        if (!v) { console.log('[DEBUG-join] step2 validation failed'); return; }
+        if (!validateStep2()) return;
       }
-      console.log('[DEBUG-join] proceeding to goToStep(' + (n + 1) + ')');
       goToStep(n + 1);
       if (n + 1 === 3) populateStep3();
     }
@@ -452,14 +448,12 @@
       var checks = document.querySelectorAll('#step-2 input[type="checkbox"]:checked');
       var bio = document.getElementById('bio');
       var bioVal = bio ? bio.value.trim() : '';
-      console.log('[DEBUG-join] validateStep2: checks=' + checks.length + ' bio.length=' + bioVal.length);
       if (checks.length === 0) { showError('اختر اهتماماً ثقافياً واحداً على الأقل'); return false; }
       if (!bioVal || bioVal.length < 10) { showError('اكتب نبذة مختصرة عن نفسك (10 أحرف على الأقل)'); return false; }
       return true;
     }
 
     function showError(msg) {
-      console.log('[DEBUG-join] showError:', msg);
       var el = document.getElementById('join-error');
       if (el) {
         el.textContent = msg;
@@ -572,12 +566,10 @@
 
         // Ensure we have a session (user may not be auto-confirmed)
         if (!authData.session) {
-          console.log('[DEBUG-join] No session after signUp, attempting signIn...');
           var { error: siErr } = await supabaseClient.auth.signInWithPassword({
             email: email, password: pass
           });
           if (siErr) {
-            console.log('[DEBUG-join] signIn failed:', siErr.message);
             // Can't get a session — likely email confirmation required.
             // Insert membership request (anon-allowed per RLS) as partial save.
             await supabaseClient.from('membership_requests').insert({
@@ -591,7 +583,6 @@
             resetBtn(submitBtn);
             return;
           }
-          console.log('[DEBUG-join] signIn succeeded, session obtained.');
         }
 
         // Step 2: Create profile (now authenticated)
@@ -599,12 +590,11 @@
           id: userId,
           name: name,
           email: email,
-          role: 'pending',
-          is_approved: true
+          role: 'member',
+          is_approved: false
         });
 
         if (profileErr) {
-          console.log('[DEBUG-join] profile insert failed:', profileErr.message, profileErr.code);
           // If still 401, try via RPC as fallback
           if (profileErr.code === '401' || profileErr.status === 401) {
             try {
@@ -643,7 +633,7 @@
         });
 
         if (reqErr) {
-          console.error('[DEBUG-join] membership_requests error:', reqErr);
+          console.error('membership_requests error:', reqErr);
         }
 
         // Sign out and show success

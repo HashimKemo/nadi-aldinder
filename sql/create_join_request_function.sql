@@ -18,7 +18,7 @@ SET search_path = public
 AS $$
 BEGIN
   INSERT INTO public.profiles (id, name, email, role, is_approved)
-  VALUES (p_user_id, p_name, p_email, 'pending', true)
+  VALUES (p_user_id, p_name, p_email, 'member', false)
   ON CONFLICT (id) DO NOTHING;
 
   INSERT INTO public.membership_requests (full_name, email, phone, city, origin, interests, bio, how_knew, profile_id, status)
