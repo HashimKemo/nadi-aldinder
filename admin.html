@@ -605,7 +605,7 @@
     async function approveReq(id, btn) {
       btn.disabled = true;
       btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-      var reqRes = await supabaseClient.from('membership_requests').select('email, full_name, profile_id').eq('id', id).maybeSingle();
+      var reqRes = await supabaseClient.from('membership_requests').select('email, full_name').eq('id', id).maybeSingle();
       if (!reqRes.data) {
         showNotification('لم يتم العثور على الطلب', 'error');
         btn.disabled = false;
@@ -619,8 +619,10 @@
         btn.innerHTML = '<i class="fas fa-check"></i> قبول';
         return;
       }
-      if (reqRes.data.profile_id) {
-        await supabaseClient.from('profiles').update({ is_approved: true }).eq('id', reqRes.data.profile_id);
+      // Find and approve the profile by email
+      var profRes = await supabaseClient.from('profiles').select('id').eq('email', reqRes.data.email).maybeSingle();
+      if (profRes.data) {
+        await supabaseClient.from('profiles').update({ is_approved: true }).eq('id', profRes.data.id);
       }
       var el = btn.closest('.pending-member');
       el.style.opacity = '0.4'; btn.innerHTML = 'تم';
@@ -632,7 +634,7 @@
     async function rejectReq(id, btn) {
       btn.disabled = true;
       btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-      var reqRes = await supabaseClient.from('membership_requests').select('profile_id').eq('id', id).maybeSingle();
+      var reqRes = await supabaseClient.from('membership_requests').select('email').eq('id', id).maybeSingle();
       var { error } = await supabaseClient.from('membership_requests').update({ status: 'rejected' }).eq('id', id);
       if (error) {
         showNotification('خطأ: ' + error.message, 'error');
@@ -640,8 +642,11 @@
         btn.innerHTML = 'رفض';
         return;
       }
-      if (reqRes && reqRes.data && reqRes.data.profile_id) {
-        await supabaseClient.from('profiles').update({ is_approved: false }).eq('id', reqRes.data.profile_id);
+      if (reqRes && reqRes.data && reqRes.data.email) {
+        var profRes = await supabaseClient.from('profiles').select('id').eq('email', reqRes.data.email).maybeSingle();
+        if (profRes.data) {
+          await supabaseClient.from('profiles').update({ is_approved: false }).eq('id', profRes.data.id);
+        }
       }
       var el = btn.closest('.pending-member');
       el.style.opacity = '0.4'; el.style.pointerEvents = 'none';

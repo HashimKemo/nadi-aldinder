@@ -575,7 +575,7 @@
             await supabaseClient.from('membership_requests').insert({
               full_name: name, email: email, phone: phone,
               city: city, origin: origin, interests: interests || null,
-              bio: bio, how_knew: howKnew, profile_id: userId,
+              bio: bio, how_knew: howKnew,
               status: 'pending'
             }).then(function(){}, function(){});
             await supabaseClient.auth.signOut().then(function(){}, function(){});
@@ -628,7 +628,6 @@
           interests: interests || null,
           bio: bio,
           how_knew: howKnew,
-          profile_id: userId,
           status: 'pending'
         });
 

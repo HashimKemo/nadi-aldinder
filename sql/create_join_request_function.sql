@@ -21,8 +21,8 @@ BEGIN
   VALUES (p_user_id, p_name, p_email, 'member', false)
   ON CONFLICT (id) DO NOTHING;
 
-  INSERT INTO public.membership_requests (full_name, email, phone, city, origin, interests, bio, how_knew, profile_id, status)
-  VALUES (p_name, p_email, p_phone, p_city, p_origin, p_interests, p_bio, p_how_knew, p_user_id, 'pending')
+  INSERT INTO public.membership_requests (full_name, email, phone, city, origin, interests, bio, how_knew, status)
+  VALUES (p_name, p_email, p_phone, p_city, p_origin, p_interests, p_bio, p_how_knew, 'pending')
   ON CONFLICT DO NOTHING;
 END;
 $$;
