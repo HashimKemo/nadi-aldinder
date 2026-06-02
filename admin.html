@@ -867,7 +867,7 @@
         var btn = document.getElementById('article-save-btn');
         btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جارٍ الحفظ...';
 
-        var slug = title.trim().replace(/\s+/g, '-').replace(/[^\w\u0600-\u06FF\s-]/gi, '').replace(/-+/g, '-').replace(/^-|-$/g, '').toLowerCase() + '-' + Date.now();
+        var slug = 'a-' + Date.now().toString(36) + '-' + Math.random().toString(36).substring(2, 7);
 
         var payload = {
           title: title, category: category, author: author, excerpt: excerpt,
