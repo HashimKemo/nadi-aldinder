@@ -403,7 +403,9 @@
       document.querySelector('.hero__description').textContent = article.excerpt || '';
 
       const authorEl = document.querySelector('.article-header__meta-author');
-      authorEl.innerHTML = `<img src="${article.author_avatar || "images/default-avatar.png"}" alt="${article.author}" loading="lazy" decoding="async"><span>بقلم <strong>${article.author}</strong></span>`;
+      console.log('[DEBUG-a4f2] article.author =', article.author, '| type:', typeof article.author);
+      console.log('[DEBUG-a4f2] authorEl found:', !!authorEl);
+      if (authorEl) authorEl.innerHTML = `<img src="${article.author_avatar || "images/default-avatar.png"}" alt="${article.author}" loading="lazy" decoding="async"><span>بقلم <strong>${article.author}</strong></span>`;
 
       const metaSpans = document.querySelectorAll('.article-header__meta span');
       if (metaSpans.length >= 2) {
