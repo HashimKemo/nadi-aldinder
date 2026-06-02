@@ -403,23 +403,9 @@
       document.querySelector('.hero__description').textContent = article.excerpt || '';
 
       const authorEl = document.querySelector('.article-header__meta-author');
-      console.log('[DEBUG-a4f2] article.author =', article.author, '| type:', typeof article.author);
-      console.log('[DEBUG-a4f2] authorEl found:', !!authorEl);
-      if (authorEl) {
-        authorEl.innerHTML = `<img src="${article.author_avatar || "images/default-avatar.png"}" alt="${article.author}" loading="lazy" decoding="async"><span>بقلم <strong>${article.author}</strong></span>`;
-        console.log('[DEBUG-a4f2] authorEl.innerHTML after set:', JSON.stringify(authorEl.innerHTML.substring(0, 200)));
-        var cs = window.getComputedStyle(authorEl);
-        console.log('[DEBUG-a4f2] authorEl styles:', 'opacity=' + cs.opacity, 'display=' + cs.display, 'visibility=' + cs.visibility, 'color=' + cs.color);
-        var parentCs = window.getComputedStyle(authorEl.parentElement);
-        console.log('[DEBUG-a4f2] parent (.article-header__meta) opacity:', parentCs.opacity);
-        var grandparent = document.querySelector('.article-header');
-        if (grandparent) {
-          var gpCs = window.getComputedStyle(grandparent);
-          console.log('[DEBUG-a4f2] grandparent (.article-header) opacity:', gpCs.opacity, '| has reveal--visible:', grandparent.classList.contains('reveal--visible'));
-        }
-      }
+      if (authorEl) authorEl.innerHTML = `<img src="${article.author_avatar || "images/default-avatar.png"}" alt="${article.author}" loading="lazy" decoding="async"><span>بقلم <strong>${article.author}</strong></span>`;
 
-      const metaSpans = document.querySelectorAll('.article-header__meta span');
+      const metaSpans = document.querySelectorAll('.article-header__meta > span');
       if (metaSpans.length >= 2) {
         metaSpans[1].textContent = 'نُشر في ' + new Date(article.published_at).toLocaleDateString('ar-SD');
         metaSpans[2].textContent = article.read_time + ' دقائق قراءة';
