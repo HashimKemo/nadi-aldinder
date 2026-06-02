@@ -330,6 +330,7 @@
     var categoryNames = { opinion: 'رأي', literature: 'أدب', history: 'تاريخ وتراث', society: 'مجتمع', culture: 'ثقافة' };
 
     document.addEventListener('DOMContentLoaded', async function () {
+      try {
       const params = new URLSearchParams(window.location.search);
       const articleSlug = params.get('slug');
       const articleId = params.get('id');
@@ -749,6 +750,14 @@
         setTimeout(function () { if (div.parentNode) div.parentNode.removeChild(div); }, 4000);
       }
       } catch (e) { console.error('Comment system error:', e); }
+      } catch (e) {
+        console.error('⚠️ خطأ غير متوقع في تحميل المقالة:', e);
+        document.title = 'المقالة — نادي الدندر الثقافي الاجتماعي';
+        document.querySelector('meta[name="description"]').content = '';
+        document.querySelector('.hero__title').textContent = 'تعذر تحميل المقالة';
+        document.querySelector('.hero__description').textContent = '';
+        document.querySelector('.article-body').innerHTML = '<p style="text-align:center;padding:4rem;color:var(--text-muted)">تعذر تحميل المقالة — تحقق من الاتصال بقاعدة البيانات.</p>';
+      }
     });
   </script>
   <!-- Confirm Delete Comment Modal -->
