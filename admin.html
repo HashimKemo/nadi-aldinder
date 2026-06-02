@@ -586,7 +586,7 @@
       (recentRes.data || []).forEach(function (a) {
         var cls = a.is_published ? 'status-badge--published' : (a.is_published === false ? 'status-badge--draft' : '');
         var txt = a.is_published ? 'منشورة' : 'مسودة';
-        recentBody.innerHTML += '<tr><td>' + escapeHtml(a.title) + '</td><td>' + escapeHtml(a.author) + '</td><td>' + fmtDate(a.published_at) + '</td><td><span class="status-badge ' + cls + '">' + txt + '</span></td><td><a href="article.html?id=' + a.id + '" class="action-btn"><i class="fas fa-eye"></i></a></td></tr>';
+        recentBody.innerHTML += '<tr><td>' + escapeHtml(a.title) + '</td><td>' + escapeHtml(a.author) + '</td><td>' + fmtDate(a.published_at) + '</td><td><span class="status-badge ' + cls + '">' + txt + '</span></td><td><a href="article.html?slug=' + encodeURIComponent(a.slug || '') + '" class="action-btn"><i class="fas fa-eye"></i></a></td></tr>';
       });
 
       var pendRes = await supabaseClient.from('membership_requests').select('*').eq('status', 'pending').order('created_at', { ascending: false });
@@ -690,7 +690,7 @@
         var pubIcon = a.is_published ? 'fa-eye-slash' : 'fa-eye';
         var pubTitle = a.is_published ? 'إلغاء النشر' : 'نشر';
         tbody.innerHTML += '<tr><td>' + escapeHtml(a.title) + '</td><td>' + escapeHtml(a.author) + '</td><td>' + (catNames[a.category] || a.category) + '</td><td>' + fmtDate(a.published_at) + '</td><td><span class="status-badge ' + cls + '">' + txt + '</span></td><td>' + (a.views || 0) + '</td><td>' +
-          '<a href="article.html?id=' + a.id + '" class="action-btn" title="عرض"><i class="fas fa-eye"></i></a>' +
+          '<a href="article.html?slug=' + encodeURIComponent(a.slug || '') + '" class="action-btn" title="عرض"><i class="fas fa-eye"></i></a>' +
           '<button class="action-btn" onclick="editArticle(' + a.id + ')" title="تعديل"><i class="fas fa-edit"></i></button>' +
           '<button class="action-btn action-btn--danger" onclick="deleteArticle(' + a.id + ')" title="حذف"><i class="fas fa-trash"></i></button>' +
           '<button class="action-btn" onclick="togglePublish(' + a.id + ', ' + a.is_published + ')" title="' + pubTitle + '"><i class="fas ' + pubIcon + '"></i></button>' +
@@ -865,7 +865,7 @@
         var btn = document.getElementById('article-save-btn');
         btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جارٍ الحفظ...';
 
-        var slug = title.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-').toLowerCase() + '-' + Date.now();
+        var slug = title.trim().replace(/\s+/g, '-').replace(/[^\w\u0600-\u06FF\s-]/gi, '').replace(/-+/g, '-').replace(/^-|-$/g, '').toLowerCase() + '-' + Date.now();
 
         var payload = {
           title: title, category: category, author: author, excerpt: excerpt,
@@ -953,7 +953,7 @@
 
       var { data: comments, error } = await supabaseClient
         .from('article_comments')
-        .select('*, articles!inner(title)')
+        .select('*, articles!inner(title, slug)')
         .order('created_at', { ascending: false });
 
       if (error) {
@@ -969,15 +969,17 @@
 
       comments.forEach(function (c) {
         var articleTitle = c.articles ? c.articles.title : '—';
+        var articleSlug = c.articles ? c.articles.slug : null;
+        var articleLink = articleSlug ? 'article.html?slug=' + encodeURIComponent(articleSlug) : 'article.html?id=' + c.article_id;
         var excerpt = c.content.length > 80 ? c.content.substring(0, 80) + '...' : c.content;
         tbody.innerHTML += '<tr>' +
-          '<td><a href="article.html?id=' + c.article_id + '" class="action-btn" title="عرض المقالة" style="font-size:inherit;color:var(--color-primary);text-decoration:underline;">' + escapeHtml(articleTitle) + '</a></td>' +
+          '<td><a href="' + articleLink + '" class="action-btn" title="عرض المقالة" style="font-size:inherit;color:var(--color-primary);text-decoration:underline;">' + escapeHtml(articleTitle) + '</a></td>' +
           '<td>' + escapeHtml(c.name) + '</td>' +
           '<td style="max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="' + escapeHtml(c.content) + '">' + escapeHtml(excerpt) + '</td>' +
           '<td style="font-size:var(--text-xs);color:var(--text-muted);">' + fmtDate(c.created_at) + '</td>' +
           '<td>' +
             '<button class="action-btn action-btn--danger" onclick="deleteAdminComment(' + c.id + ')" title="حذف التعليق"><i class="fas fa-trash"></i></button>' +
-            '<a href="article.html?id=' + c.article_id + '#comment-' + c.id + '" class="action-btn" title="عرض في المقالة"><i class="fas fa-eye"></i></a>' +
+            '<a href="' + articleLink + '#comment-' + c.id + '" class="action-btn" title="عرض في المقالة"><i class="fas fa-eye"></i></a>' +
           '</td></tr>';
       });
     }
