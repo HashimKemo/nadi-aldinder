@@ -403,7 +403,7 @@
       document.querySelector('.hero__description').textContent = article.excerpt || '';
 
       const authorEl = document.querySelector('.article-header__meta-author');
-      authorEl.innerHTML = `<img src="${article.author_avatar || ""images/default-avatar.png""}" alt="${article.author}" loading="lazy" decoding="async"><span>بقلم <strong>${article.author}</strong></span>`;
+      authorEl.innerHTML = `<img src="${article.author_avatar || "images/default-avatar.png"}" alt="${article.author}" loading="lazy" decoding="async"><span>بقلم <strong>${article.author}</strong></span>`;
 
       const metaSpans = document.querySelectorAll('.article-header__meta span');
       if (metaSpans.length >= 2) {
@@ -474,13 +474,13 @@
           const card = document.createElement('article');
           card.className = 'news-card reveal';
           card.innerHTML = `
-            <img class="news-card__image" src="${a.cover_image || ""images/og-cover.jpg""}" alt="${a.title}" loading="lazy" decoding="async">
+            <img class="news-card__image" src="${a.cover_image || "images/og-cover.jpg"}" alt="${a.title}" loading="lazy" decoding="async">
             <div class="news-card__body">
               <div class="news-card__meta"><span class="news-card__category">${categoryNames[a.category] || a.category}</span><span class="news-card__date">${new Date(a.published_at).toLocaleDateString('ar-SD')}</span></div>
               <h3 class="news-card__title"><a href="${a.slug ? 'article.html?slug=' + encodeURIComponent(a.slug) : 'article.html?id=' + a.id}">${a.title}</a></h3>
               <p class="news-card__excerpt">${(a.excerpt || '').substring(0, 100)}</p>
               <div class="news-card__author">
-                <img class="news-card__author-avatar" src="${a.author_avatar || ""images/default-avatar.png""}" alt="${a.author}" loading="lazy" decoding="async">
+                <img class="news-card__author-avatar" src="${a.author_avatar || "images/default-avatar.png"}" alt="${a.author}" loading="lazy" decoding="async">
                 <div><div class="news-card__author-name">${a.author}</div></div>
               </div>
             </div>`;
