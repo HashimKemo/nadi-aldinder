@@ -412,6 +412,11 @@
         console.log('[DEBUG-a4f2] authorEl styles:', 'opacity=' + cs.opacity, 'display=' + cs.display, 'visibility=' + cs.visibility, 'color=' + cs.color);
         var parentCs = window.getComputedStyle(authorEl.parentElement);
         console.log('[DEBUG-a4f2] parent (.article-header__meta) opacity:', parentCs.opacity);
+        var grandparent = document.querySelector('.article-header');
+        if (grandparent) {
+          var gpCs = window.getComputedStyle(grandparent);
+          console.log('[DEBUG-a4f2] grandparent (.article-header) opacity:', gpCs.opacity, '| has reveal--visible:', grandparent.classList.contains('reveal--visible'));
+        }
       }
 
       const metaSpans = document.querySelectorAll('.article-header__meta span');
