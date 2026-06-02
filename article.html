@@ -405,7 +405,14 @@
       const authorEl = document.querySelector('.article-header__meta-author');
       console.log('[DEBUG-a4f2] article.author =', article.author, '| type:', typeof article.author);
       console.log('[DEBUG-a4f2] authorEl found:', !!authorEl);
-      if (authorEl) authorEl.innerHTML = `<img src="${article.author_avatar || "images/default-avatar.png"}" alt="${article.author}" loading="lazy" decoding="async"><span>بقلم <strong>${article.author}</strong></span>`;
+      if (authorEl) {
+        authorEl.innerHTML = `<img src="${article.author_avatar || "images/default-avatar.png"}" alt="${article.author}" loading="lazy" decoding="async"><span>بقلم <strong>${article.author}</strong></span>`;
+        console.log('[DEBUG-a4f2] authorEl.innerHTML after set:', JSON.stringify(authorEl.innerHTML.substring(0, 200)));
+        var cs = window.getComputedStyle(authorEl);
+        console.log('[DEBUG-a4f2] authorEl styles:', 'opacity=' + cs.opacity, 'display=' + cs.display, 'visibility=' + cs.visibility, 'color=' + cs.color);
+        var parentCs = window.getComputedStyle(authorEl.parentElement);
+        console.log('[DEBUG-a4f2] parent (.article-header__meta) opacity:', parentCs.opacity);
+      }
 
       const metaSpans = document.querySelectorAll('.article-header__meta span');
       if (metaSpans.length >= 2) {
