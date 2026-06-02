@@ -334,26 +334,26 @@
       const articleSlug = params.get('slug');
       const articleId = params.get('id');
 
-      if (!articleSlug && !articleId) { document.querySelector('.article-body').innerHTML = '<p style="text-align:center;padding:4rem;color:var(--text-muted)">لم يتم تحديد المقالة.</p>'; return; }
+      if (!articleSlug && !articleId) { document.querySelector('.hero__title').textContent = 'لم يتم تحديد المقالة'; document.querySelector('.hero__description').textContent = ''; document.querySelector('.article-body').innerHTML = '<p style="text-align:center;padding:4rem;color:var(--text-muted)">لم يتم تحديد المقالة.</p>'; return; }
 
       var query = supabaseClient.from('articles').select('*');
       if (articleSlug) { query = query.eq('slug', articleSlug); }
       else { query = query.eq('id', articleId); }
       var { data: article, error } = await query.single();
 
-      if (error) {
-        console.warn('⚠️ Supabase غير متاح:', error.message);
-        document.querySelector('.article-body').innerHTML = '<p style="text-align:center;padding:4rem;color:var(--text-muted)">تعذر تحميل المقالة — تحقق من الاتصال بقاعدة البيانات.</p>';
+      if (error || !article) {
+        document.title = 'المقالة — نادي الدندر الثقافي الاجتماعي';
+        document.querySelector('meta[name="description"]').content = '';
+        document.querySelector('.hero__title').textContent = error ? 'تعذر تحميل المقالة' : 'المقالة غير موجودة';
+        document.querySelector('.hero__description').textContent = '';
+        var errMsg = error ? 'تعذر تحميل المقالة — تحقق من الاتصال بقاعدة البيانات.' : 'المقالة غير موجودة.';
+        console.warn('⚠️', error ? error.message : 'المقالة غير موجودة');
+        document.querySelector('.article-body').innerHTML = '<p style="text-align:center;padding:4rem;color:var(--text-muted)">' + errMsg + '</p>';
         return;
       }
 
-      if (!article) { document.querySelector('.article-body').innerHTML = '<p style="text-align:center;padding:4rem;color:var(--text-muted)">المقالة غير موجودة.</p>'; return; }
-
       /* تحديث الرابط في شريط العنوان لاستخدام slug */
-      if (article.slug) {
-        var canonicalUrl = window.location.origin + '/article.html?slug=' + encodeURIComponent(article.slug);
-        window.history.replaceState({}, '', canonicalUrl);
-      }
+      try { if (article.slug) window.history.replaceState({}, '', '?slug=' + encodeURIComponent(article.slug)); } catch (e) {}
 
       var shareUrl = window.location.href;
       var shareTitle = article.title;
@@ -476,7 +476,7 @@
             <img class="news-card__image" src="${a.cover_image || ""images/og-cover.jpg""}" alt="${a.title}" loading="lazy" decoding="async">
             <div class="news-card__body">
               <div class="news-card__meta"><span class="news-card__category">${categoryNames[a.category] || a.category}</span><span class="news-card__date">${new Date(a.published_at).toLocaleDateString('ar-SD')}</span></div>
-              <h3 class="news-card__title"><a href="article.html?slug=${encodeURIComponent(a.slug || '')}">${a.title}</a></h3>
+              <h3 class="news-card__title"><a href="${a.slug ? 'article.html?slug=' + encodeURIComponent(a.slug) : 'article.html?id=' + a.id}">${a.title}</a></h3>
               <p class="news-card__excerpt">${(a.excerpt || '').substring(0, 100)}</p>
               <div class="news-card__author">
                 <img class="news-card__author-avatar" src="${a.author_avatar || ""images/default-avatar.png""}" alt="${a.author}" loading="lazy" decoding="async">
