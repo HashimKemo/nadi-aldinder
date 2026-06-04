@@ -14,7 +14,9 @@ Static multi-page Arabic HTML site. **No build tools, no frameworks, no package.
 | 404 | `404.html` | Custom error page |
 | Supabase | `js/supabase.js` | Client init (`supabaseClient`), newsletter handler, health check, `SUPABASE_FUNCTIONS_URL` |
 | Page-specific JS | inline in each `.html` | Articles, admin, dashboard, login |
-| Edge Function | `supabase/functions/invite-member/index.ts` | (احتياطي — غير مستخدم حالياً) |
+| Edge Function (احتياطي) | `supabase/functions/invite-member/index.ts` | (غير مستخدم حالياً) |
+| Edge Function (نشرة) | `supabase/functions/send-newsletter/index.ts` | يرسل بريد BCC لجميع المشتركين عند نشر مقالة |
+| Unsubscribe | `unsubscribe.html` | صفحة إلغاء اشتراك بسيطة: `?email=` → تأكيد → DELETE |
 | DB | Supabase (remote) | Tables: `articles`, `profiles`, `subscribers`, `membership_requests`, `contact_messages`, `article_comments` |
 
 ## Critical Setup — Supabase
@@ -26,7 +28,9 @@ Static multi-page Arabic HTML site. **No build tools, no frameworks, no package.
 - **Free tier pauses after 7 days** inactivity. `supabase.js` has health check banner.
 - **First user** who logs in becomes admin via `should_create_admin()` RPC.
 - **Seed data**: `sql/seed_articles.sql` has 8 articles.
-- **Edge Function** needs deployment: `supabase functions deploy invite-member` (redundant now)
+- **Edge Function (نشرة)** needs deployment: `supabase functions deploy send-newsletter`
+- **SMTP env vars** must be set in Supabase Dashboard → Edge Functions → send-newsletter secrets: `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`, `SITE_URL`
+- **Unsubscribe** works via `unsubscribe.html?email=` — DELETE requires RLS policy or SECURITY DEFINER function
 
 ## Membership Flow
 
@@ -103,6 +107,7 @@ User logs in → dashboard.html (member/publisher/editor) or admin.html (admin)
 - `sql/seed_articles.sql` — 8 initial articles INSERT
 - `sql/create_join_request_function.sql` — SECURITY DEFINER function to fix 401 during signup
 - `supabase/functions/invite-member/index.ts` — Edge Function for invite emails
+- `supabase/functions/send-newsletter/index.ts` — Edge Function for newsletter BCC on article publish
 - `DEPLOY.md` — GitHub Pages deployment guide (Arabic)
 - `MAINTENANCE.md` — Regular maintenance guide (Arabic)
 
@@ -117,6 +122,7 @@ User logs in → dashboard.html (member/publisher/editor) or admin.html (admin)
 | Manage all users | admin.html → إدارة المستخدمين |
 | Moderate comments | admin.html → التعليقات |
 | Deploy Edge Function | `supabase functions deploy invite-member` (requires Supabase CLI, احتياطي فقط) |
+| Deploy newsletter function | `supabase functions deploy send-newsletter` (requires Supabase CLI + SMTP secrets set) |
 | Create join function | Run `sql/create_join_request_function.sql` in Supabase SQL Editor (يُحل مشكلة 401) |
 | Fix RLS issues | Re-run SECURITY DEFINER functions + policies from SUPABASE_GUIDE.md Part 3 |
 | Wake up Supabase | Supabase Dashboard → project → Resume (if paused) |
