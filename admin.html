@@ -882,7 +882,16 @@
         btn.disabled = false; btn.innerHTML = id ? 'تحديث المقالة' : 'حفظ المقالة';
 
         if (res.error) { showNotification('خطأ: ' + res.error.message, 'error'); }
-        else { showNotification(id ? 'تم تحديث المقالة' : 'تم إنشاء المقالة', 'success'); if (articleModal) articleModal.classList.remove('confirm-modal-overlay--open'); loadAllArticles(); loadDashboard(); }
+        else {
+          showNotification(id ? 'تم تحديث المقالة' : 'تم إنشاء المقالة', 'success');
+          if (articleModal) articleModal.classList.remove('confirm-modal-overlay--open');
+          loadAllArticles(); loadDashboard();
+          if (isPublished) {
+            supabaseClient.functions.invoke('send-newsletter', {
+              body: { title, slug, excerpt, author, category, cover_image: cover, site_url: window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '') }
+            }).catch(function () {});
+          }
+        }
       });
     }
 
@@ -921,6 +930,15 @@
         showNotification(newVal ? 'تم نشر المقالة' : 'تم إلغاء نشر المقالة', 'success');
         loadAllArticles();
         loadDashboard();
+        if (newVal) {
+          supabaseClient.from('articles').select('title, slug, excerpt, author, category, cover_image').eq('id', id).single().then(function (res2) {
+            if (res2.data) {
+              supabaseClient.functions.invoke('send-newsletter', {
+                body: { title: res2.data.title, slug: res2.data.slug, excerpt: res2.data.excerpt, author: res2.data.author, category: res2.data.category, cover_image: res2.data.cover_image, site_url: window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '') }
+              }).catch(function () {});
+            }
+          });
+        }
       }
     }
 
