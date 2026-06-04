@@ -111,6 +111,13 @@
       color: var(--text-secondary);
       font-weight: var(--weight-medium);
     }
+    
+    .stat-box__number-suffix {
+      font-family: var(--font-heading);
+      font-size: var(--text-4xl);
+      font-weight: var(--weight-bold);
+      color: var(--color-primary-dark);
+    }
 
     /* تنسيق معاينة قسم عن النادي */
     .about-preview {
@@ -275,26 +282,26 @@
     <div class="container">
       <div class="grid grid--3 grid--centered">
         
-        <!-- إحصاء 1 -->
+        <!-- إحصاء 1: الأعضاء النشطاء (ثابت 50+) -->
         <div class="stat-box">
           <div class="stat-box__icon"><i class="fas fa-users" aria-hidden="true"></i></div>
-          <div class="stat-box__number" role="status">+50</div>
-          <span class="stat-box__number-suffix" style="font-family: var(--font-heading); font-size: var(--text-4xl); font-weight: var(--weight-bold); color: var(--color-primary-dark);">+</span>
+          <div class="stat-box__number" role="status" id="stat-members">50</div>
+          <span class="stat-box__number-suffix" aria-hidden="true">+</span>
           <div class="stat-box__label">عضو نشط</div>
         </div>
         
-        <!-- إحصاء 2 -->
-        <div class="stat-box">
+        <!-- إحصاء 2: عدد المقالات المنشورة (من قاعدة البيانات) -->
+        <a href="articles.html" class="stat-box" style="text-decoration:none;color:inherit;display:block">
           <div class="stat-box__icon"><i class="fas fa-pen" aria-hidden="true"></i></div>
-          <div class="stat-box__number" role="status">+50</div>
-          <span class="stat-box__number-suffix" style="font-family: var(--font-heading); font-size: var(--text-4xl); font-weight: var(--weight-bold); color: var(--color-primary-dark);">+</span>
+          <div class="stat-box__number" role="status" id="stat-articles">0</div>
+          <span class="stat-box__number-suffix" aria-hidden="true">+</span>
           <div class="stat-box__label">مقالة منشورة</div>
-        </div>
+        </a>
         
-        <!-- إحصاء 3 -->
+        <!-- إحصاء 3: عام التأسيس (ثابت) -->
         <div class="stat-box">
           <div class="stat-box__icon"><i class="fas fa-calendar-check" aria-hidden="true"></i></div>
-          <div class="stat-box__number" role="status">1968</div>
+          <div class="stat-box__number" role="status" id="stat-year">1968</div>
           <div class="stat-box__label">عام التأسيس</div>
         </div>
         
@@ -602,7 +609,7 @@
       async function loadLatestArticles() {
         var grid = document.getElementById('articles-grid');
         if (!grid) return;
-        var res = await supabaseClient.from('articles').select('*').eq('is_published', true).order('published_at', { ascending: false }).limit(3);
+        var res = await supabaseClient.from('articles').select('*').eq('is_published', true).not('is', 'published_at', null).order('published_at', { ascending: false }).limit(3);
         if (!res.data || res.data.length === 0) return;
         grid.innerHTML = '';
         res.data.forEach(function (a) {
@@ -623,8 +630,25 @@
       }
 
       loadLatestArticles();
+      loadStats();
       
     });
+
+    async function loadStats() {
+      try {
+        // عدد المقالات المنشورة
+        var articlesRes = await supabaseClient.from('articles')
+          .select('*', { count: 'exact', head: true })
+          .eq('is_published', true)
+          .not('is', 'published_at', null);
+        var articlesEl = document.getElementById('stat-articles');
+        if (articlesEl && articlesRes.count !== null) {
+          articlesEl.textContent = articlesRes.count;
+        }
+      } catch (e) {
+        console.warn('loadStats error:', e);
+      }
+    }
   </script>
 </body>
 </html>
