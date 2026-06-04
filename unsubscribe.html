@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="shortcut icon" href="favicon.ico">
+  <meta name="theme-color" content="#1b4d3e">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إلغاء الاشتراك — نادي الدندر الثقافي الاجتماعي</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Noto+Naskh+Arabic:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .unsub-hero {
+      background: linear-gradient(135deg, #0f2e24 0%, var(--color-primary) 50%, #2a7a5a 100%);
+      padding: var(--space-14) 0 var(--space-12);
+      text-align: center;
+    }
+    .unsub-hero__title { font-family: var(--font-heading); font-size: clamp(1.6rem,4vw,2.4rem); color: var(--text-light); margin-bottom: var(--space-2); }
+    .unsub-card {
+      max-width: 480px; margin: -60px auto var(--space-12);
+      background: var(--bg-card); border-radius: var(--radius-2xl);
+      padding: var(--space-8) var(--space-6) var(--space-10);
+      border: 1px solid var(--border-color);
+      box-shadow: 0 8px 40px rgba(0,0,0,.06);
+      text-align: center; position: relative; z-index: 2;
+    }
+    .unsub-card__icon { font-size: 3rem; color: var(--color-primary); margin-bottom: var(--space-3); }
+    .unsub-card__email { direction: ltr; display: inline-block; font-size: var(--text-sm); color: var(--text-muted); background: var(--bg-section-alt); padding: var(--space-1) var(--space-3); border-radius: var(--radius-md); margin-bottom: var(--space-5); word-break: break-all; }
+    .unsub-card__btn { min-width: 200px; }
+    .unsub-card__btn:disabled { opacity: .6; cursor: not-allowed; }
+    .unsub-card__error { color: var(--color-danger); font-size: var(--text-sm); margin-top: var(--space-3); display: none; }
+    .unsub-card__error--show { display: block; }
+    .unsub-card__success { display: none; }
+    .unsub-card__success--show { display: block; }
+    .unsub-card__success-icon { font-size: 4rem; color: var(--color-success); margin-bottom: var(--space-3); }
+    .unsub-card__success-title { font-family: var(--font-heading); font-size: var(--text-xl); color: var(--color-primary-dark); margin-bottom: var(--space-2); }
+    .unsub-card__success-desc { color: var(--text-muted); font-size: var(--text-sm); margin-bottom: var(--space-5); }
+    .unsub-card__success-link { display: inline-block; padding: var(--space-2) var(--space-5); background: var(--color-primary); color: #fff; text-decoration: none; border-radius: var(--radius-md); font-size: var(--text-sm); }
+    .unsub-card__missing { display: none; }
+    .unsub-card__missing--show { display: block; }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header__inner">
+      <a href="index.html" class="header__logo">
+        <span class="header__logo-decoration">✦</span>
+        نادي الدندر
+        <span class="header__logo-sub">الثقافي الاجتماعي</span>
+      </a>
+      <button class="menu-toggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="main-nav">
+        <span class="menu-toggle__bar"></span>
+        <span class="menu-toggle__bar"></span>
+        <span class="menu-toggle__bar"></span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="nav" id="main-nav">
+    <div class="nav__drawer-header">
+      <div class="nav__drawer-brand">
+        <span class="nav__drawer-star">✦</span>
+        <div class="nav__drawer-name">نادي الدندر</div>
+        <div class="nav__drawer-subtitle">الثقافي الاجتماعي</div>
+      </div>
+    </div>
+    <ul class="nav__list">
+      <li><a href="index.html" class="nav__link"><i class="fas fa-home"></i><span class="nav__link-text"><span class="nav__link-title">الرئيسية</span><span class="nav__link-desc">الصفحة الرئيسية</span></span></a></li>
+      <li><a href="articles.html" class="nav__link"><i class="fas fa-newspaper"></i><span class="nav__link-text"><span class="nav__link-title">المقالات</span><span class="nav__link-desc">مقالات ومحتوى ثقافي</span></span></a></li>
+      <li><a href="about.html" class="nav__link"><i class="fas fa-info-circle"></i><span class="nav__link-text"><span class="nav__link-title">عن النادي</span><span class="nav__link-desc">تعرّف على نادينا</span></span></a></li>
+      <li><a href="join.html" class="nav__link"><i class="fas fa-hand-holding-heart"></i><span class="nav__link-text"><span class="nav__link-title">انضم إلينا</span><span class="nav__link-desc">أصبح عضو في النادي</span></span></a></li>
+      <li><a href="contact.html" class="nav__link"><i class="fas fa-envelope"></i><span class="nav__link-text"><span class="nav__link-title">تواصل معنا</span><span class="nav__link-desc">نحن في الخدمة</span></span></a></li>
+    </ul>
+    <div class="nav__drawer-footer">
+      <a href="login.html" class="btn btn--primary nav__drawer-login" id="nav-login-btn">دخول الأعضاء</a>
+      <div class="nav__drawer-legal">نادي الدندر الثقافي الاجتماعي © 2026</div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="unsub-hero">
+      <h1 class="unsub-hero__title">إلغاء الاشتراك في النشرة البريدية</h1>
+    </section>
+
+    <div class="unsub-card" id="unsub-card">
+      <div id="unsub-missing" class="unsub-card__missing">
+        <div class="unsub-card__icon">🔗</div>
+        <p style="color:var(--text-muted);font-size:var(--text-sm);">رابط غير صالح. يُرجى استخدام الرابط الموجود في رسالتنا البريدية.</p>
+        <a href="index.html" class="btn btn--primary" style="margin-top:var(--space-4);">العودة إلى الرئيسية</a>
+      </div>
+
+      <div id="unsub-initial">
+        <div class="unsub-card__icon">📧</div>
+        <p style="color:var(--text-muted);margin-bottom:var(--space-4);">هل تريد إلغاء الاشتراك لهذا البريد الإلكتروني؟</p>
+        <div class="unsub-card__email" id="unsub-email"></div>
+        <button class="btn btn--primary unsub-card__btn" id="unsub-btn" onclick="unsubscribe()">
+          <i class="fas fa-ban" aria-hidden="true"></i> إلغاء الاشتراك
+        </button>
+        <div class="unsub-card__error" id="unsub-error"></div>
+      </div>
+
+      <div id="unsub-success">
+        <div class="unsub-card__success-icon">✅</div>
+        <div class="unsub-card__success-title">تم إلغاء الاشتراك</div>
+        <p class="unsub-card__success-desc">تمت إزالة بريدك الإلكتروني من قائمتنا البريدية. لن تصلك رسائل منا بعد الآن.</p>
+        <a href="index.html" class="unsub-card__success-link">العودة إلى الرئيسية</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <div class="footer__logo">نادي الدندر الثقافي الاجتماعي</div>
+          <p class="footer__description">نادٍ ثقافي اجتماعي يهتم بالشأن الثقافي والاجتماعي في مدينة الدندر ويسعى لتطوير المجتمع المحلي.</p>
+          <div class="footer__social">
+            <a href="https://www.facebook.com/DinderClub" target="_blank" rel="noopener" class="footer__social-link" aria-label="فيسبوك"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+            <a href="https://x.com/DinderClub" target="_blank" rel="noopener" class="footer__social-link" aria-label="تويتر"><i class="fab fa-x-twitter" aria-hidden="true"></i></a>
+            <a href="https://www.youtube.com/@DinderClub" target="_blank" rel="noopener" class="footer__social-link" aria-label="يوتيوب"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+            <a href="contact.html" target="_blank" rel="noopener" class="footer__social-link" aria-label="واتساب"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer__heading">روابط سريعة</h4>
+          <ul class="footer__links">
+            <li><a href="index.html" class="footer__link">الرئيسية</a></li>
+            <li><a href="articles.html" class="footer__link">المقالات</a></li>
+            <li><a href="about.html" class="footer__link">عن النادي</a></li>
+            <li><a href="join.html" class="footer__link">انضم إلينا</a></li>
+            <li><a href="contact.html" class="footer__link">تواصل معنا</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__heading">روابط مهمة</h4>
+          <ul class="footer__links">
+            <li><a href="join.html" class="footer__link">انضم إلينا</a></li>
+            <li><a href="contact.html" class="footer__link">تواصل معنا</a></li>
+            <li><a href="login.html" class="footer__link">دخول الأعضاء</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__heading">النشرة البريدية</h4>
+          <form class="newsletter-form" style="display:flex;gap:var(--space-2);max-width:320px;">
+            <input type="email" placeholder="بريدك الإلكتروني" required style="flex:1;padding:var(--space-2) var(--space-3);border:1px solid var(--border-color);border-radius:var(--radius-md);background:var(--bg-section-alt);color:var(--text-primary);font-size:var(--text-sm);">
+            <button type="submit" class="btn btn--primary btn--sm" style="white-space:nowrap;">اشترك</button>
+          </form>
+          <p style="font-size:var(--text-xs);color:var(--text-muted);margin-top:var(--space-2);">اشترك ليصلك كل جديد</p>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">© 2026 نادي الدندر الثقافي الاجتماعي. جميع الحقوق محفوظة.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    (function () {
+      var email = new URLSearchParams(window.location.search).get('email');
+      var missingEl = document.getElementById('unsub-missing');
+      var initialEl = document.getElementById('unsub-initial');
+      var successEl = document.getElementById('unsub-success');
+
+      if (!email || !email.trim()) {
+        missingEl.classList.add('unsub-card__missing--show');
+        initialEl.style.display = 'none';
+        return;
+      }
+
+      document.getElementById('unsub-email').textContent = email.trim();
+    })();
+
+    async function unsubscribe() {
+      var btn = document.getElementById('unsub-btn');
+      var errEl = document.getElementById('unsub-error');
+      errEl.classList.remove('unsub-card__error--show');
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جارٍ الإلغاء...';
+
+      var email = new URLSearchParams(window.location.search).get('email');
+      if (!email) { return; }
+
+      var { error } = await supabaseClient.from('subscribers').delete().eq('email', email.trim());
+
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-ban"></i> إلغاء الاشتراك';
+
+      if (error) {
+        errEl.textContent = 'حدث خطأ: ' + (error.message === 'new row violates row-level security for table "subscribers"' ? 'غير مصرح بالحذف مباشرة' : error.message);
+        errEl.classList.add('unsub-card__error--show');
+        return;
+      }
+
+      document.getElementById('unsub-initial').style.display = 'none';
+      document.getElementById('unsub-success').classList.add('unsub-card__success--show');
+    }
+  </script>
+</body>
+</html>

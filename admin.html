@@ -757,11 +757,18 @@
       var res = await supabaseClient.from('subscribers').select('*').order('subscribed_at', { ascending: false });
       container.innerHTML = '';
       (res.data || []).forEach(function (s) {
-        container.innerHTML += '<div class="admin-list-item"><div class="admin-list-item__info"><div class="admin-list-item__title">' + escapeHtml(s.email) + '</div></div><div style="font-size:11px;color:var(--text-muted);flex-shrink:0;">' + new Date(s.subscribed_at).toLocaleDateString('ar-SD') + '</div></div>';
+        container.innerHTML += '<div class="admin-list-item"><div class="admin-list-item__info"><div class="admin-list-item__title">' + escapeHtml(s.email) + '</div></div><div style="font-size:11px;color:var(--text-muted);flex-shrink:0;">' + new Date(s.subscribed_at).toLocaleDateString('ar-SD') + '</div><button class="action-btn action-btn--danger" onclick="deleteSubscriber(' + s.id + ', \'' + escapeHtml(s.email) + '\')" title="حذف"><i class="fas fa-trash"></i></button></div>';
       });
       if (!res.data || res.data.length === 0) {
         container.innerHTML = '<div class="tab-empty">لا يوجد مشتركون بعد</div>';
       }
+    }
+
+    async function deleteSubscriber(id, email) {
+      if (!confirm('هل أنت متأكد من حذف المشترك "' + email + '"؟')) return;
+      var res = await supabaseClient.from('subscribers').delete().eq('id', id);
+      if (res.error) { showNotification('خطأ: ' + res.error.message, 'error'); }
+      else { showNotification('تم حذف المشترك', 'success'); loadSubscribers(); }
     }
 
     /* ---- إدارة المستخدمين ---- */
