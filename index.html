@@ -609,7 +609,7 @@
       async function loadLatestArticles() {
         var grid = document.getElementById('articles-grid');
         if (!grid) return;
-        var res = await supabaseClient.from('articles').select('*').eq('is_published', true).not('is', 'published_at', null).order('published_at', { ascending: false }).limit(3);
+        var res = await supabaseClient.from('articles').select('*').eq('is_published', true).not('published_at', 'is', null).order('published_at', { ascending: false }).limit(3);
         if (!res.data || res.data.length === 0) return;
         grid.innerHTML = '';
         res.data.forEach(function (a) {
@@ -640,7 +640,7 @@
         var articlesRes = await supabaseClient.from('articles')
           .select('*', { count: 'exact', head: true })
           .eq('is_published', true)
-          .not('is', 'published_at', null);
+          .not('published_at', 'is', null);
         var articlesEl = document.getElementById('stat-articles');
         if (articlesEl && articlesRes.count !== null) {
           articlesEl.textContent = articlesRes.count;
